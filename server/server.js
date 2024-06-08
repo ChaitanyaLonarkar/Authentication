@@ -8,19 +8,21 @@ const cors = require("cors");
 
 require('dotenv').config()
 
-// const connectDb = require("./DB/connection.js");
+const connectDb = require("./Db/connection.js");
 // const router = express.Router();
-// const authRouter = require("./routes/authRoute.js");
+const authRouter = require("./routes/authRoute.js");
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
+app.use("/",authRouter)
+
 
 app.get("/",(req,res)=>{
     res.send("heelos")
 })
 
 app.listen(process.env.PORT, () => {
-    // connectDb();
+    connectDb();
     console.log(`working on`,process.env.PORT);
     });
