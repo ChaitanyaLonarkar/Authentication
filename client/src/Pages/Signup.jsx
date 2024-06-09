@@ -9,14 +9,41 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confpassword, setconfPassword] = useState("");
+  const [rdata, setrdata] = useState("");
 
   // const notify = () => ;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Here is your toast.')
-    console.log(name,email,password,confpassword)
-    // const response= await axios.post()
+    // try {
+    //   const serverResponse = await axios.post(
+    //     "http://localhost:8000/signup",
+    //     { name, email, password, confpassword },
+    //     // { withCredentials: true }
+    //   );
+    //   console.log(serverResponse.data);
+    //   toast.success(response.data.message || 'User created successfully');
+    //   // const {response}
+    //   // if (serverResponse) {
+    //     toast.success("Here done toast.");
+    //     console.log("sdhgfhsgdhfgshdfghsd",serverResponse);
+    //   // } else {
+    //   //   toast.error("erererere");
+    //   // }
+    //   // console.log(name, email, password, confpassword);
+    //   // const response= await axios.post()
+    // } catch (error) {
+    //   toast.error("error hai bhai ....")
+    // }
+    try {
+      const response = await axios.post('http://localhost:8000/signup', { name, email, password, confpassword }); // Make sure the URL is correct
+      toast.success(response.data.message || 'User created successfully');
+      navigate("/login");
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || 'An error occurred';
+      toast.error(errorMessage);
+    }
   };
 
   return (
@@ -77,6 +104,7 @@ export default function Signup() {
           <Toaster />
         </form>
       </div>
+      <div>sjhdgfhjasgdhfgashjdgfhjgsajdfhghasgdf{rdata}</div>
     </>
   );
 }

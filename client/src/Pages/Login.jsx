@@ -9,10 +9,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("Here is your toast.");
-    console.log( email, password,);
+
+    // try {
+      const response = await axios.post('/login', {email,password});
+      // toast.success(response.data.message || 'User logged in successfully');
+    // } catch (error) {
+    //   toast.error(error.response?.data?.error || 'An error occurred');
+    // }
+    // toast.success("Here is your toast.");
+    // console.log( email, password,);
     // const response= await axios.post()
-  };
+  // };
+  }
   return (
     <>
       <div className="sign">
@@ -41,7 +49,7 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
           <span>
             Dont have an account? <Link to={"/signup"}>Signup</Link>
           </span>

@@ -76,13 +76,10 @@ const Signup = async (req, res) => {
 
         let token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-        res.cookie("token", token, {
-          withCredentials: true,
-          httpOnly: false,
-        });
+        res.cookie("token", token);
         console.log("ye signup token hai ", token);
         console.log("ye signup cookie hai", req.cookies);
-        res.send(createduser);
+        res.send({message:"user registered successfully"});
       });
     });
     // res.send("signup")
