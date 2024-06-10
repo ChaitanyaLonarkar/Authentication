@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authuser,setAuthuser]=useState()
+  const [authuser,setAuthuser]=useState(null)
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,7 +22,9 @@ export default function Login() {
       toast.success(response.data.message || 'User logged in successfully');
       console.log(response.data.user)
 
-      setAuthuser(JSON.stringify(response.data.user))
+      setAuthuser(response.data.user)
+      console.log("auth usser hai ham",authuser)
+
       navigate("/")
       console.log("usersersdhfjshd",authuser)
     } catch (error) {
