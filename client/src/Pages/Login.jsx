@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [authuser,setAuthuser]=useState()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,15 +17,18 @@ export default function Login() {
       const response = await axios.post('http://localhost:8000/login', {email,password},{
         withCredentials: true,
       });
+      console.log(response.data)
+      // localStorage.setItem(response?.data?.user)
       toast.success(response.data.message || 'User logged in successfully');
+      console.log(response.data.user)
+
+      setAuthuser(JSON.stringify(response.data.user))
       navigate("/")
+      console.log("usersersdhfjshd",authuser)
     } catch (error) {
       toast.error(error.response?.data?.error || 'An error occurred');
     }
-    // toast.success("Here is your toast.");
-    // console.log( email, password,);
-    // const response= await axios.post()
-  // };
+  
   }
   return (
     <>
