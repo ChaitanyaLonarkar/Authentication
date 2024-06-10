@@ -51,8 +51,8 @@ const Login = async (req, res) => {
 };
 
 const Logout = (req, res) => {
-  res.send("logout hu m");
   res.cookie("token", "");
+  res.send("logout hu m");
   //  res.redirect("/")
 };
 
@@ -62,6 +62,8 @@ const Signup = async (req, res) => {
     // if (name || email || password || confpassword == "") {
     //   return res.status(400).json({ error: " field should not empty" });
     // }
+    if(password.length<6) return res.status(400).json({ error: "Password length is greater or equal to 6" });
+
     if (password !== confpassword) {
       return res.status(400).json({ error: "Passward doesnt matched" });
     }
@@ -76,7 +78,10 @@ const Signup = async (req, res) => {
 
         let token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-        res.cookie("token", token);
+        res.cookie("token", token,{
+          withCredentials: true,
+          httpOnly: false,
+        });
         console.log("ye signup token hai ", token);
         console.log("ye signup cookie hai", req.cookies);
         res.send({message:"user registered successfully"});

@@ -1,21 +1,27 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-      const response = await axios.post('/login', {email,password});
-      // toast.success(response.data.message || 'User logged in successfully');
-    // } catch (error) {
-    //   toast.error(error.response?.data?.error || 'An error occurred');
-    // }
+    try {
+      const response = await axios.post('http://localhost:8000/login', {email,password},{
+        withCredentials: true,
+      });
+      toast.success(response.data.message || 'User logged in successfully');
+      navigate("/")
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'An error occurred');
+    }
     // toast.success("Here is your toast.");
     // console.log( email, password,);
     // const response= await axios.post()
