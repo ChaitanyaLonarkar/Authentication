@@ -29,6 +29,7 @@ const Login = async (req, res) => {
 
     let token = jwt.sign({ email }, process.env.JWT_SECRET);
     res.cookie("token", token, {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
       withCredentials: true,
       httpOnly: true,
     });
@@ -53,6 +54,7 @@ const Login = async (req, res) => {
 const Logout = (req, res) => {
   // res.cookie("token", "");
   res.clearCookie("token");
+  console.log("logogogogo",req.cookies)
   // console.log("sdfsdfsdsdffsdfsdfsdf",req.cookies)
   if (req.cookies) {
     res.json({ status: true, message: "Logout successfully.." });
@@ -84,7 +86,8 @@ const Signup = async (req, res) => {
 
         let token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-        res.cookie("token", token, {
+        res.cookie("token", token,  {
+          maxAge: 15 * 24 * 60 * 60 * 1000,
           withCredentials: true,
           httpOnly: false,
         });

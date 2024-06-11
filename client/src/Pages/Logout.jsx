@@ -6,7 +6,7 @@ import axios from "axios";
 export default function Logout() {
   const navigate = useNavigate();
   const logout = async () => {
-    // try {
+    try {
     const response = await axios.post("http://localhost:8000/logout", {
       withCredentials: true,
     }); // Make sure the URL is correct
@@ -19,10 +19,10 @@ export default function Logout() {
     else{
         toast.success(response.data.message);
     }
-    // } catch (error) {
-    //   const errorMessage = error.response?.data?.error || "An error occurred";
-    //   toast.error(errorMessage);
-    // }
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || "An error occurred";
+      toast.error(errorMessage);
+    }
   };
   return (
     <>
