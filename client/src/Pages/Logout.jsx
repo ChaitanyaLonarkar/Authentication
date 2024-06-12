@@ -7,7 +7,7 @@ export default function Logout() {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-    const response = await axios.post("http://localhost:8000/logout", {
+    const response = await axios.post("http://localhost:8000/logout",{}, {
       withCredentials: true,
     }); // Make sure the URL is correct
     console.log(response.data);
