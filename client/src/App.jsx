@@ -22,6 +22,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/createBlog" element={<CreateBlog />} />
 
+          {/* <Route index element={(localStorage.getItem("user"))? <Home /> :<Navigate to={"/login"}/>} />
+          <Route path="/signup" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Signup />} />
+          <Route path="/login" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Login />} />
+          <Route path="/createBlog" element={(localStorage.getItem("user"))? <CreateBlog />:<Navigate to={"/login"}/>} /> */}
         </Routes>
       </BrowserRouter>
       <Toaster />
