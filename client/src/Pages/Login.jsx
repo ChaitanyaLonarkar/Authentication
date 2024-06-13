@@ -7,31 +7,33 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authuser,setAuthuser]=useState(null)
+  const [authuser, setAuthuser] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post('http://localhost:8000/login', {email,password},{
-        withCredentials: true,
-      });
-      console.log(response.data)
+      const response = await axios.post(
+        "http://localhost:8000/login",
+        { email, password },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
       // localStorage.setItem(response?.data?.user)
-      toast.success(response.data.message || 'User logged in successfully');
-      console.log(response.data.user)
+      toast.success(response.data.message || "User logged in successfully");
+      console.log(response.data.user);
+      //localstrorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      setAuthuser(localStorage.getItem("user"));
+      console.log("auth usser hai ham", authuser);
 
-      setAuthuser(response.data.user)
-      console.log("auth usser hai ham",authuser)
-
-      navigate("/")
-      console.log("usersersdhfjshd",authuser)
+      navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.error || 'An error occurred');
+      toast.error(error.response?.data?.error || "An error occurred");
     }
-  
-  }
+  };
   return (
     <>
       <div className="sign">
