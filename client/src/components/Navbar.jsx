@@ -37,16 +37,16 @@ export default function Navbar() {
             />
           </div>
         </div>
-        <div className="nav-right flex gap-4 sm:gap-8 items-center">
+        <div className="nav-right flex max-[400px]:gap-1 gap-4 sm:gap-8 items-center">
           <div className="cursor-pointer flex lg:hidden hover:bg-slate-200  rounded p-1  ">
             {!searchReasponsive ? (
               <IoSearch
-                className=" lg:hidden text-slate-800 text-2xl transition-all "
+                className=" lg:hidden text-slate-800 text-2xl transition-all max-[400px]:scale-75"
                 onClick={() => setSearchReasponsive(true)}
               />
             ) : (
               <IoClose
-                className=" lg:hidden text-slate-800 text-2xl transition-all"
+                className=" lg:hidden text-slate-800 text-2xl transition-all max-[400px]:scale-90"
                 onClick={() => setSearchReasponsive(false)}
               />
             )}
@@ -54,7 +54,7 @@ export default function Navbar() {
 
           <Link to="/createBlog">
             <abbr title="Write Blog">
-              <LuPenSquare className="text-slate-800 text-xl-5 text-2xl" />
+              <LuPenSquare className="text-slate-800 text-xl-5 text-2xl max-[400px]:scale-75" />
             </abbr>
           </Link>
 
@@ -91,12 +91,12 @@ export default function Navbar() {
           <div className="flex lg:hidden bg-slate-50 hover:bg-slate-200  rounded p-1  cursor-pointer ">
             {!toggle ? (
               <TfiMenuAlt
-                className=" text-slate-800 text-xl-5 text-2xl   rotate-180"
+                className=" text-slate-800 text-xl-5 text-2xl   rotate-180  max-[400px]:scale-75"
                 onClick={() => settoggle(true)}
               />
             ) : (
               <IoMdCloseCircle
-                className=" text-slate-800 text-xl-5 text-2xl"
+                className=" text-slate-800 text-xl-5 text-2xl max-[400px]:scale-90"
                 onClick={() => settoggle(false)}
               />
             )}
@@ -110,7 +110,7 @@ export default function Navbar() {
 
             <input
               type="search"
-              className=" bg-transparent outline-none w-48 "
+              className=" bg-transparent outline-none w-48 max-[400px]:w-3/4 "
             />
           </div>
         </div>

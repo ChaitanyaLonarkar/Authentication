@@ -45,7 +45,7 @@ export default function Login() {
         className="  flex justify-center items-center"
         style={{ height: "90vh" }}
       >
-        <div className="sign flex flex-col gap-5 rounded-lg bg-white w-96  px-12 py-10  justify-center items-center">
+        <div className="sign flex flex-col gap-5 rounded-lg bg-white sm:w-96  w-72  p-7  sm:px-12 sm:py-10  justify-center items-center max-[400px]:scale-90">
           <h1 className="font-bold text-3xl text-indigo-500">Login </h1>
           <form onSubmit={handleSubmit} className=" flex flex-col w-full gap-3">
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
@@ -59,11 +59,11 @@ export default function Login() {
                 placeholder="Enter your email"
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className=" bg-transparent placeholder:text-indigo-500 placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 placeholder:text-sm outline-none max-[600px]:w-3/4 "
               />
             </div>
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
-              <IoIosUnlock className="text-xl text-slate-600" />
+              <IoIosUnlock className="text-xl text-slate-600  " />
               <input
                 type="password"
                 name="password"
@@ -71,7 +71,7 @@ export default function Login() {
                 placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className=" bg-transparent placeholder:text-indigo-500 placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 placeholder:text-sm outline-none max-[600px]:w-3/4"
               />
             </div>
 

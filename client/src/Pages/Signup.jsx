@@ -45,7 +45,7 @@ export default function Signup() {
         className="  flex justify-center items-center"
         style={{ height: "90vh" }}
       >
-        <div className="sign flex flex-col gap-5 rounded-lg bg-white w-96 px-12 py-10  justify-center items-center">
+        <div className="sign flex flex-col gap-5 rounded-lg bg-white sm:w-96 p-7  sm:px-12 sm:py-10   justify-center items-center max-[400px]:scale-90 ">
           <h1 className="font-bold text-3xl text-indigo-500">Join Us </h1>
           <form onSubmit={handleSubmit} className=" flex flex-col w-full gap-3">
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
@@ -57,7 +57,7 @@ export default function Signup() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 required
-                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none  max-[600px]:w-3/4"
               />
             </div>
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
@@ -70,7 +70,7 @@ export default function Signup() {
                 placeholder="Enter your email"
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none max-[600px]:w-3/4 "
               />
             </div>
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
@@ -82,7 +82,7 @@ export default function Signup() {
                 placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none max-[600px]:w-3/4 "
               />
             </div>
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
@@ -93,7 +93,7 @@ export default function Signup() {
                 value={confpassword}
                 placeholder="Enter confirm password"
                 onChange={(e) => setconfPassword(e.target.value)}
-                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none "
+                className=" bg-transparent placeholder:text-indigo-500 text-indigo-500 text-md placeholder:text-sm outline-none  max-[600px]:w-3/4"
                 required
               />
             </div>
