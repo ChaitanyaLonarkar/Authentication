@@ -30,7 +30,10 @@ export default function Logout() {
   };
   return (
     <>
-      <button type="submit" onClick={logout}>
+      <button type="submit" onClick={logout}
+                className="py-2 px-4 rounded-md bg-indigo-100 font-bold  hover:bg-violet-200 text-indigo-700 "
+
+      >
         Logout
       </button>
     </>

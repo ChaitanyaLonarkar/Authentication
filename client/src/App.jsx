@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./App.css";
@@ -11,6 +11,7 @@ import CreateBlog from "./Pages/CreateBlog";
 
 function App() {
   const [count, setCount] = useState(0);
+  // const navigate = useNavigate();
 
   return (
     <>
