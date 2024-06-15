@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
-export default function CreateBlog() {
+export default function UpdateBlog() {
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
 
@@ -28,14 +28,14 @@ export default function CreateBlog() {
       <div className="flex justify-center my-4  items-center ">
         <div className=" md:w-[50rem] max-[400px]:w-[95%]  bg-white p-3 min-[501px]:w-[87%] min-[401px]:p-7 md:p-12 flex flex-col gap-8 sm:gap-10 rounded-lg">
           <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-3xl  text-indigo-950 opacity-95">
-            Create New Blog here
+          Update Blog here
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm ">
-            <div className="font-semibold text-indigo-900">Add Thumbnail</div>
+            <div className="font-semibold text-indigo-900">Update Thumbnail</div>
             <input type="file" placeholder="dfgdfg" className="" />
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
-            <div className="font-semibold text-indigo-900">Add Title</div>
+            <div className="font-semibold text-indigo-900">Update Title</div>
             <input
               type="text"
               placeholder="dfgdfg"
@@ -44,7 +44,7 @@ export default function CreateBlog() {
           </div>
 
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
-            <div className="font-semibold text-indigo-900 ">Add Category</div>
+            <div className="font-semibold text-indigo-900 ">Update Category</div>
             <div className=" flex flex-col">
               <div className="flex items-center  md:space-x-8">
                 <input
@@ -79,7 +79,7 @@ export default function CreateBlog() {
           </div>
 
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
-            <div className="font-semibold text-indigo-900">Add Description</div>
+            <div className="font-semibold text-indigo-900">Update Description</div>
             <textarea
               name="desc"
               id=""
@@ -92,7 +92,7 @@ export default function CreateBlog() {
 
           <div>
             <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white ">
-              Create Blog
+            Update Blog
             </button>
           </div>
         </div>

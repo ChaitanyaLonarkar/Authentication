@@ -9,6 +9,8 @@ import Home from "./Pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CreateBlog from "./Pages/CreateBlog";
+import SelectedBlog from "./Pages/SelectedBlog";
+import UpdateBlog from "./Pages/UpdateBlog";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,6 +25,10 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/createBlog" element={<CreateBlog />} />
+          <Route path="/b" element={<SelectedBlog />} />
+          <Route path="/updateBlog" element={<UpdateBlog />} />
+
+
 
           {/* <Route index element={(localStorage.getItem("user"))? <Home /> :<Navigate to={"/login"}/>} />
           <Route path="/signup" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Signup />} />

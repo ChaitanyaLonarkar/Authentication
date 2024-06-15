@@ -28,12 +28,12 @@ export default function Navbar() {
               <span className="text-violet-500 d font-medium ">Blogs</span>
             </Link>
           </div>
-          <div className="nav-search hidden lg:flex items-center gap-4 px-5  bg-slate-200 rounded-lg h-10">
+          <div className="nav-search hidden lg:flex items-center gap-4 px-5  bg-slate-100 rounded-lg h-10">
             <IoSearch className="text-slate-700 text-lg" />
 
             <input
               type="search"
-              className=" bg-transparent outline-none w-48 "
+              className=" bg-transparent outline-none w-48 text-sm " placeholder="Search blog here"
             />
           </div>
         </div>
