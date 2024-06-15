@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import CreateBlog from "./Pages/CreateBlog";
 import SelectedBlog from "./Pages/SelectedBlog";
 import UpdateBlog from "./Pages/UpdateBlog";
+import Profile from "./Pages/Profile";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,6 +28,8 @@ function App() {
           <Route path="/createBlog" element={<CreateBlog />} />
           <Route path="/b" element={<SelectedBlog />} />
           <Route path="/updateBlog" element={<UpdateBlog />} />
+          <Route path="/myprofile" element={<Profile />} />
+
 
 
 
