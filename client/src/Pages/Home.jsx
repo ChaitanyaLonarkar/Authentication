@@ -65,45 +65,45 @@ export default function Home() {
 
   return (
     <>
-      <div className="home m-5 bg-white rounded-xl p-12 px-20  flex justify-around items-center ">
-        <div className="h-l flex flex-col gap-12">
-          <div className="h-text">
-            <div className="mb-4 font-medium text-indigo-900 text-lg opacity-75  ">
+      <div className="home md:m-5 m-2 p-4 py-8 bg-white rounded-xl md:p-12 md:px-15  flex justify-around items-center flex-col-reverse sm:flex-row  ">
+        <div className="h-l flex flex-col max-[636px]:gap-5  gap-12">
+          <div className="h-text max-[636px]:text-center">
+            <div className="mb-4 font-medium text-indigo-900 text-xs sm:text-sm lg:text-lg opacity-75  ">
               {/* <img src={Logo} alt="Logo" /> */}
               Dive into Knowledge, Explore the World
             </div>
-            <h1 className=" font-extrabold  spacing text-6xl text-indigo-400 ">
+            <h1 className=" font-extrabold  spacing max-[400px]:text-2xl text-4xl xl:text-6xl md:text-5xl sm:text-3xl text-indigo-400 ">
               Inspire. Learn. Share.
             </h1>
-            <h1 className=" font-extrabold  spacing text-5xl text-indigo-900 opacity-95 mt-5  leading-relaxed ">
+            <h1 className=" font-extrabold  spacing max-[400px]:text-xl text-2xl xl:text-5xl md:text-3xl sm:text-2xl text-indigo-900 opacity-95 mt-5  leading-relaxed ">
               A Blogs for Passionate People. <br />
               {/* Your Journey Starts Here. */}
             </h1>
           </div>
-          <div className="join">
+          <div className="join max-[636px]:flex max-[636px]:justify-center ">
             <Link
               to="/login"
-              className="p-4 rounded-md bg-indigo-100 font-bold  hover:bg-indigo-200 text-indigo-700 "
+              className="max-[636px]:p-2 max-[636px]:text-sm p-4 rounded-md bg-indigo-100 font-bold  hover:bg-indigo-200 text-indigo-700 "
             >
               {" "}
               Join Us Today
             </Link>
           </div>
         </div>
-        <div className="h-r w-2/4">
+        <div className="h-r  w-72 sm:w-2/4 sm:mb-0 mb-10">
           <div className="illus">
             <img src={il1} alt="illustration" />
           </div>
         </div>
       </div>
 
-      <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
+      {/* <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
         <div className="heading font-extrabold text-5xl flex flex-col items-center text-indigo-900 opacity-95">
           Latest Blogs
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        <div className="latestblogs ">
+        <div className="latestblogs "> */}
           {/* {blogs.map((b) => {
             <div>
               <img src={b.thumbnail} alt="" />
@@ -112,7 +112,7 @@ export default function Home() {
               <div>{b.description}</div>
             </div>;
           })} */}
-
+{/* 
           <div className="l-blog flex gap-12  ">
             <div className=" w-2/4 rounded-xl overflow-hidden  ">
               <img src={tu} alt="" />
@@ -160,7 +160,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

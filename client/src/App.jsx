@@ -7,6 +7,7 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Home from "./Pages/Home";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import CreateBlog from "./Pages/CreateBlog";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Login />} />
           <Route path="/createBlog" element={(localStorage.getItem("user"))? <CreateBlog />:<Navigate to={"/login"}/>} /> */}
         </Routes>
+        <Footer/>
       </BrowserRouter>
       <Toaster />
     </>
