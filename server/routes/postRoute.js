@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Blog = require("../models/postModel.js");
-
+const verifyUser=require("../verifyUser.js")
 // CREATE ONE BLOG
 
 const createPost = async (req, res) => {
@@ -101,9 +101,9 @@ const getOnePost = async (req, res) => {
   }
 };
 
-router.post("/create", createPost);
-router.put("/update/:id", updatePost);
-router.delete("/delete/:id", deletePost);
+router.post("/create",verifyUser, createPost);
+router.put("/update/:id",verifyUser, updatePost);
+router.delete("/delete/:id",verifyUser, deletePost);
 router.get("/getAllPosts", getAllPosts);
 router.get("/getpostofuser/:id", getOnePostOfUser);
 router.get("/getpost/:id", getOnePost);

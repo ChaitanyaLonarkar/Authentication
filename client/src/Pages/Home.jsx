@@ -15,9 +15,9 @@ export default function Home() {
         withCredentials: true,
       }); // Make sure the URL is correct
 
-      if (localStorage.getItem("user")) {
-        // if (response.data.status) {
-        // toast.success(response.data.message || "User verified successfully");
+      // if (localStorage.getItem("user")) {
+        if (response.data.status) {
+        toast.success(response.data.message || "User verified successfully");
         navigate("/");
       } else {
         navigate("/login");
@@ -67,7 +67,7 @@ export default function Home() {
     <>
       <div className="home md:m-5 m-2 p-4 py-8 bg-white rounded-xl md:p-12 md:px-15  flex justify-around items-center flex-col-reverse sm:flex-row  ">
         <div className="h-l flex flex-col max-[636px]:gap-5  gap-12">
-          <div className="h-text max-[636px]:text-center">
+          <div className="h-text max-[636px]:text-center flex flex-col md:gap-5">
             <div className="mb-4 font-medium text-indigo-900 text-xs sm:text-sm lg:text-lg opacity-75  ">
               {/* <img src={Logo} alt="Logo" /> */}
               Dive into Knowledge, Explore the World

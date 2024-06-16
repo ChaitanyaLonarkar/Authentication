@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const Comments = require("../models/commentModel.js");
 app.use(cookieParser());
+const verifyUser=require("../verifyUser.js")
 
 const updateUser = async (req, res) => {
 
@@ -94,8 +95,8 @@ const getUser = async (req, res) => {
   }
 };
 
-router.put("/update/:id", updateUser);
-router.delete("/delete/:id", deleteUser);
+router.put("/update/:id",verifyUser, updateUser);
+router.delete("/delete/:id",verifyUser, deleteUser);
 router.get("/getuser/:id", getUser);
 
 module.exports = router;

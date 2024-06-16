@@ -4,6 +4,7 @@ const router = express.Router();
 // const Blog = require("../models/postModel.js");
 // const User = require("../models/userModel.js");
 const Comments = require("../models/commentModel.js");
+const verifyUser=require("../verifyUser.js")
 
 
 
@@ -61,9 +62,9 @@ const getPostComment=async (req,res)=>{
     }
 }
 
-router.post("/create", createComment);
-router.put("/update/:id", updateComment);
-router.delete("/delete/:id", deleteComment);
+router.post("/create",verifyUser, createComment);
+router.put("/update/:id",verifyUser, updateComment);
+router.delete("/delete/:id",verifyUser, deleteComment);
 router.get("/post/:postId", getPostComment);
 
 

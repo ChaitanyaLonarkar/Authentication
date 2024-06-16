@@ -9,6 +9,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 app.use(cookieParser());
+const verifyUser=require("../verifyUser.js")
+
 
 const Login = async (req, res) => {
   try {
@@ -109,36 +111,10 @@ const Signup = async (req, res) => {
   }
 };
 
-const verifyUser = (req, res, next) => {
-  try {
-    const token = req.cookies.token;
 
-    if (!token) {
-      return res.json({
-        status: false,
-        message: "Unauthorize - no token provided or you need to login",
-      });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!decoded) {
-      return res.json({
-        status: false,
-        message: "Unauthorize - invalid token ",
-      });
-    }
-
-    // console.log(req.user,"from protect")
-    next();
-  } catch (error) {
-    console.log("Error in protectRoute controller", error.message);
-    res.json({ error: "Internal Server Error" });
-  }
-};
 
 router.post("/login", Login);
-router.post("/logout", Logout);
+router.post("/logout",verifyUser, Logout);
 router.post("/signup", Signup);
 
 router.get("/", verifyUser, (req, res) => {
