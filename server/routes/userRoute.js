@@ -9,7 +9,7 @@ const app = express();
 
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const Comments = require("../models/commentModle.js");
+const Comments = require("../models/commentModel.js");
 app.use(cookieParser());
 
 const updateUser = async (req, res) => {
