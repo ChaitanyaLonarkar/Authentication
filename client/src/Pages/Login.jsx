@@ -6,13 +6,16 @@ import toast, { Toaster } from "react-hot-toast";
 import { IoIosUnlock } from "react-icons/io";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { IoMail } from "react-icons/io5";
+import { useAuthContext } from "../context/AuthContext";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authuser, setAuthuser] = useState(null);
+  // const [authuser, setAuthuser] = useState(null);
   const navigate = useNavigate();
 
+  const { authUser, setAuthUser } = useAuthContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,9 +30,10 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       if (localStorage.getItem("user")) {
         toast.success(response.data.message || "User logged in successfully");
-        console.log(response.data.user);
-        setAuthuser(localStorage.getItem("user"));
-        console.log("auth usser hai ham", authuser);
+        // console.log(response.data.user);
+        // setAuthUser(localStorage.getItem("user"));
+        setAuthUser(response.data.user);
+        // console.log("auth usser hai ham", authUser);
         navigate("/");
       }
       else{
