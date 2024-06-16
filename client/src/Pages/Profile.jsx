@@ -77,6 +77,12 @@ export default function Profile() {
                         </Link>
                       </div>
                       <div>by Chaitanya Lonarkar,2 days ago</div>
+                      <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                    Update Blog
+                </div>
+                <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                    Delete Blog
+                </div>
                     </div>
                   </div>
                   
