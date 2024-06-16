@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const postSchema = new mongoose.Schema(
   {
     // date: { type: Date, default: Date.now },
-    templatePic: {
+    thumbnail: {
       type: String,
       default: "",
     },
