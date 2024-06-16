@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
+      
     },
     email: {
       type: String,
@@ -17,12 +19,17 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
     },
     
-    /*profilePic: {
+    profilePic: {
       type: String,
       default: "",
-    },*/
+      required:false,
+    },
+    myblogs:{
+      type: Array,
+      required:false,
+    },
   },
-  // { timestamps: true }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);

@@ -80,6 +80,12 @@ const Signup = async (req, res) => {
     if (user) {
       return res.status(400).json({ error: "email already exsist" });
     }
+
+    const username = await User.findOne({ name });
+
+    if (username) {
+      return res.status(400).json({ error: "username already exsist" });
+    }
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(password, salt, async function (err, hash) {
         const createduser = await User.create({ name, email, password: hash });

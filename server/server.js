@@ -16,10 +16,14 @@ require('dotenv').config()
 const connectDb = require("./Db/connection.js");
 // const router = express.Router();
 const authRouter = require("./routes/authRoute.js");
+const userRouter = require("./routes/userRoute.js");
+
 
 app.use(cookieParser());
 app.use(express.json());
 app.use("/",authRouter)
+app.use("/user",userRouter)
+
 
 
 app.get("/",(req,res)=>{
