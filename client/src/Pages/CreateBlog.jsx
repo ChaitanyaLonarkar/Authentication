@@ -7,20 +7,20 @@ export default function CreateBlog() {
   const [cats, setcats] = useState([]);
 
   const addCategory = () => {
-    if(cat==""){
-      return  toast.error("kuch to dal category me")
+    if (cat == "") {
+      return toast.error("kuch to dal category me");
     }
     let updatedCat = [...cats];
     updatedCat.push(cat);
     setcat("");
     setcats(updatedCat);
-    console.log(cats)
+    console.log(cats);
   };
   const delCategory = (k) => {
     let updatedCat = [...cats];
-    updatedCat.splice(k,1);
+    updatedCat.splice(k, 1);
     setcats(updatedCat);
-    console.log(cats,"........................................")
+    console.log(cats, "........................................");
   };
 
   return (
@@ -32,7 +32,31 @@ export default function CreateBlog() {
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm ">
             <div className="font-semibold text-indigo-900">Add Thumbnail</div>
-            <input type="file" placeholder="dfgdfg" className="" />
+            <input
+              type="file"
+              placeholder="dfgdfg"
+              className="text-sm text-stone-500
+   file:mr-5 file:py-2 file:px-3 
+    file:font-medium file:border-0
+   file:bg-indigo-500 file:text-white
+   hover:file:cursor-pointer hover:file:bg-blue-50
+   hover:file:text-blue-700"
+            />
+
+            
+{/* <div class="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" />
+    </label>
+</div>  */}
+
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
             <div className="font-semibold text-indigo-900">Add Title</div>
@@ -63,17 +87,19 @@ export default function CreateBlog() {
 
               <div className="flex  mt-4">
                 {cats.map((cat, k) => (
-                  <div key={k} className="flex justify-center items-center space-x-2 mr-4 bg-gray-200 px-2 py-1 rounded-md">
+                  <div
+                    key={k}
+                    className="flex justify-center items-center space-x-2 mr-4 bg-gray-200 px-2 py-1 rounded-md"
+                  >
                     <p>{cat}</p>
                     <p
                       className="text-slate-500 rounded-full cursor-pointer p-1 text-sm"
-                      onClick={()=>delCategory(k)}
+                      onClick={() => delCategory(k)}
                     >
                       <ImCross />
                     </p>
                   </div>
                 ))}
-
               </div>
             </div>
           </div>
