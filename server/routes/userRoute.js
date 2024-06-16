@@ -9,20 +9,10 @@ const app = express();
 
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const Comments = require("../models/commentModle.js");
 app.use(cookieParser());
 
 const updateUser = async (req, res) => {
-  //   try {
-  //     const { title, content, category, templatePic } = req.body();
-
-  //     if (title || content || category || templatePic ==""){
-  //         return res.status(400).json({ message: "All fields are required" });
-  //     }
-  //     const createdPost = await Blog.create({ title, content, category, templatePic });
-
-  //   } catch (error) {
-  //     res.status(500).json(error)
-  //   }
 
   try {
     const { name, email, password, profilePic } = req.body;
@@ -62,7 +52,11 @@ const updateUser = async (req, res) => {
         });
         console.log("ye updated token hai ", token);
         console.log("ye updated cookie hai", req.cookies);
-        res.send({ message: "user updated successfully" });
+        res.send({ message: "user updated successfully",updatedUser : {
+            _id: updateduser._id,
+            name: updateduser.name,
+            email: updateduser.email,
+          },});
       });
     });
   } catch (errorr) {
@@ -75,38 +69,33 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { title, content, category, templatePic } = req.body();
+    // const { title, content, category, templatePic } = req.body();
+    await User.findByIdAndDelete(req.params.id)
+    await Blog.deleteMany({userId:req.params.id})
+    await Comments.deleteMany({userId:req.params.id})
+    res.status(200).json({sucess:true,message:"User has been deleted"})
 
-    if (title || content || category || templatePic == "") {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-    const createdPost = await Blog.create({
-      title,
-      content,
-      category,
-      templatePic,
-    });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({sucess:false,message:"Unable to delete user"})
+    console.log(error.message)
+
+  }
 };
 
 const getUser = async (req, res) => {
   try {
-    const { title, content, category, templatePic } = req.body();
+    const user=await User.findById(req.params.id)
+    const {password,...info}=user._doc 
+    res.status(200).json({sucess:true,message:"User has been found",getUser:info})
 
-    if (title || content || category || templatePic == "") {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-    const createdPost = await Blog.create({
-      title,
-      content,
-      category,
-      templatePic,
-    });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({sucess:false,message:"Unable to get user or user not found"})
+    console.log(error.message)
+  }
 };
 
 router.put("/update/:id", updateUser);
-// router.delete("/logout", Logout);
-// router.get("/signup", Signup);
+router.delete("/delete/:id", deleteUser);
+router.get("/getuser/:id", getUser);
 
 module.exports = router;
