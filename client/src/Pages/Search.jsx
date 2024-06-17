@@ -12,12 +12,15 @@ export default function Search() {
     const [allBlogs, setallBlogs] = useState([]);
     const { search } = useLocation();
     // console.log(search);
+    const [noResult, setnoResult] = useState(false);
 
     const fetchSearchBlogs = async () => {
         try {
           const res = await axios.get("http://localhost:8000/post/getSearchPosts"+search);
           // console.log(res.data.posts,);
           setallBlogs(res.data.posts);
+          if(res.data.posts==0) setnoResult(true)
+          else setnoResult(false)
           // console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
         } catch (error) {
           console.log(error);
@@ -61,9 +64,9 @@ export default function Search() {
 
   return (
     <>
-      <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
+     {!noResult? <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
         <div className="heading font-extrabold text-5xl flex flex-col items-center text-indigo-900 opacity-95">
-          Latest Blogs
+          Search Blogs
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
@@ -102,7 +105,8 @@ export default function Search() {
             </div>
           ))}
         </div>
-      </div>
+      </div>:<div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
+        <div className="text-2xl font-semibold text-indigo-900 opacity-90">No Result Found</div></div>}
     </>
   );
 }

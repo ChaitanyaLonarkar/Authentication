@@ -15,6 +15,7 @@ export default function Navbar() {
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
+
   const navigate=useNavigate()
   // console.log(prompt);
   //  const onSearchReasponsive=()=>{
