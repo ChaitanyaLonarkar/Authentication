@@ -53,11 +53,8 @@ const updateUser = async (req, res) => {
         });
         console.log("ye updated token hai ", token);
         console.log("ye updated cookie hai", req.cookies);
-        res.send({ message: "user updated successfully",updatedUser : {
-            _id: updateduser._id,
-            name: updateduser.name,
-            email: updateduser.email,
-          },});
+        res.send({ message: "user updated successfully",updatedUser :
+           updateduser});
       });
     });
   } catch (errorr) {

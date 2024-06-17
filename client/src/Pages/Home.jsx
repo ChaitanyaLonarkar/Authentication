@@ -17,10 +17,11 @@ export default function Home() {
   //     const response = await axios.get("http://localhost:8000/", {
   //       withCredentials: true,
   //     }); // Make sure the URL is correct
-
-  //     // if (localStorage.getItem("user")) {
-  //       if (response.data.status) {
+  //      setAuthUser(response.data.user)
+  //     if (localStorage.getItem("user")) {
+  //       // if (response.data.status) {
   //       toast.success(response.data.message || "User verified successfully");
+
   //       navigate("/");
   //     } else {
   //       navigate("/login");
@@ -31,39 +32,10 @@ export default function Home() {
   //   }
   // };
 
-  // const blogs = [
-  //   {
-  //     title: "Why Enhancing Virtual Reality is Important",
-  //     description:
-  //       "Virtual reality is seen as a “fun” technology to some without much...",
-  //     thumbnail: "https://cdn-images-1.medium.com/max/2600/0*kz30LOdXT8CyOymh",
-  //     link: "https://medium.com/p/ac19dd21c728",
-  //     categories: [
-  //       "vr",
-  //       "technology",
-  //       "virtual-reality",
-  //       "engineering",
-  //       "artificial-intelligence",
-  //     ],
-  //     // publishedAt: Wed Aug 11 2021 18:43:34 GMT+0600
-  //   },
-  //   {
-  //     title: "How to Get Started With Data Science: a Brief Guide",
-  //     description:
-  //       "You’ve heard about data science and machine learning, and you want to get started. Maybe you hear...",
-  //     thumbnail: "https://cdn-images-1.medium.com/max/2600/0*Ah0vLtsvxqUvRWuS",
-  //     link: "https://medium.com/p/88ec244f2fee",
-  //     categories: [
-  //       "beginner-coding",
-  //       "data-science-training",
-  //       "machine-learning-course",
-  //     ],
-  //     // publishedAt: Mon Jul 26 2021 22:55:26 GMT+0600
-  //   },
-  // ];
-
-  // const { search } = useLocation();
-  // console.log(search);
+  const { search } = useLocation();
+  console.log(search);
+  
+  
   const fetchAllBlogs = async () => {
     try {
       const res = await axios.get("http://localhost:8000/post/getAllPosts");

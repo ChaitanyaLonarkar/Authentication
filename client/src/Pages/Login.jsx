@@ -26,7 +26,7 @@ export default function Login() {
           withCredentials: true,
         }
       );
-      console.log(response.data);
+      console.log(response.data,"loginnnnnnnnnnnnnnn");
       localStorage.setItem("user", JSON.stringify(response.data.user));
       if (localStorage.getItem("user")) {
         toast.success(response.data.message || "User logged in successfully");

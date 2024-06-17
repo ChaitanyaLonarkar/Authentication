@@ -14,27 +14,29 @@ const verifyUser=require("../verifyUser.js")
 
 const Login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    // const { email} = req.body;
+    if (!req.body.email || !req.body.password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne( {email:req.body.email} );
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const auth = await bcrypt.compare(password, user.password);
+    const auth = await bcrypt.compare(req.body.password, user.password);
     if (!auth) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    let token = jwt.sign({ email }, process.env.JWT_SECRET);
+    let token = jwt.sign({email:req.body.email}, process.env.JWT_SECRET);
     res.cookie("token", token, {
         maxAge: 10 * 24 * 60 * 60 * 1000,
       withCredentials: true,
       httpOnly: true,
     });
+
+    const {password,...info}=user._doc 
 
     console.log("ye user hai ", user);
     console.log("ye login token hai ", token);
@@ -42,14 +44,11 @@ const Login = async (req, res) => {
     res.status(200).json({
       message: "User logged in successfully",
       success: true,
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user: info,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
+    console.log(error.message)
   }
 };
 

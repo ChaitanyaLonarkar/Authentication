@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate,useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./App.css";
@@ -13,10 +13,13 @@ import SelectedBlog from "./Pages/SelectedBlog";
 import UpdateBlog from "./Pages/UpdateBlog";
 import Profile from "./Pages/Profile";
 import Search from "./Pages/Search";
+import { useAuthContext } from "./context/AuthContext";
 
 function App() {
   const [count, setCount] = useState(0);
   // const navigate = useNavigate();
+const { authUser, setAuthUser } = useAuthContext();
+
 
   return (
     <>
@@ -27,6 +30,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/createBlog" element={<CreateBlog />} />
+          {/* <Route path="/createBlog" element={authUser?<CreateBlog />:navigate("login")} /> */}
+
           <Route path="/bloginfo/:id" element={<SelectedBlog />} />
           <Route path="/updateBlog" element={<UpdateBlog />} />
           <Route path="/myprofile" element={<Profile />} />

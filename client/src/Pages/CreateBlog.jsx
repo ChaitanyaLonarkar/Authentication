@@ -1,10 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
+
 export default function CreateBlog() {
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
+  const [title, settitle] = useState("");
+  const [desc, setdesc] = useState("");
+  // const [, setcat] = useState("");
 
   const addCategory = () => {
     if (cat == "") {
@@ -22,6 +27,39 @@ export default function CreateBlog() {
     setcats(updatedCat);
     console.log(cats, "........................................");
   };
+
+  const [image, setImage] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  console.log(image,"hjghccggggfgffgfggvgvgvbbbbm")
+
+
+  const createBlogPost=async()=>{
+
+    try {
+      const res=await axios.post("http://localhost:8000/post/create",{
+        thumbnail: "fgdfdfg",
+        title: "for",
+        desc: "fonrsdndn",
+        categories: ["game"],
+        userId: "666ea7c341028dc4c4fc2f29",
+        username:"chaitanyaa"
+    })
+
+    console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -41,6 +79,7 @@ export default function CreateBlog() {
    file:bg-indigo-500 file:text-white
    hover:file:cursor-pointer hover:file:bg-blue-50
    hover:file:text-blue-700"
+   onClick={handleFileChange}
             />
 
             {/* <div class="flex items-center justify-center w-full">
@@ -115,7 +154,7 @@ export default function CreateBlog() {
           </div>
 
           <div>
-            <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white ">
+            <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white " onClick={createBlogPost}>
               Create Blog
             </button>
           </div>
