@@ -5,9 +5,13 @@ import toast, { Toaster } from "react-hot-toast";
 import Logo from "../assets/logo.png";
 import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
+import { useAuthContext } from "../context/AuthContext";
+import timeAgo from "../context/TimeAgo";
 export default function Home() {
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
+  const { authUser, setAuthUser } = useAuthContext();
+
   // const verifyUser = async (e) => {
   //   try {
   //     const response = await axios.get("http://localhost:8000/", {
@@ -77,42 +81,42 @@ export default function Home() {
     fetchAllBlogs();
   }, []);
 
-  function timeAgo(inputTime) {
-    const now = new Date();
-    const time = new Date(inputTime);
-    const diff = now - time;
+  // function timeAgo(inputTime) {
+  //   const now = new Date();
+  //   const time = new Date(inputTime);
+  //   const diff = now - time;
 
-    const msPerMinute = 60 * 1000;
-    const msPerHour = msPerMinute * 60;
-    const msPerDay = msPerHour * 24;
+  //   const msPerMinute = 60 * 1000;
+  //   const msPerHour = msPerMinute * 60;
+  //   const msPerDay = msPerHour * 24;
 
-    if (diff < msPerMinute) {
-      const seconds = Math.round(diff / 1000);
-      return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
-    } else if (diff < msPerHour) {
-      const minutes = Math.round(diff / msPerMinute);
-      return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
-    } else if (diff < msPerDay) {
-      const hours = Math.round(diff / msPerHour);
-      return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-    } else if (diff < msPerDay * 2) {
-      return "1 day ago";
-    } else if (diff < msPerDay * 7) {
-      const days = Math.round(diff / msPerDay);
-      return `${days} days ago`;
-    } else {
-      // For times older than a week, return the formatted date
-      return time.toLocaleString("en-US", {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      });
-    }
-  }
+  //   if (diff < msPerMinute) {
+  //     const seconds = Math.round(diff / 1000);
+  //     return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
+  //   } else if (diff < msPerHour) {
+  //     const minutes = Math.round(diff / msPerMinute);
+  //     return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+  //   } else if (diff < msPerDay) {
+  //     const hours = Math.round(diff / msPerHour);
+  //     return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+  //   } else if (diff < msPerDay * 2) {
+  //     return "1 day ago";
+  //   } else if (diff < msPerDay * 7) {
+  //     const days = Math.round(diff / msPerDay);
+  //     return `${days} days ago`;
+  //   } else {
+  //     // For times older than a week, return the formatted date
+  //     return time.toLocaleString("en-US", {
+  //       weekday: "short",
+  //       year: "numeric",
+  //       month: "short",
+  //       day: "numeric",
+  //       hour: "numeric",
+  //       minute: "numeric",
+  //       hour12: true,
+  //     });
+  //   }
+  // }
 
   return (
    
@@ -168,7 +172,8 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="font-bold text-4xl  text-indigo-900 opacity-95">
-                  <Link key={blog._id} to="/b">
+                  {/* <Link key={blog._id} to={authUser?`/bloginfo/${blog._id}`:"/login"}> */}
+                  <Link key={blog._id} to={`/bloginfo/${blog._id}`}>
                     {blog.title}
                   </Link>
                 </div>

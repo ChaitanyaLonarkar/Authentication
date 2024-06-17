@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import person from "../assets/ppp.jpg";
 import { FcLike } from "react-icons/fc";
 import { GoHeartFill } from "react-icons/go";
@@ -7,24 +7,50 @@ import { useState } from "react";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FaShare } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import timeAgo from "../context/TimeAgo";
+import {BiEdit} from 'react-icons/bi'
+import {MdDelete} from 'react-icons/md'
 
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
-  const [commnetKaru, setcommentKaru] = useState(false);
+  const [commnetKaru, setcommentKaru] = useState();
+  const blogId=useParams().id
+  const [blog, setblog] = useState({})
+  const fetchBlogInfo=async()=>{
+    try {
+      const res=await axios.get("http://localhost:8000/post/getpost/"+blogId)
+      // console.log(res.data.oneBlog)
+      setblog(res.data.oneBlog)
+      console.log(blog)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
+  useEffect(() => {
+    fetchBlogInfo()
+  }, [blogId])
+  
+//  console.log(blogId)
   return (
     <>
       <div className="flex justify-center my-4  items-center ">
         <div className="md:w-[50rem] max-[400px]:w-[95%]  bg-white p-3 min-[401px]:p-7 md:p-12 flex flex-col gap-6 sm:gap-10 rounded-lg">
           <div className="b-heading  max-[400px]:text-[28px] min-[401px]:text-3xl md:text-5xl font-bold text-indigo-900 ">
-            Overcoming Challenges and Finding a Great Job in a Competitive
-            Landscape
+            {blog.title}
           </div>
 
           <div className="flex gap-5 text-sm  font-medium text-indigo-900">
-            <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Career</div>
+            {blog.categories?.map((c)=>(
+
+            <div className=" bg-slate-200 p-1 px-3 rounded-2xl ">{c}</div>
+
+            ))}
+            {/* <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Career</div>
             <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Job</div>
-            <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Tech</div>
+            <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Tech</div> */}
           </div>
           <div className="blogger-details flex gap-3 items-center justify-between text-slate-700 border-t-2  border-b-2 p-2  sm:p-4">
             <div className="flex gap-3 items-center max-[500px]:text-sm">
@@ -32,10 +58,10 @@ export default function SelectedBlog() {
                 <img src={person} alt="" />
               </div>
               <div className="">
-                Chaitanya Lonarkar
+               {blog.username}
                 <br />
                 <span className=" max-[400px]:text-xs text-sm text-slate-500">
-                  17 hours ago
+                  {timeAgo(blog.updatedAt)}
                 </span>
               </div>
             </div>
@@ -69,8 +95,11 @@ export default function SelectedBlog() {
                 src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*CC1ML6NyDUAWSLdRJLFsMg.jpeg"
                 alt=""
               />
+
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
+              {blog.desc}
+              <br />
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
               atque eveniet debitis assumenda expedita cumque aliquid, repellat
               ab magni obcaecati suscipit minus molestias sint incidunt
@@ -159,6 +188,12 @@ export default function SelectedBlog() {
             />
             <FaShare className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
           </div>
+          {/* {user?._id===blog?.userId &&  */}
+          {/* <div className="flex items-center justify-center space-x-2">
+            <p className="cursor-pointer" onClick={()=>navigate("/edit/"+postId)} ><BiEdit/></p>
+            <p className="cursor-pointer" onClick=""><MdDelete/></p>
+         </div> */}
+         {/* } */}
           {commnetKaru && (
             <div
               id="comment-karu"

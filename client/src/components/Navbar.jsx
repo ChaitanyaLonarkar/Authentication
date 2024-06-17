@@ -9,19 +9,22 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { LuPenSquare } from "react-icons/lu";
 import Logout from "../Pages/Logout";
 import { IoClose } from "react-icons/io5";
+import { useAuthContext } from "../context/AuthContext";
+
 export default function Navbar() {
   const [loginUser, setLoginUser] = useState(true);
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
-
+  const { authUser, setAuthUser } = useAuthContext();
+console.log(authUser)
   const navigate=useNavigate()
   // console.log(prompt);
   //  const onSearchReasponsive=()=>{
   //   set
   //  }
-
+   
   return (
     <>
       <div className="nav flex justify-between bg-white  items-center w-full px-3 py-2 sm:px-20 sm:py-3 border-b ">
@@ -68,7 +71,7 @@ export default function Navbar() {
             </abbr>
           </Link>
 
-          {!localStorage.getItem("user") ? (
+          {!authUser ? (
             <div className="btns hidden lg:flex gap-8">
               <Link
                 className="py-2 px-4 rounded-md bg-indigo-100 font-bold  hover:bg-violet-200 text-indigo-700 "
