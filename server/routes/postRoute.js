@@ -70,6 +70,26 @@ const getAllPosts = async (req, res) => {
     res.status(500).json({ sucess: false, message: "Blogs nahi hai" });
   }
 };
+// GET search ALL BLOGS
+
+const getSearchPosts = async (req, res) => {
+  try {
+    const query = req.query;
+      const searchFilter = {
+        // title: { $regex: query.search, $options: "i" },
+        $or: [
+          { title: { $regex: query.search, $options: "i" } },
+          { categories: { $elemMatch: { $regex: query.search, $options: "i" } } }
+        ]
+      };
+      const posts = await Blog.find(searchFilter);
+      res.status(200).json({posts:posts,message:"DSRSDFS"});
+   
+  } catch (error) {
+    res.status(500).json({ sucess: false, message: "Blogs nahi hai" });
+    console.log(error.message)
+  }
+};
 
 // GET POST OF USER
 const getOnePostOfUser = async (req, res) => {
@@ -105,6 +125,8 @@ router.post("/create",verifyUser, createPost);
 router.put("/update/:id",verifyUser, updatePost);
 router.delete("/delete/:id",verifyUser, deletePost);
 router.get("/getAllPosts", getAllPosts);
+router.get("/getSearchPosts", getSearchPosts);
+
 router.get("/getpostofuser/:id", getOnePostOfUser);
 router.get("/getpost/:id", getOnePost);
 

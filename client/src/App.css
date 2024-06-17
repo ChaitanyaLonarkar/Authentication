@@ -4,3 +4,7 @@ body{
 }
 
 
+.latestblog:nth-child(odd) .l-blog{
+   background-color: brown;
+    justify-content: row-reverse;
+  }

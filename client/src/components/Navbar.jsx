@@ -4,7 +4,7 @@ import logo from "../assets/perfect1.png";
 import person from "../assets/person.jpg";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate, useNavigate } from "react-router-dom";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { LuPenSquare } from "react-icons/lu";
 import Logout from "../Pages/Logout";
@@ -14,6 +14,9 @@ export default function Navbar() {
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
+  const [prompt, setprompt] = useState("");
+  const navigate=useNavigate()
+  // console.log(prompt);
   //  const onSearchReasponsive=()=>{
   //   set
   //  }
@@ -29,12 +32,18 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="nav-search hidden lg:flex items-center gap-4 px-5  bg-slate-100 rounded-lg h-10">
-            <IoSearch className="text-slate-700 text-lg" />
+            {/* <Link to="/search" className="flex gap-3">  */}
+            <IoSearch className="text-slate-700 text-lg cursor-pointer" onClick={()=>navigate(prompt?"/search"+"?search="+prompt:"/")} />
 
             <input
               type="search"
-              className=" bg-transparent outline-none w-48 text-sm " placeholder="Search blog here"
+              className=" bg-transparent outline-none w-48 text-sm "
+              placeholder="Search blog here"
+              onChange={(e) => {
+                setprompt(e.target.value);
+              }}
             />
+            {/* </Link>  */}
           </div>
         </div>
         <div className="nav-right flex max-[400px]:gap-1 gap-4 sm:gap-8 items-center">
@@ -106,11 +115,14 @@ export default function Navbar() {
       {searchReasponsive && (
         <div className="responsive-search lg:hidden flex w-full justify-center bg-white">
           <div className="nav-search lg:hidden flex items-center gap-4 px-5 m-5 w-3/4 bg-slate-200 rounded-lg h-10">
-            <IoSearch className="text-slate-700 text-lg" />
+            <IoSearch className="text-slate-700 text-lg cursor-pointer" onClick={()=>navigate(prompt?"/search"+"?search="+prompt:navigate("/"))}/>
 
             <input
               type="search"
               className=" bg-transparent outline-none w-48 max-[400px]:w-3/4 "
+              onChange={(e) => {
+                setprompt(e.target.value);
+              }}
             />
           </div>
         </div>

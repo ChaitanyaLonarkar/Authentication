@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Logo from "../assets/logo.png";
@@ -58,13 +58,15 @@ export default function Home() {
   //   },
   // ];
 
+  // const { search } = useLocation();
+  // console.log(search);
   const fetchAllBlogs = async () => {
     try {
       const res = await axios.get("http://localhost:8000/post/getAllPosts");
 
-      console.log(res.data.allblogs);
+      // console.log(res.data.allblogs);
       setallBlogs(res.data.allblogs);
-      console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
+      // console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
     } catch (error) {
       console.log(error);
     }
@@ -75,53 +77,45 @@ export default function Home() {
     fetchAllBlogs();
   }, []);
 
-//   function convertTo12Hour(timeString) {
-//     // Split the time string into hours and minutes
-//     let [hours, minutes] = timeString.split(':');
-    
-//     // Convert hours from string to number
-//     hours = parseInt(hours);
+  function timeAgo(inputTime) {
+    const now = new Date();
+    const time = new Date(inputTime);
+    const diff = now - time;
 
-//     // Determine AM or PM suffix
-//     let period = hours >= 12 ? 'PM' : 'AM';
+    const msPerMinute = 60 * 1000;
+    const msPerHour = msPerMinute * 60;
+    const msPerDay = msPerHour * 24;
 
-//     // Convert 24-hour time to 12-hour time
-//     hours = hours % 12 || 12; // Convert 0 to 12 for midnight
-
-//     // Return the formatted time
-//     return `${hours}:${minutes} ${period}`;
-// }
-
-function timeAgo(inputTime) {
-  const now = new Date();
-  const time = new Date(inputTime);
-  const diff = now - time;
-  
-  const msPerMinute = 60 * 1000;
-  const msPerHour = msPerMinute * 60;
-  const msPerDay = msPerHour * 24;
-  
-  if (diff < msPerMinute) {
+    if (diff < msPerMinute) {
       const seconds = Math.round(diff / 1000);
-      return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
-  } else if (diff < msPerHour) {
+      return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
+    } else if (diff < msPerHour) {
       const minutes = Math.round(diff / msPerMinute);
-      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
-  } else if (diff < msPerDay) {
+      return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+    } else if (diff < msPerDay) {
       const hours = Math.round(diff / msPerHour);
-      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-  } else if (diff < msPerDay * 2) {
-      return '1 day ago';
-  } else if (diff < msPerDay * 7) {
+      return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+    } else if (diff < msPerDay * 2) {
+      return "1 day ago";
+    } else if (diff < msPerDay * 7) {
       const days = Math.round(diff / msPerDay);
       return `${days} days ago`;
-  } else {
+    } else {
       // For times older than a week, return the formatted date
-      return time.toLocaleString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+      return time.toLocaleString("en-US", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+    }
   }
-}
 
   return (
+   
     <>
       <div className="home md:m-5 m-2 p-4 py-8 bg-white rounded-xl md:p-12 md:px-15  flex justify-around items-center flex-col-reverse sm:flex-row  ">
         <div className="h-l flex flex-col max-[636px]:gap-5  gap-12">
@@ -161,8 +155,7 @@ function timeAgo(inputTime) {
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        <div className="latestblogs ">
-          
+        <div className="latestblogs flex flex-col-reverse ">
           {allBlogs.map((blog) => (
             <div className="l-blog flex gap-12  ">
               <div className=" w-2/4 rounded-xl overflow-hidden  ">
@@ -170,26 +163,32 @@ function timeAgo(inputTime) {
               </div>
               <div className="w-2/4 flex flex-col  justify-center gap-7">
                 <div className="text-indigo-900 font-medium opacity-95 text-xl">
-                  {blog.categories.map((c)=>(
+                  {blog.categories.map((c) => (
                     <div>{c}</div>
                   ))}
                 </div>
                 <div className="font-bold text-4xl  text-indigo-900 opacity-95">
-                  <Link key={blog._id} to="/b">{blog.title}</Link>
+                  <Link key={blog._id} to="/b">
+                    {blog.title}
+                  </Link>
                 </div>
                 <div className="text-slate-700 text-lg ">
-                  {blog.desc.slice(0,200)}...
-                  <Link key={blog._id} to="/b" className=" text-base text-sky-700">
+                  {blog.desc.slice(0, 200)}...
+                  <Link
+                    key={blog._id}
+                    to="/b"
+                    className=" text-base text-sky-700"
+                  >
                     Read More
                   </Link>
                 </div>
-                <div key={blog.userId}>by {blog.username} {timeAgo(blog.updatedAt)}
+                <div key={blog.userId}>
+                  by {blog.username} {timeAgo(blog.updatedAt)}
                   {/* ,{new Date(blog.updatedAt).toString().slice(0,15)} {convertTo12Hour((new Date(blog.updatedAt).toString().slice(16,24)))} */}
-                  </div>
+                </div>
               </div>
             </div>
           ))}
-          
         </div>
       </div>
     </>
