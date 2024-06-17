@@ -65,8 +65,8 @@ export default function Search() {
   return (
     <>
      {!noResult? <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
-        <div className="heading font-extrabold text-5xl flex flex-col items-center text-indigo-900 opacity-95">
-          Search Blogs
+        <div className="heading font-bold text-4xl flex flex-col items-center text-indigo-900 opacity-95">
+          Searched Blogs
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
