@@ -5,7 +5,10 @@ import toast, { Toaster } from "react-hot-toast";
 import Logo from "../assets/logo.png";
 import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
+import { useAuthContext } from "../context/AuthContext";
+
 export default function Profile() {
+  const { authUser } = useAuthContext();
   return (
     <>
       <div className="flex justify-center my-4  items-center ">
@@ -78,31 +81,37 @@ export default function Profile() {
                       </div>
                       <div>by Chaitanya Lonarkar,2 days ago</div>
                       <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                    Update Blog
-                </div>
-                <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                    Delete Blog
-                </div>
+                        Update Blog
+                      </div>
+                      <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                        Delete Blog
+                      </div>
                     </div>
                   </div>
-                  
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-[35%] ">
-            <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">My Profile</div>
+          <div className="w-[35%] flex flex-col gap-8  ">
+            <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
+              My Profile
+            </div>
 
             <div className="text-lg font-medium flex flex-col gap-5">
-                <div></div>
-                <div>Name : Chaitanya Lonarkar</div>
-                <div>Email : Chaitanyalonarkar@gmail.com</div>
-                <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                    Update Profile
-                </div>
-                <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                    Delete Profile
-                </div>
+              <div className="w-[200px] rounded-lg overflow-hidden ">
+                <img
+                  src="https://avatars.githubusercontent.com/u/110454138?v=4"
+                  alt=""
+                />
+              </div>
+              <div>UserName : {authUser.name}</div>
+              <div>Email : {authUser.email}</div>
+              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                Update Profile
+              </div>
+              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                Delete Profile
+              </div>
             </div>
           </div>
         </div>

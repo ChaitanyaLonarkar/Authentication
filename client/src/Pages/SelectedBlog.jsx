@@ -103,7 +103,7 @@ export default function SelectedBlog() {
 
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
-              {blog.desc}
+              <pre>{blog.desc}</pre>
               {/* <br />
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
               atque eveniet debitis assumenda expedita cumque aliquid, repellat

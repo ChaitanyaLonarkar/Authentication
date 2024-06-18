@@ -18,7 +18,8 @@ import { useAuthContext } from "./context/AuthContext";
 function App() {
   const [count, setCount] = useState(0);
   // const navigate = useNavigate();
-const { authUser, setAuthUser } = useAuthContext();
+const { authUser} = useAuthContext();
+console.log(authUser,"from aoo")
 
 
   return (

@@ -4,6 +4,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function CreateBlog() {
   const [cat, setcat] = useState("");
@@ -12,6 +13,7 @@ export default function CreateBlog() {
   const [desc, setdesc] = useState("");
   // const [, setcat] = useState("");
   const navigate = useNavigate();
+  const { authUser } = useAuthContext();
 
   const addCategory = () => {
     if (cat == "") {
@@ -50,23 +52,22 @@ export default function CreateBlog() {
       // }
       // console.log(image, "hjghccggggfgffgfggvgvgvbbbbm");
 
-      const post={
-        title:title,
-        desc:desc,
-        categories:cats,
-        // username:user.username,
-        // userId:user._id,
-        userId: "666ea7c341028dc4c4fc2f29",
-        username: "chaitanyaa"
-      }
+      const post = {
+        title: title,
+        desc: desc,
+        categories: cats,
+        username: authUser.name,
+        userId: authUser._id,
+        // userId: "666ea7c341028dc4c4fc2f29",
+        // username: "chaitanyaa"
+      };
 
-      const formData = new FormData();
-      const filename=Date.now()+file.name
-      formData.append("img",filename)
-      formData.append("file", file);
-      post.thumbnail=filename
-
-
+      if (file) {
+        const formData = new FormData();
+        const filename = Date.now() + file.name;
+        formData.append("img", filename);
+        formData.append("file", file);
+        post.thumbnail = filename;
       // console.log(formData,"fomrdata")
 
       //img upload
@@ -80,18 +81,15 @@ export default function CreateBlog() {
       } catch (err) {
         console.log(err.message);
       }
+    }
 
-      const res = await axios.post(
-        "http://localhost:8000/post/create",
-        post,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("http://localhost:8000/post/create", post, {
+        withCredentials: true,
+      });
 
       // console.log(res.data);
       if (res.data.sucess) {
-        navigate("/bloginfo/"+res.data.post._id);
+        navigate("/bloginfo/" + res.data.post._id);
         toast.success(res.data.message);
       } else {
         toast.error(res.data.message);

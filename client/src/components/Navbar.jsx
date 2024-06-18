@@ -17,7 +17,7 @@ export default function Navbar() {
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
-  // const { authUser} = useAuthContext();
+  const { authUser} = useAuthContext();
   
 // console.log(authUser)
   const navigate=useNavigate()
@@ -72,7 +72,7 @@ export default function Navbar() {
             </abbr>
           </Link>
 
-          {!loginUser ? (
+          {!authUser ? (
             <div className="btns hidden lg:flex gap-8">
               <Link
                 className="py-2 px-4 rounded-md bg-indigo-100 font-bold  hover:bg-violet-200 text-indigo-700 "
@@ -90,8 +90,8 @@ export default function Navbar() {
           ) : (
             <div className="nav-profile hidden lg:flex gap-8 items-center">
               <div className="nav-user flex gap-1 items-center">
-                <img src={person} alt="user" className=" rounded-full w-8" />
-                <Link to="/myprofile">Username</Link>
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="user" className=" rounded-full w-8" />
+                <Link to="/myprofile">{authUser.name}</Link>
               </div>
               <Logout />
               {/* <Link

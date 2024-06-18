@@ -36,6 +36,9 @@ export default function Home() {
 
   const { search } = useLocation();
   // console.log(search);
+  // const user=JSON.parse(localStorage.getItem("user"))
+  // console.log(user.name);
+
   
   
   const fetchAllBlogs = async () => {
@@ -112,8 +115,8 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="font-bold text-4xl  text-indigo-900 opacity-95">
-                  {/* <Link key={blog._id} to={authUser?`/bloginfo/${blog._id}`:"/login"}> */}
-                  <Link key={blog._id} to={`/bloginfo/${blog._id}`}>
+                  <Link key={blog._id} to={authUser?`/bloginfo/${blog._id}`:"/login"}>
+                  {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
                     {blog.title}
                   </Link>
                 </div>
