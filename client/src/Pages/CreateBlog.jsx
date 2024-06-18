@@ -3,6 +3,7 @@ import { useState } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBlog() {
   const [cat, setcat] = useState("");
@@ -10,6 +11,7 @@ export default function CreateBlog() {
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
   // const [, setcat] = useState("");
+  const navigate = useNavigate();
 
   const addCategory = () => {
     if (cat == "") {
@@ -19,54 +21,83 @@ export default function CreateBlog() {
     updatedCat.push(cat);
     setcat("");
     setcats(updatedCat);
-    console.log(cats);
+    // console.log(cats);
   };
   const delCategory = (k) => {
     let updatedCat = [...cats];
     updatedCat.splice(k, 1);
     setcats(updatedCat);
-    console.log(cats, "........................................");
+    // console.log(cats, "........................................");
   };
 
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+  // console.log(file, "hjghccggggfgffgfggvgvgvbbbbm");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  console.log(image, "hjghccggggfgffgfggvgvgvbbbbm");
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+
+  // };
 
   const createBlogPost = async () => {
     try {
+      // if (file) {
+      //   const reader = new FileReader();
+      //   reader.onloadend = () => {
+      //     setImage(reader.result);
+      //   };
+      //   reader.readAsDataURL(file);
+      // }
+      // console.log(image, "hjghccggggfgffgfggvgvgvbbbbm");
+
+      const post={
+        title:title,
+        desc:desc,
+        categories:cats,
+        // username:user.username,
+        // userId:user._id,
+        userId: "666ea7c341028dc4c4fc2f29",
+        username: "chaitanyaa"
+      }
+
+      const formData = new FormData();
+      const filename=Date.now()+file.name
+      formData.append("img",filename)
+      formData.append("file", file);
+      post.thumbnail=filename
+
+
+      // console.log(formData,"fomrdata")
+
+      //img upload
+      try {
+        const imgUpload = await axios.post(
+          "http://localhost:8000/image/upload",
+          formData,
+          { withCredentials: true }
+        );
+        // console.log(imgUpload, "image upload");
+      } catch (err) {
+        console.log(err.message);
+      }
+
       const res = await axios.post(
         "http://localhost:8000/post/create",
-        {
-          thumbnail: "fgdfdfg",
-          title: "for",
-          desc: "fonrsdndn",
-          categories: ["game"],
-          userId: "666ea7c341028dc4c4fc2f29",
-          username: "chaitanyaa",
-        },
+        post,
         {
           withCredentials: true,
         }
       );
 
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.sucess) {
+        navigate("/bloginfo/"+res.data.post._id);
         toast.success(res.data.message);
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -88,7 +119,7 @@ export default function CreateBlog() {
    file:bg-indigo-500 file:text-white
    hover:file:cursor-pointer hover:file:bg-blue-50
    hover:file:text-blue-700"
-              onClick={handleFileChange}
+              onChange={(e) => setFile(e.target.files[0])}
             />
 
             {/* <div class="flex items-center justify-center w-full">
@@ -110,6 +141,7 @@ export default function CreateBlog() {
               type="text"
               placeholder="dfgdfg"
               className="bg-slate-200 p-3 outline-none"
+              onChange={(e) => settitle(e.target.value)}
             />
           </div>
 
@@ -157,6 +189,7 @@ export default function CreateBlog() {
               id=""
               placeholder="add paragraph"
               className="bg-slate-200 p-3 outline-none"
+              onChange={(e) => setdesc(e.target.value)}
             >
               {" "}
             </textarea>

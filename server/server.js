@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
+const multer=require('multer')
+const path=require("path")
 var jwt = require("jsonwebtoken");
-// const isUserLoggedIn = require("./middleware/isLoggedin.js");
 
 const cors = require("cors");
 const corsOptions = {
@@ -26,10 +27,31 @@ app.use("/", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
+app.use("/public/Images",express.static(path.join(__dirname,"/public/Images")))
+
 
 // app.get("/",(req,res)=>{
 //     res.send("heelos")
 // })
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    return cb(null, "./public/Images")
+  },
+  filename: function (req, file, cb) {
+    // return cb(null, `${Date.now()}_${file.originalname}`)
+    return cb(null,req.body.img)
+
+  }
+})
+
+const upload = multer({storage})
+
+app.post('/image/upload', upload.single('file'), (req, res) => {
+  console.log(req.body)
+  // console.log(req.file)
+  res.status(200).json("Image has been uploaded successfully!")
+})
 
 app.listen(process.env.PORT, () => {
   connectDb();

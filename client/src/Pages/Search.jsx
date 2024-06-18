@@ -15,6 +15,7 @@ export default function Search() {
   // console.log(search);
   const [noResult, setnoResult] = useState(false);
   const [loader, setloader] = useState(false);
+  const url="http://localhost:8000/public/Images/"
 
   const fetchSearchBlogs = async () => {
     setloader(true);
@@ -39,42 +40,7 @@ export default function Search() {
     fetchSearchBlogs();
   }, [search]);
 
-  // function timeAgo(inputTime) {
-  //   const now = new Date();
-  //   const time = new Date(inputTime);
-  //   const diff = now - time;
 
-  //   const msPerMinute = 60 * 1000;
-  //   const msPerHour = msPerMinute * 60;
-  //   const msPerDay = msPerHour * 24;
-
-  //   if (diff < msPerMinute) {
-  //     const seconds = Math.round(diff / 1000);
-  //     return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
-  //   } else if (diff < msPerHour) {
-  //     const minutes = Math.round(diff / msPerMinute);
-  //     return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
-  //   } else if (diff < msPerDay) {
-  //     const hours = Math.round(diff / msPerHour);
-  //     return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-  //   } else if (diff < msPerDay * 2) {
-  //     return "1 day ago";
-  //   } else if (diff < msPerDay * 7) {
-  //     const days = Math.round(diff / msPerDay);
-  //     return `${days} days ago`;
-  //   } else {
-  //     // For times older than a week, return the formatted date
-  //     return time.toLocaleString("en-US", {
-  //       weekday: "short",
-  //       year: "numeric",
-  //       month: "short",
-  //       day: "numeric",
-  //       hour: "numeric",
-  //       minute: "numeric",
-  //       hour12: true,
-  //     });
-  //   }
-  // }
 
   return (
     <>
@@ -85,11 +51,12 @@ export default function Search() {
             <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
           </div>
 
-          <div className="latestblogs ">
+          <div className="latestblogs  ">
             {allBlogs.map((blog) => (
               <div className="l-blog flex gap-12  ">
                 <div className=" w-2/4 rounded-xl overflow-hidden  ">
-                  <img src={tu} alt="" />
+                  {/* <img src={tu} alt="" /> */}
+                  <img src={url+blog.thumbnail} alt="Thumbnail" />
                 </div>
                 <div className="w-2/4 flex flex-col  justify-center gap-7">
                   <div className="text-indigo-900 font-medium opacity-95 text-xl">

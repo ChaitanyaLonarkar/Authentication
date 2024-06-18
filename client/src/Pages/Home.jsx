@@ -11,6 +11,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
   const { authUser, setAuthUser } = useAuthContext();
+  const url="http://localhost:8000/public/Images/"
 
   // const verifyUser = async (e) => {
   //   try {
@@ -34,7 +35,7 @@ export default function Home() {
   // };
 
   const { search } = useLocation();
-  console.log(search);
+  // console.log(search);
   
   
   const fetchAllBlogs = async () => {
@@ -99,8 +100,10 @@ export default function Home() {
         <div className="latestblogs flex flex-col-reverse ">
           {allBlogs.map((blog) => (
             <div className="l-blog flex gap-12  ">
-              <div className=" w-2/4 rounded-xl overflow-hidden  ">
-                <img src={tu} alt="" />
+              <div className=" w-2/4 .w-[41rem] rounded-xl overflow-hidden  ">
+                {/* <img src={tu} alt="" /> */}
+                <img src={url+blog.thumbnail} alt="Thumbnail" />
+
               </div>
               <div className="w-2/4 flex flex-col  justify-center gap-7">
                 <div className="text-indigo-900 font-medium opacity-95 text-xl">

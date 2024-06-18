@@ -18,12 +18,14 @@ export default function SelectedBlog() {
   const [commnetKaru, setcommentKaru] = useState();
   const blogId=useParams().id
   const [blog, setblog] = useState({})
+
+  const url="http://localhost:8000/public/Images/"
   const fetchBlogInfo=async()=>{
     try {
       const res=await axios.get("http://localhost:8000/post/getpost/"+blogId)
       // console.log(res.data.oneBlog)
       setblog(res.data.oneBlog)
-      console.log(blog)
+      // console.log(blog)
     } catch (error) {
       console.log(error)
     }
@@ -56,6 +58,7 @@ export default function SelectedBlog() {
             <div className="flex gap-3 items-center max-[500px]:text-sm">
               <div className="w-16 ">
                 <img src={person} alt="" />
+
               </div>
               <div className="">
                {blog.username}
@@ -91,15 +94,17 @@ export default function SelectedBlog() {
 
           <div className="blog-content flex flex-col gap-10">
             <div>
-              <img
+              {/* <img
                 src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*CC1ML6NyDUAWSLdRJLFsMg.jpeg"
                 alt=""
-              />
+              /> */}
+                <img src={url+blog.thumbnail} alt="thumbnail" />
+
 
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
               {blog.desc}
-              <br />
+              {/* <br />
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
               atque eveniet debitis assumenda expedita cumque aliquid, repellat
               ab magni obcaecati suscipit minus molestias sint incidunt
@@ -162,7 +167,7 @@ export default function SelectedBlog() {
               sapiente iusto, enim accusamus harum minima iste autem
               voluptatibus perspiciatis quo laudantium similique voluptatum?
               Corporis rem pariatur quidem adipisci veritatis iure? Voluptates
-              est nisi, exercitationem distinctio dolor totam?
+              est nisi, exercitationem distinctio dolor totam? */}
             </div>
           </div>
           <div className="flex gap-8">
