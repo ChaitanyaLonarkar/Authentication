@@ -17,7 +17,7 @@ export default function Navbar() {
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
-  const { authUser} = useAuthContext();
+  // const { authUser} = useAuthContext();
   
 // console.log(authUser)
   const navigate=useNavigate()
@@ -72,7 +72,7 @@ export default function Navbar() {
             </abbr>
           </Link>
 
-          {authUser ? (
+          {!loginUser ? (
             <div className="btns hidden lg:flex gap-8">
               <Link
                 className="py-2 px-4 rounded-md bg-indigo-100 font-bold  hover:bg-violet-200 text-indigo-700 "

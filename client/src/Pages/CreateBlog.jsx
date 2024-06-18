@@ -40,26 +40,35 @@ export default function CreateBlog() {
       reader.readAsDataURL(file);
     }
   };
-  console.log(image,"hjghccggggfgffgfggvgvgvbbbbm")
+  console.log(image, "hjghccggggfgffgfggvgvgvbbbbm");
 
-
-  const createBlogPost=async()=>{
-
+  const createBlogPost = async () => {
     try {
-      const res=await axios.post("http://localhost:8000/post/create",{
-        thumbnail: "fgdfdfg",
-        title: "for",
-        desc: "fonrsdndn",
-        categories: ["game"],
-        userId: "666ea7c341028dc4c4fc2f29",
-        username:"chaitanyaa"
-    })
+      const res = await axios.post(
+        "http://localhost:8000/post/create",
+        {
+          thumbnail: "fgdfdfg",
+          title: "for",
+          desc: "fonrsdndn",
+          categories: ["game"],
+          userId: "666ea7c341028dc4c4fc2f29",
+          username: "chaitanyaa",
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-    console.log(res.data)
+      console.log(res.data);
+      if (res.data.sucess) {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -79,7 +88,7 @@ export default function CreateBlog() {
    file:bg-indigo-500 file:text-white
    hover:file:cursor-pointer hover:file:bg-blue-50
    hover:file:text-blue-700"
-   onClick={handleFileChange}
+              onClick={handleFileChange}
             />
 
             {/* <div class="flex items-center justify-center w-full">
@@ -154,7 +163,10 @@ export default function CreateBlog() {
           </div>
 
           <div>
-            <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white " onClick={createBlogPost}>
+            <button
+              className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
+              onClick={createBlogPost}
+            >
               Create Blog
             </button>
           </div>

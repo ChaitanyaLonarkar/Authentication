@@ -7,7 +7,7 @@ const verifyUser = (req, res, next) => {
   
       if (!token) {
         return res.json({
-          status: false,
+          sucess: false,
           message: "Unauthorize - no token provided or you need to login",
         });
       }
@@ -16,7 +16,7 @@ const verifyUser = (req, res, next) => {
   
       if (!decoded) {
         return res.json({
-          status: false,
+          sucess: false,
           message: "Unauthorize - invalid token ",
         });
       }
