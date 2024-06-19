@@ -34,7 +34,7 @@ console.log(authUser,"from aoo")
           {/* <Route path="/createBlog" element={authUser?<CreateBlog />:navigate("login")} /> */}
 
           <Route path="/bloginfo/:id" element={<SelectedBlog />} />
-          <Route path="/updateBlog" element={<UpdateBlog />} />
+          <Route path="/updateBlog/:id" element={<UpdateBlog />} />
           <Route path="/myprofile" element={<Profile />} />
           <Route path="/search" element={<Search />} />
 

@@ -2,9 +2,14 @@ import { useState } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
 export default function UpdateBlog() {
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
+  const blogId = useParams().id;
+  const navigate = useNavigate()
 
   const addCategory = () => {
     if(cat==""){
@@ -22,6 +27,26 @@ export default function UpdateBlog() {
     setcats(updatedCat);
     console.log(cats,"........................................")
   };
+
+  const updateBlogPost=async()=>{
+      try {
+        const res = await axios.put(
+          "http://localhost:8000/post/update/" + blogId,{withCredentials:true}
+        );
+        // console.log(res.data)
+        if(res.data.sucess){
+          toast.success(res.data.message)
+          navigate("/bloginfo/"+blogId)
+        }
+        else{
+          toast.error(res.data.message)
+  
+        }
+        // console.log(blog)
+      } catch (error) {
+        console.log(error);
+      }
+  }
 
   return (
     <>
@@ -91,7 +116,7 @@ export default function UpdateBlog() {
           </div>
 
           <div>
-            <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white ">
+            <button className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white " onClick={updateBlogPost}>
             Update Blog
             </button>
           </div>

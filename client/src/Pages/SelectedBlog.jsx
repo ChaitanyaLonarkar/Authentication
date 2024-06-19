@@ -7,35 +7,61 @@ import { useState } from "react";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FaShare } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import timeAgo from "../context/TimeAgo";
-import {BiEdit} from 'react-icons/bi'
-import {MdDelete} from 'react-icons/md'
+import { BiEdit } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
+import { useAuthContext } from "../context/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
+
 
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
   const [commnetKaru, setcommentKaru] = useState();
-  const blogId=useParams().id
-  const [blog, setblog] = useState({})
-
-  const url="http://localhost:8000/public/Images/"
-  const fetchBlogInfo=async()=>{
+  const blogId = useParams().id;
+  const [blog, setblog] = useState({});
+  const { authUser } = useAuthContext();
+const navigate=useNavigate()
+  const url = "http://localhost:8000/public/Images/";
+  const fetchBlogInfo = async () => {
     try {
-      const res=await axios.get("http://localhost:8000/post/getpost/"+blogId)
+      const res = await axios.get(
+        "http://localhost:8000/post/getpost/" + blogId
+      );
       // console.log(res.data.oneBlog)
-      setblog(res.data.oneBlog)
+      setblog(res.data.oneBlog);
       // console.log(blog)
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  };
+
+
+  const handleDeletePost=async()=>{
+    try {
+      const res = await axios.delete(
+        "http://localhost:8000/post/delete/" + blogId,{withCredentials:true}
+      );
+      // console.log(res.data)
+      if(res.data.sucess){
+        toast.success(res.data.message)
+        navigate("/")
+      }
+      else{
+        toast.error(res.data.message)
+
+      }
+      // console.log(blog)
+    } catch (error) {
+      console.log(error);
     }
   }
-
   useEffect(() => {
-    fetchBlogInfo()
-  }, [blogId])
-  
-//  console.log(blogId)
+    fetchBlogInfo();
+  }, [blogId]);
+
+  //  console.log(blogId)
   return (
     <>
       <div className="flex justify-center my-4  items-center ">
@@ -45,10 +71,8 @@ export default function SelectedBlog() {
           </div>
 
           <div className="flex gap-5 text-sm  font-medium text-indigo-900">
-            {blog.categories?.map((c)=>(
-
-            <div className=" bg-slate-200 p-1 px-3 rounded-2xl ">{c}</div>
-
+            {blog.categories?.map((c) => (
+              <div className=" bg-slate-200 p-1 px-3 rounded-2xl ">{c}</div>
             ))}
             {/* <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Career</div>
             <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Job</div>
@@ -58,10 +82,9 @@ export default function SelectedBlog() {
             <div className="flex gap-3 items-center max-[500px]:text-sm">
               <div className="w-16 ">
                 <img src={person} alt="" />
-
               </div>
               <div className="">
-               {blog.username}
+                {blog.username}
                 <br />
                 <span className=" max-[400px]:text-xs text-sm text-slate-500">
                   {timeAgo(blog.updatedAt)}
@@ -85,11 +108,29 @@ export default function SelectedBlog() {
                 />
                 // <GoHeartFill  />
               )}
-              <a href="#comment-karu" className=" scroll-smooth" onClick={()=>setcommentKaru(true)}>
+              <a
+                href="#comment-karu"
+                className=" scroll-smooth"
+                onClick={() => setcommentKaru(true)}
+              >
                 <FaRegCommentDots className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
               </a>
               <FaShare className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
             </div>
+            <div></div>
+            {authUser?._id === blog?.userId && (
+              <div className="flex items-center justify-center space-x-2">
+                <p
+                  className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"
+                  onClick={() => navigate("/updateBlog/" + blogId)}
+                >
+                  <BiEdit />
+                </p>
+                <p className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700" onClick={handleDeletePost}>
+                  <MdDelete />
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="blog-content flex flex-col gap-10">
@@ -98,12 +139,10 @@ export default function SelectedBlog() {
                 src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*CC1ML6NyDUAWSLdRJLFsMg.jpeg"
                 alt=""
               /> */}
-                <img src={url+blog.thumbnail} alt="thumbnail" />
-
-
+              <img src={url + blog.thumbnail} alt="thumbnail" />
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
-              <pre>{blog.desc}</pre>
+              <pre className="w-[100%] overflow-hidden">{blog.desc}</pre>
               {/* <br />
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
               atque eveniet debitis assumenda expedita cumque aliquid, repellat
@@ -198,7 +237,7 @@ export default function SelectedBlog() {
             <p className="cursor-pointer" onClick={()=>navigate("/edit/"+postId)} ><BiEdit/></p>
             <p className="cursor-pointer" onClick=""><MdDelete/></p>
          </div> */}
-         {/* } */}
+          {/* } */}
           {commnetKaru && (
             <div
               id="comment-karu"
