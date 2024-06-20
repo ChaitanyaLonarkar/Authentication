@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Logo from "../assets/logo.png";
@@ -8,20 +8,22 @@ import tu from "../assets/illus.jpg";
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
 
-
 export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
-  const url = "http://localhost:8000/public/Images/";
+  const [user, setuser] = useState([]);
 
-  const fetchUsersPost = async () => {
+  const userId = useParams().id;
+  
+  const fetchUser = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/post/getpostofuser/" + authUser._id,
+        "http://localhost:8000/user/getuser/" + userId,
         { withCredentials: true }
       );
-      // console.log(res.data.oneBlogOfUser);
-      setusersPosts(res.data.oneBlogOfUser);
+      console.log(res.data);
+      setuser(res.data.getUser);
+      setusersPosts(res.data.getUser.myblogs)
       // console.log(usersPosts)
     } catch (err) {
       console.log(err);
@@ -29,7 +31,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    fetchUsersPost();
+    fetchUser();
   }, []);
 
   return (
@@ -49,8 +51,6 @@ export default function Profile() {
                     <div className="l-blog">
                       <div className="  rounded-xl overflow-hidden  ">
                         <img src={tu} alt="" />
-              {/* <img src={url + blog.thumbnail} alt="thumbnail" /> */}
-
                       </div>
                       <div className=" flex flex-col  justify-center gap-4 mt-10">
                         {blog.categories.map((cat) => {
@@ -68,7 +68,7 @@ export default function Profile() {
                           </Link>
                         </div>
                         <div>
-                          by <Link  className="text-xl text-indigo-800 font-semibold" to="/">{blog.username}</Link> {timeAgo(blog.updatedAt)}
+                          by <Link  className="text-xl text-indigo-800 font-semibold" to="">{blog.username}</Link> {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
                     </div>
@@ -91,14 +91,9 @@ export default function Profile() {
                   alt=""
                 />
               </div>
-              <div>UserName : {authUser.name}</div>
-              <div>Email : {authUser.email}</div>
-              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                Update Profile
-              </div>
-              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
-                Delete Profile
-              </div>
+              <div>UserName : {user.name}</div>
+              <div>Email : {user.email}</div>
+            
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
   const { authUser, setAuthUser } = useAuthContext();
-  const url="http://localhost:8000/public/Images/"
+  const url = "http://localhost:8000/public/Images/";
 
   // const verifyUser = async (e) => {
   //   try {
@@ -39,8 +39,6 @@ export default function Home() {
   // const user=JSON.parse(localStorage.getItem("user"))
   // console.log(user.name);
 
-  
-  
   const fetchAllBlogs = async () => {
     try {
       const res = await axios.get("http://localhost:8000/post/getAllPosts");
@@ -58,9 +56,7 @@ export default function Home() {
     fetchAllBlogs();
   }, []);
 
-
   return (
-   
     <>
       <div className="home md:m-5 m-2 p-4 py-8 bg-white rounded-xl md:p-12 md:px-15  flex justify-around items-center flex-col-reverse sm:flex-row  ">
         <div className="h-l flex flex-col max-[636px]:gap-5  gap-12">
@@ -105,8 +101,7 @@ export default function Home() {
             <div className="l-blog flex gap-12 even:flex-row-reverse border bg-slate-200 p-[2rem] items-center ">
               <div className=" w-2/4 .w-[41rem] rounded-xl overflow-hidden  ">
                 {/* <img src={tu} alt="" /> */}
-                <img src={url+blog.thumbnail} alt="Thumbnail" />
-
+                <img src={url + blog.thumbnail} alt="Thumbnail" />
               </div>
               <div className="w-2/4 flex flex-col  justify-center gap-7">
                 <div className="text-indigo-900 font-medium opacity-95 text-xl">
@@ -115,8 +110,11 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="font-bold text-4xl  text-indigo-900 opacity-95">
-                  <Link key={blog._id} to={authUser?`/bloginfo/${blog._id}`:"/login"}>
-                  {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
+                  <Link
+                    key={blog._id}
+                    to={authUser ? `/bloginfo/${blog._id}` : "/login"}
+                  >
+                    {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
                     {blog.title}
                   </Link>
                 </div>
@@ -131,8 +129,15 @@ export default function Home() {
                   </Link>
                 </div>
                 <div key={blog.userId}>
-                  by {blog.username} {timeAgo(blog.updatedAt)}
-                  {/* ,{new Date(blog.updatedAt).toString().slice(0,15)} {convertTo12Hour((new Date(blog.updatedAt).toString().slice(16,24)))} */}
+                  by{" "}
+                  <Link
+                    className="text-xl text-indigo-800 font-semibold"
+                    to={blog.userId === authUser._id ?"/myprofile": `/userinfo/${blog.userId}` }
+                  >
+                    {blog.username}
+                  </Link>
+                  {timeAgo(blog.updatedAt)}
+                  
                 </div>
               </div>
             </div>

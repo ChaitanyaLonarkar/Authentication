@@ -14,6 +14,7 @@ import UpdateBlog from "./Pages/UpdateBlog";
 import Profile from "./Pages/Profile";
 import Search from "./Pages/Search";
 import { useAuthContext } from "./context/AuthContext";
+import UserInfo from "./Pages/UserInfo";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,6 +38,8 @@ console.log(authUser,"from aoo")
           <Route path="/updateBlog/:id" element={<UpdateBlog />} />
           <Route path="/myprofile" element={<Profile />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/userinfo/:id" element={<UserInfo />} />
+
 
           {/* <Route index element={(localStorage.getItem("user"))? <Home /> :<Navigate to={"/login"}/>} />
           <Route path="/signup" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Signup />} />
