@@ -55,7 +55,7 @@ const deleteComment = async (req, res) => {
 const getPostComment=async (req,res)=>{
     try{
         const comments=await Comments.find({postId:req.params.postId})
-        res.status(200).json(comments)
+        res.status(200).json({comments})
     }
     catch(err){
         res.status(500).json(err)

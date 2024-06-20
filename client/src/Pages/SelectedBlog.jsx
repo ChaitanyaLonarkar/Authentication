@@ -15,15 +15,19 @@ import { MdDelete } from "react-icons/md";
 import { useAuthContext } from "../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
-
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
   const [commnetKaru, setcommentKaru] = useState();
   const blogId = useParams().id;
   const [blog, setblog] = useState({});
   const { authUser } = useAuthContext();
-const navigate=useNavigate()
+  const [comment, setcomment] = useState("");
+  const [comments, setcomments] = useState([]);
+
+  const navigate = useNavigate();
+
   const url = "http://localhost:8000/public/Images/";
+
   const fetchBlogInfo = async () => {
     try {
       const res = await axios.get(
@@ -37,29 +41,78 @@ const navigate=useNavigate()
     }
   };
 
-
-  const handleDeletePost=async()=>{
+  const handleDeletePost = async () => {
     try {
       const res = await axios.delete(
-        "http://localhost:8000/post/delete/" + blogId,{withCredentials:true}
+        "http://localhost:8000/post/delete/" + blogId,
+        { withCredentials: true }
       );
       // console.log(res.data)
-      if(res.data.sucess){
-        toast.success(res.data.message)
-        navigate("/")
-      }
-      else{
-        toast.error(res.data.message)
-
+      if (res.data.sucess) {
+        toast.success(res.data.message);
+        navigate("/");
+      } else {
+        toast.error(res.data.message);
       }
       // console.log(blog)
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const fetchBlogComments = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/comment/post/" + blogId
+      );
+      // console.log(res.data)
+      setcomments(res.data.comments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const postBlogComment = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/comment/create",
+        {
+          comment: comment,
+          autherId: authUser.name,
+          userId: authUser._id,
+          postId: blogId,
+        },
+        { withCredentials: true }
+      );
+      if (res.data.sucess) {
+        toast.success(res.data.message);
+        setcomment("");
+        window.location.reload(true)
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchBlogInfo();
+    fetchBlogComments();
   }, [blogId]);
+
+  const deleteBlogComments = async (id) => {
+    try {
+      const res = await axios.delete(
+        "http://localhost:8000/comment/delete/" + id,{withCredentials:true}
+      );
+      // toast.message(res.data.message)
+      window.location.reload(true)
+      // setcomments(res.data.comments);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   //  console.log(blogId)
   return (
@@ -113,11 +166,10 @@ const navigate=useNavigate()
                 className=" scroll-smooth"
                 onClick={() => setcommentKaru(true)}
               >
-                <FaRegCommentDots className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
+                <FaRegCommentDots className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer" />
               </a>
-              <FaShare className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
+              <FaShare className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer" />
             </div>
-            <div></div>
             {authUser?._id === blog?.userId && (
               <div className="flex items-center justify-center space-x-2">
                 <p
@@ -126,7 +178,10 @@ const navigate=useNavigate()
                 >
                   <BiEdit />
                 </p>
-                <p className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700" onClick={handleDeletePost}>
+                <p
+                  className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"
+                  onClick={handleDeletePost}
+                >
                   <MdDelete />
                 </p>
               </div>
@@ -143,70 +198,6 @@ const navigate=useNavigate()
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
               <pre className="w-[100%] overflow-hidden">{blog.desc}</pre>
-              {/* <br />
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
-              atque eveniet debitis assumenda expedita cumque aliquid, repellat
-              ab magni obcaecati suscipit minus molestias sint incidunt
-              reprehenderit iusto. Ullam ea quisquam beatae aut quibusdam nisi
-              quod aliquid pariatur in assumenda, ut dolore sed animi laboriosam
-              magni doloribus asperiores. Quisquam voluptate sapiente quibusdam
-              earum itaque amet. Reiciendis, ipsa! Accusamus sed beatae alias
-              hic quas excepturi praesentium debitis aliquid id exercitationem
-              reprehenderit laudantium illum blanditiis dolorum fuga unde, iusto
-              at dicta consequatur eaque voluptatum quia inventore dolor. Sunt
-              corporis similique maiores veritatis nulla quis voluptate ut!
-              Debitis ad, fugiat voluptates optio, pariatur ipsa, dolore quidem
-              error laboriosam dolores delectus natus minus. Molestias
-              laudantium, eaque officiis aperiam consequatur quaerat eligendi
-              mollitia cumque illo fuga ut! Possimus adipisci molestiae dolor at
-              nihil quaerat praesentium porro tenetur. Reprehenderit possimus
-              vero quis iste quisquam molestias veritatis quam ullam quod!
-              Dolorem ea aut sed placeat quas laborum, totam vel doloribus
-              corporis magnam aspernatur perferendis ratione quae fugiat iusto
-              exercitationem! Harum est incidunt, autem quia veniam eaque optio
-              delectus nisi. Ratione nesciunt accusamus beatae, odio veniam
-              molestiae aspernatur a fugiat sint non laudantium recusandae
-              corrupti harum sequi, eius commodi. Molestias vel beatae labore
-              obcaecati ut repellat esse earum laborum eaque blanditiis
-              perspiciatis nesciunt aliquam distinctio nulla commodi, fugit
-              dignissimos quis sunt architecto consequuntur. Natus deleniti quo
-              veritatis perspiciatis harum rerum minima fugiat omnis tempora ab!
-              Rerum beatae dolores, ipsum similique fugit, laboriosam fuga saepe
-              optio explicabo modi qui placeat earum numquam voluptas voluptatem
-              accusamus. Delectus facilis itaque deserunt, non earum cum in
-              distinctio atque molestiae nam magnam harum eligendi dolorem
-              adipisci suscipit repellendus fugit rem accusamus veniam ad
-              excepturi pariatur. <br /> <br />
-              Tenetur harum ex quae provident tempore, officiis, mollitia
-              reiciendis illo cum laborum libero temporibus animi, optio velit
-              molestiae? Dicta autem at labore natus ab ipsam animi unde, neque
-              numquam. Reprehenderit voluptatibus dolorum, modi iste dolore iure
-              aut maxime? Ipsa fugit non sunt dolorem optio sequi tenetur
-              veritatis a, accusamus asperiores obcaecati, ea, mollitia itaque
-              corrupti atque unde! Recusandae, natus. Facilis alias quos ipsam
-              voluptates, similique explicabo nulla est provident ea eos cumque,
-              accusamus eius esse nam deserunt unde, id molestiae repellat quod
-              quidem deleniti eum aliquam cupiditate sapiente! Iure voluptatum
-              eligendi itaque laboriosam delectus! Vero porro itaque, beatae
-              voluptatem minima id aliquid doloribus quidem veniam officiis odit
-              rerum voluptates accusantium officia aliquam sed corporis quis,
-              obcaecati labore harum? Eaque autem dolorum odit dolores ad
-              blanditiis hic incidunt dignissimos, amet doloremque atque
-              voluptates ullam adipisci maxime molestiae officia, nihil id sequi
-              inventore repellat deleniti.
-              <br />
-              <br />
-              Harum nesciunt explicabo maiores recusandae porro quibusdam
-              necessitatibus dolorem illum repudiandae, beatae qui itaque
-              perferendis suscipit quis, deleniti non commodi tempore iusto sit
-              iure accusamus? Dolore eaque alias animi dolorum praesentium eum
-              ut neque optio rerum possimus ea nostrum voluptatibus velit
-              provident numquam libero labore, in illum perferendis ratione
-              laborum blanditiis maxime? Amet, ipsum ipsa natus cum consectetur
-              sapiente iusto, enim accusamus harum minima iste autem
-              voluptatibus perspiciatis quo laudantium similique voluptatum?
-              Corporis rem pariatur quidem adipisci veritatis iure? Voluptates
-              est nisi, exercitationem distinctio dolor totam? */}
             </div>
           </div>
           <div className="flex gap-8">
@@ -227,17 +218,12 @@ const navigate=useNavigate()
               // <GoHeartFill  />
             )}
             <FaRegCommentDots
-              className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer"
+              className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer"
               onClick={() => setcommentKaru(true)}
             />
-            <FaShare className="text-2xl text-slate-400 hover:text-slate-600 cursor-pointer" />
+            <FaShare className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer" />
           </div>
-          {/* {user?._id===blog?.userId &&  */}
-          {/* <div className="flex items-center justify-center space-x-2">
-            <p className="cursor-pointer" onClick={()=>navigate("/edit/"+postId)} ><BiEdit/></p>
-            <p className="cursor-pointer" onClick=""><MdDelete/></p>
-         </div> */}
-          {/* } */}
+
           {commnetKaru && (
             <div
               id="comment-karu"
@@ -260,8 +246,12 @@ const navigate=useNavigate()
                   type="text"
                   placeholder="write here.. "
                   className="p-3 text-sm w-3/4 outline-none"
+                  onChange={(e) => setcomment(e.target.value)}
                 />
-                <button className="p-3 bg-indigo-500 text-white text-sm hover:bg-indigo-600 rounded-sm  ">
+                <button
+                  className="p-3 bg-indigo-500 text-white text-sm hover:bg-indigo-600 rounded-sm  "
+                  onClick={postBlogComment}
+                >
                   Add Comment
                 </button>
               </div>
@@ -269,14 +259,25 @@ const navigate=useNavigate()
           )}
           <div className="comment-section  w-full bg-slate-50 p-3 rounded  ">
             <div className="font-semibold text-slate-600">All Comments</div>
-            <div className="text-sm m-3 flex flex-col gap-2">
-              <div>username</div>
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
-                dolorem.
+            {comments.map((cm) => (
+              <div className="text-sm m-3 flex flex-col gap-2 bg-white px-5 py-3 border rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs">
+                    <b className="text-lg text-indigo-900 pe-4">
+                      @{cm.autherId}
+                    </b>
+                    {timeAgo(cm.updatedAt)}
+                  </div>
+                  {authUser._id===cm.userId?<div className="flex text-xl gap-4 text-slate-700 cursor-pointer">
+                    {/* <BiEdit /> */}
+                    <MdDelete onClick={()=>deleteBlogComments(cm._id)} />
+                  </div>:""}
+                  
+                </div>
+                <div className="text-base text-indigo-600">{cm.comment}</div>
+                {/* <div>{timeAgo(cm.updatedAt)}</div> */}
               </div>
-              <div>20 Jun 2024</div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

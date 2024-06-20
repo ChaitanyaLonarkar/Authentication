@@ -12,6 +12,7 @@ export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
   const [user, setuser] = useState([]);
+  const url = "http://localhost:8000/public/Images/";
 
   const userId = useParams().id;
   
@@ -23,7 +24,21 @@ export default function Profile() {
       );
       console.log(res.data);
       setuser(res.data.getUser);
-      setusersPosts(res.data.getUser.myblogs)
+      // setusersPosts(res.data.getUser.myblogs)
+      // console.log(usersPosts)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchUsersPost = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/post/getpostofuser/" + userId,
+        { withCredentials: true }
+      );
+      // console.log(res.data.oneBlogOfUser);
+      setusersPosts(res.data.oneBlogOfUser);
       // console.log(usersPosts)
     } catch (err) {
       console.log(err);
@@ -31,6 +46,8 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    fetchUsersPost();
+
     fetchUser();
   }, []);
 
