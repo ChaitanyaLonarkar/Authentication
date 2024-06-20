@@ -7,10 +7,11 @@ import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
-
+import Cookies from 'js-cookie';
 
 export default function Profile() {
-  const { authUser } = useAuthContext();
+  const { authUser ,setAuthUser } = useAuthContext();
+  const navigate=useNavigate()
   const [usersPosts, setusersPosts] = useState([]);
   const url = "http://localhost:8000/public/Images/";
 
@@ -27,10 +28,28 @@ export default function Profile() {
       console.log(err);
     }
   };
+  const username = Cookies.get('token');
+  console.log(username); // 
 
   useEffect(() => {
     fetchUsersPost();
   }, []);
+
+  const delUser = async () => {
+    try {
+      const res = await axios.delete(
+        "http://localhost:8000/user/delete/" + authUser._id,
+        { withCredentials: true }
+      );
+      // console.log(res.data)
+      localStorage.removeItem("user")
+      setAuthUser(null)
+      Cookies.remove('token');
+      navigate("/login")
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   return (
     <>
@@ -49,8 +68,7 @@ export default function Profile() {
                     <div className="l-blog">
                       <div className="  rounded-xl overflow-hidden  ">
                         <img src={tu} alt="" />
-              {/* <img src={url + blog.thumbnail} alt="thumbnail" /> */}
-
+                        {/* <img src={url + blog.thumbnail} alt="thumbnail" /> */}
                       </div>
                       <div className=" flex flex-col  justify-center gap-4 mt-10">
                         {blog.categories.map((cat) => {
@@ -68,12 +86,17 @@ export default function Profile() {
                           </Link>
                         </div>
                         <div>
-                          by <Link  className="text-xl text-indigo-800 font-semibold" to="/">{blog.username}</Link> {timeAgo(blog.updatedAt)}
+                          by{" "}
+                          <Link
+                            className="text-xl text-indigo-800 font-semibold"
+                            to="/"
+                          >
+                            {blog.username}
+                          </Link>{" "}
+                          {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
                     </div>
-
-                   
                   ))}
                 </div>
               </div>
@@ -90,17 +113,16 @@ export default function Profile() {
                   src="https://avatars.githubusercontent.com/u/110454138?v=4"
                   alt=""
                 /> */}
-                            <img src={url +authUser.profilePic} alt="thumbnail" />
-
+                <img src={url + authUser.profilePic} alt="thumbnail" />
               </div>
               <div>UserName : {authUser.name}</div>
               <div>Email : {authUser.email}</div>
               <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
                 <Link to={`/profileUpdate/${authUser._id}`}>
-                Update Profile
+                  Update Profile
                 </Link>
               </div>
-              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4" onClick={delUser}>
                 Delete Profile
               </div>
             </div>

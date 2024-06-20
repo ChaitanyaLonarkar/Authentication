@@ -74,6 +74,7 @@ const deleteUser = async (req, res) => {
     await Blog.deleteMany({userId:req.params.id})
     await Comments.deleteMany({userId:req.params.id})
     res.status(200).json({sucess:true,message:"User has been deleted"})
+    res.clearCookie("token");
 
   } catch (error) {
     res.status(500).json({sucess:false,message:"Unable to delete user"})
