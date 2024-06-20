@@ -51,10 +51,12 @@ const updateUser = async (req, res) => {
           withCredentials: true,
           httpOnly: false,
         });
+        const {password,...info}=updateduser._doc 
+
         console.log("ye updated token hai ", token);
         console.log("ye updated cookie hai", req.cookies);
-        res.send({ message: "user updated successfully",updatedUser :
-           updateduser});
+        res.send({ sucess:true,message: "user updated successfully",updatedUser :
+           info});
       });
     });
   } catch (errorr) {

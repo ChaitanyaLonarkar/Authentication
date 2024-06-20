@@ -15,6 +15,7 @@ import Profile from "./Pages/Profile";
 import Search from "./Pages/Search";
 import { useAuthContext } from "./context/AuthContext";
 import UserInfo from "./Pages/UserInfo";
+import ProfileUpdate from "./Pages/ProfileUpdate";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -39,6 +40,8 @@ const { authUser} = useAuthContext();
           <Route path="/myprofile" element={<Profile />} />
           <Route path="/search" element={<Search />} />
           <Route path="/userinfo/:id" element={<UserInfo />} />
+          <Route path="/profileUpdate/:id" element={<ProfileUpdate />} />
+
 
 
           {/* <Route index element={(localStorage.getItem("user"))? <Home /> :<Navigate to={"/login"}/>} />

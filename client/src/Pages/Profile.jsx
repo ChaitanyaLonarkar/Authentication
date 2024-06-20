@@ -86,15 +86,19 @@ export default function Profile() {
 
             <div className="text-lg font-medium flex flex-col gap-5">
               <div className="w-[200px] rounded-lg overflow-hidden ">
-                <img
+                {/* <img
                   src="https://avatars.githubusercontent.com/u/110454138?v=4"
                   alt=""
-                />
+                /> */}
+                            <img src={url +authUser.profilePic} alt="thumbnail" />
+
               </div>
               <div>UserName : {authUser.name}</div>
               <div>Email : {authUser.email}</div>
               <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+                <Link to={`/profileUpdate/${authUser._id}`}>
                 Update Profile
+                </Link>
               </div>
               <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
                 Delete Profile

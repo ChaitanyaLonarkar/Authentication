@@ -12,12 +12,13 @@ import { IoClose } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { authUser} = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
+  const url = "http://localhost:8000/public/Images/";
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
-  const { authUser} = useAuthContext();
   
 // console.log(authUser)
   const navigate=useNavigate()
@@ -90,7 +91,10 @@ export default function Navbar() {
           ) : (
             <div className="nav-profile hidden lg:flex gap-8 items-center">
               <div className="nav-user flex gap-1 items-center">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="user" className=" rounded-full w-8" />
+                
+                <img src={url +authUser.profilePic} alt="pic" className=" rounded-full w-8 h-8" />
+
+                {/* <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="user" className=" rounded-full w-8" /> */}
                 <Link to="/myprofile">{authUser.name}</Link>
               </div>
               <Logout />
