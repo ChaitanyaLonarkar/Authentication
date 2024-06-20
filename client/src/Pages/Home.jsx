@@ -100,9 +100,9 @@ export default function Home() {
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        <div className="latestblogs flex flex-col-reverse ">
+        <div className="latestblogs flex flex-col-reverse gap-8 ">
           {allBlogs.map((blog) => (
-            <div className="l-blog flex gap-12  ">
+            <div className="l-blog flex gap-12 even:flex-row-reverse border bg-slate-200 p-[2rem] items-center ">
               <div className=" w-2/4 .w-[41rem] rounded-xl overflow-hidden  ">
                 {/* <img src={tu} alt="" /> */}
                 <img src={url+blog.thumbnail} alt="Thumbnail" />

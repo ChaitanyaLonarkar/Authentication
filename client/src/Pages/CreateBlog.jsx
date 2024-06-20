@@ -152,6 +152,8 @@ export default function CreateBlog() {
                   className="px-4 py-2 outline-none bg-slate-200 "
                   placeholder="enter category "
                   onChange={(e) => setcat(e.target.value)}
+                  value={cat}
+
                 />
                 <div
                   className="bg-indigo-500 text-white px-4 py-2 font-semibold cursor-pointer"
@@ -197,6 +199,8 @@ export default function CreateBlog() {
             <button
               className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
               onClick={createBlogPost}
+              rows={8} cols={40}
+
             >
               Create Blog
             </button>
