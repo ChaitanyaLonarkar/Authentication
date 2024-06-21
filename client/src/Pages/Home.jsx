@@ -98,28 +98,28 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="blog-section m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
-        <div className="heading font-extrabold text-5xl flex flex-col items-center text-indigo-900 opacity-95">
+      <div className="blog-section max-[450px]:m-2 m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
+        <div className="heading font-extrabold max-[500px]:text-2xl text-3xl md:text-5xl  flex flex-col items-center text-indigo-900 opacity-95">
           Latest Blogs
           <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        <div className="latestblogs flex flex-col-reverse gap-8 ">
+        <div className="latestblogs flex flex-col-reverse max-[600px]:gap-4 gap-8 max-[1024px]:items-center ">
           {allBlogs.map((blog) => (
-            <div className="l-blog flex gap-12 even:flex-row-reverse border bg-indigo-50 rounded p-[2rem] items-center ">
-              <div className=" w-2/4 .w-[41rem] rounded overflow-hidden  ">
+            <div className="  l-blog flex flex-col  max-[1024px]:w-[100%] lg:flex-row gap-5 max-[450px]:w-80 lg:gap-12 lg:even:flex-row-reverse border bg-indigo-50 rounded max-[600px]:p-[1.2rem] p-[2rem] items-center  ">
+              <div className=" w-2/4 max-[1024px]:w-[100%] rounded overflow-hidden   ">
                 {/* <img src={tu} alt="" /> */}
-                <img src={url + blog.thumbnail} alt="Thumbnail" className="w-full h-[27rem] object-cover" />
+                <img src={url + blog.thumbnail} alt="Thumbnail" className="max-[600px]:h-full w-full h-[27rem] object-cover" />
               </div>
-              <div className="w-2/4 flex flex-col  justify-center gap-7">
-                <div className="text-indigo-900 flex gap-2 flex-wrap font-medium opacity-95 ">
+              <div className="w-2/4 max-[1024px]:w-[100%]  flex flex-col  justify-center gap-7">
+                <div className="max-[600px]:text-sm text-indigo-900 flex gap-2 flex-wrap font-medium opacity-95 ">
                   {blog.categories?.map((c) => (
                     <div className=" bg-white w-[max-content] p-1 px-3 rounded-xl ">
                       {c}
                     </div>
                   ))}
                 </div>
-                <div className="font-bold text-4xl  text-indigo-900 opacity-95">
+                <div className="max-[600px]:text-2xl font-bold text-4xl  text-indigo-900 opacity-95">
                   <Link
                     key={blog._id}
                     // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
@@ -129,12 +129,12 @@ export default function Home() {
                     {blog.title}
                   </Link>
                 </div>
-                <div className="text-slate-700 text-lg overflow-hidden ">
+                <div className= "max-[600px]:text-sm text-slate-700 text-lg overflow-hidden ">
                   {blog.desc.slice(0, 200)}...
                   <Link
                     key={blog._id}
                     to={`/bloginfo/${blog._id}`}
-                    className=" text-base text-sky-700"
+                    className="max-[600px]:text-sm text-base text-sky-700"
                   >
                     Read More
                   </Link>
@@ -142,7 +142,7 @@ export default function Home() {
                 <div key={blog.userId}>
                   by 
                   <Link
-                    className="text-lg ps-2 text-indigo-800 font-semibold pe-2"
+                    className=" max-[600px]:text-sm text-lg ps-2 text-indigo-800 font-semibold pe-2"
                     to={
                       blog.userId === authUser?._id
                         ? "/myprofile"
