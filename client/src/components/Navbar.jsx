@@ -132,7 +132,7 @@ export default function Navbar() {
       </div>
       {searchReasponsive && (
         <div className="responsive-search lg:hidden flex w-full justify-center bg-white">
-          <div className="nav-search lg:hidden flex items-center gap-4 px-5 m-5 w-3/4 bg-slate-200 rounded-lg h-10">
+          <div className="nav-search lg:hidden flex items-center gap-4 overflow-hidden m-5 w-3/4 bg-slate-200 rounded-lg h-10">
             <div className="bg-indigo-400 p-3">
               <IoSearch
                 className="text-slate-900 text-lg cursor-pointer"
@@ -173,8 +173,19 @@ export default function Navbar() {
           ) : (
             <div className="nav-profile lg:hidden flex flex-col gap-5  items-center mt-4 mb-4  scale-90">
               <div className="nav-user flex gap-1 items-center">
-                <img src={person} alt="user" className=" rounded-full w-8" />
-                <Link to="/myprofile">Username</Link>
+                <img
+                  src={url + authUser.profilePic}
+                  alt="pic"
+                  className=" rounded-full w-8 h-8 object-cover"
+                />
+
+                {/* <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="user" className=" rounded-full w-8" /> */}
+                <Link
+                  to="/myprofile"
+                  className="text-sm font-semibold text-indigo-800"
+                >
+                  {authUser.name}
+                </Link>
               </div>
               <Logout />
               {/* <Link

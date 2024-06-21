@@ -7,11 +7,11 @@ import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default function Profile() {
-  const { authUser ,setAuthUser } = useAuthContext();
-  const navigate=useNavigate()
+  const { authUser, setAuthUser } = useAuthContext();
+  const navigate = useNavigate();
   const [usersPosts, setusersPosts] = useState([]);
   const url = "http://localhost:8000/public/Images/";
 
@@ -28,8 +28,8 @@ export default function Profile() {
       console.log(err);
     }
   };
-  const username = Cookies.get('token');
-  // console.log(username); // 
+  const username = Cookies.get("token");
+  // console.log(username); //
 
   useEffect(() => {
     fetchUsersPost();
@@ -42,10 +42,10 @@ export default function Profile() {
         { withCredentials: true }
       );
       // console.log(res.data)
-      localStorage.removeItem("user")
-      setAuthUser(null)
-      Cookies.remove('token');
-      navigate("/login")
+      localStorage.removeItem("user");
+      setAuthUser(null);
+      Cookies.remove("token");
+      navigate("/login");
     } catch (error) {
       toast.error(error);
     }
@@ -63,12 +63,14 @@ export default function Profile() {
             <div>
               <div className="blog-section m-5 bg-white rounded-xl pr-8 gap-12  flex flex-col justify-around items-center">
                 <div className="latestblogs flex flex-col gap-12 ">
-                  fsdfdf
+                  {usersPosts.length === 0 && (
+                    <div>There is no blogs you posted</div>
+                  )}
                   {usersPosts.map((blog) => (
                     <div className="l-blog">
                       <div className="  rounded-xl overflow-hidden  ">
-                        <img src={tu} alt="" />
-                        {/* <img src={url + blog.thumbnail} alt="thumbnail" /> */}
+                        {/* <img src={tu} alt="" /> */}
+                        <img src={url + blog.thumbnail} alt="thumbnail" />
                       </div>
                       <div className=" flex flex-col  justify-center gap-4 mt-10">
                         {blog.categories.map((cat) => {
@@ -77,10 +79,16 @@ export default function Profile() {
                           </div>;
                         })}
                         <div className="font-bold text-4xl  text-indigo-900 opacity-95">
-                          <Link to="">{blog.title}</Link>
+                          <Link
+                            key={blog._id}
+                            // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
+                            to={`/bloginfo/${blog._id}`}
+                          >
+                            {blog.title}
+                          </Link>
                         </div>
                         <div className="text-slate-700 text-lg">
-                          {blog.desc}
+                          {blog.desc.slice(0, 200)}
                           <Link to="" className=" text-base text-sky-700">
                             Read More
                           </Link>
@@ -113,16 +121,27 @@ export default function Profile() {
                   src="https://avatars.githubusercontent.com/u/110454138?v=4"
                   alt=""
                 /> */}
-                <img src={url + authUser.profilePic} alt="profile" className=" w-40 h-40 object-cover rounded-lg" />
+                <img
+                  src={url + authUser.profilePic}
+                  alt="profile"
+                  className=" w-40 h-40 object-cover rounded-lg"
+                />
               </div>
-              <div className="text-base"><b>UserName :</b> {authUser.name}</div>
-              <div className="text-base"><b>Email :</b> {authUser.email}</div>
+              <div className="text-base">
+                <b>UserName :</b> {authUser.name}
+              </div>
+              <div className="text-base">
+                <b>Email :</b> {authUser.email}
+              </div>
               <div className=" cursor-pointer   hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-3">
                 <Link to={`/profileUpdate/${authUser._id}`}>
                   Update Profile
                 </Link>
               </div>
-              <div className=" cursor-pointer  hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-3" onClick={delUser}>
+              <div
+                className=" cursor-pointer  hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-3"
+                onClick={delUser}
+              >
                 Delete Profile
               </div>
             </div>

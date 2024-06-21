@@ -54,20 +54,22 @@ export default function Profile() {
   return (
     <>
       <div className="flex justify-center my-4  items-center ">
-        <div className=" md:w-[80rem] max-[400px]:w-[95%]  bg-white p-3 min-[501px]:w-[87%] min-[401px]:p-7 md:p-12 flex  gap-8 sm:gap-10 rounded-lg">
-          <div className=" w-2/3 border-r-2">
+        <div className=" md:w-[80rem] max-[500px]:w-[95%]  bg-white p-3 min-[501px]:w-[87%] min-[401px]:p-7 md:p-12 flex  max-[900px]:flex-col-reverse  gap-8 sm:gap-10 rounded-lg">
+          <div className=" w-2/3 border-r-2 max-[900px]:border-0 max-[900px]:w-[100%]">
             <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
-              My Blogs
+            User Blogs
             </div>
 
             <div>
-              <div className="blog-section m-5 bg-white rounded-xl pr-8 gap-12  flex flex-col justify-around items-center">
-                <div className="latestblogs flex flex-col gap-12 ">
+              <div className="blog-section max-[640px]:w-[100%] ms-0 m-5  rounded-xl gap-12  max-[900px]:mt-5 max-[900px]:m-0 flex flex-col justify-around items-center">
+                <div className="latestblogs max-[640px]:w-[100%] flex flex-col  gap-12 max-[640px]:gap-7 ">
                  
                   {usersPosts.map((blog) => (
-                    <div className="l-blog">
+                    <div className="l-blog bg-indigo-50 p-5 max-[900px]:w-[100%]">
                       <div className="  rounded-xl overflow-hidden  ">
-                        <img src={tu} alt="" />
+                        {/* <img src={tu} alt="" /> */}
+                        <img src={url + blog.thumbnail} alt="thumbnail" />
+
                       </div>
                       <div className=" flex flex-col  justify-center gap-4 mt-10">
                         {blog.categories.map((cat) => {
@@ -75,17 +77,17 @@ export default function Profile() {
                             {cat}
                           </div>;
                         })}
-                        <div className="font-bold text-4xl  text-indigo-900 opacity-95">
+                        <div className="font-bold text-4xl max-[640px]:text-2xl   text-indigo-900 opacity-95">
                           <Link to="">{blog.title}</Link>
                         </div>
-                        <div className="text-slate-700 text-lg">
-                          {blog.desc}
+                        <div className="text-slate-700 text-lg max-[640px]:text-base overflow-hidden">
+                          {blog.desc.slice(0, 200)}...
                           <Link to="" className=" text-base text-sky-700">
                             Read More
                           </Link>
                         </div>
-                        <div>
-                          by <Link  className="text-xl text-indigo-800 font-semibold" to="">{blog.username}</Link> {timeAgo(blog.updatedAt)}
+                        <div className="max-[640px]:text-sm ">
+                          by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">{blog.username}</Link> {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
                     </div>
@@ -96,12 +98,12 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="w-[35%] flex flex-col gap-8  ">
+          <div className="w-[35%] flex flex-col gap-8  max-[900px]:w-[100%] ">
             <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
-              My Profile
+              User Profile
             </div>
 
-            <div className="text-lg font-medium flex flex-col gap-5">
+            <div className="text-lg font-medium flex flex-col max-[900px]:border-b-2 max-[900px]:pb-9  gap-5">
               <div className="w-[200px] rounded-lg overflow-hidden ">
 
                 {user.profilePic==""?
