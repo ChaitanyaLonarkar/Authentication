@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useLocation } from "react";
 import logo from "../assets/perfect1.png";
 import person from "../assets/person.jpg";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -10,23 +10,24 @@ import { LuPenSquare } from "react-icons/lu";
 import Logout from "../Pages/Logout";
 import { IoClose } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
+// const path=useLocation().pathname
 
 export default function Navbar() {
-  const { authUser} = useAuthContext();
+  const { authUser } = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
   const url = "http://localhost:8000/public/Images/";
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
   const [prompt, setprompt] = useState("");
-  
-// console.log(authUser)
-  const navigate=useNavigate()
+
+  // console.log(authUser)
+  const navigate = useNavigate();
   // console.log(prompt);
   //  const onSearchReasponsive=()=>{
   //   set
   //  }
-   
+
   return (
     <>
       <div className="nav flex justify-between bg-white  items-center w-full px-3 py-2 sm:px-20 sm:py-3 border-b ">
@@ -37,9 +38,15 @@ export default function Navbar() {
               <span className="text-violet-500 d font-medium ">Blogs</span>
             </Link>
           </div>
-          <div className="nav-search hidden lg:flex items-center gap-4 px-5  bg-slate-100 rounded-lg h-10">
-            {/* <Link to="/search" className="flex gap-3">  */}
-            <IoSearch className="text-slate-700 text-lg cursor-pointer" onClick={()=>navigate(prompt?"/search"+"?search="+prompt:"/")} />
+          <div className="nav-search hidden lg:flex items-center gap-4  overflow-hidden  bg-slate-100 rounded-lg h-10">
+          <div className="bg-indigo-400 p-3">
+              <IoSearch
+                className="text-slate-900 text-lg cursor-pointer"
+                onClick={() =>
+                  navigate(prompt ? "/search" + "?search=" + prompt : "/")
+                }
+              />
+            </div>
 
             <input
               type="search"
@@ -91,19 +98,21 @@ export default function Navbar() {
           ) : (
             <div className="nav-profile hidden lg:flex gap-8 items-center">
               <div className="nav-user flex gap-1 items-center">
-                
-                <img src={url +authUser.profilePic} alt="pic" className=" rounded-full w-8 h-8" />
+                <img
+                  src={url + authUser.profilePic}
+                  alt="pic"
+                  className=" rounded-full w-8 h-8 object-cover"
+                />
 
                 {/* <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="user" className=" rounded-full w-8" /> */}
-                <Link to="/myprofile">{authUser.name}</Link>
+                <Link
+                  to="/myprofile"
+                  className="text-sm font-semibold text-indigo-800"
+                >
+                  {authUser.name}
+                </Link>
               </div>
               <Logout />
-              {/* <Link
-                className="py-2 px-4 rounded-md bg-indigo-100 font-bold  hover:bg-violet-200 text-indigo-700 "
-                to="/logout"
-              >
-                Logout
-              </Link> */}
             </div>
           )}
           <div className="flex lg:hidden bg-slate-50 hover:bg-slate-200  rounded p-1  cursor-pointer ">
@@ -124,7 +133,15 @@ export default function Navbar() {
       {searchReasponsive && (
         <div className="responsive-search lg:hidden flex w-full justify-center bg-white">
           <div className="nav-search lg:hidden flex items-center gap-4 px-5 m-5 w-3/4 bg-slate-200 rounded-lg h-10">
-            <IoSearch className="text-slate-700 text-lg cursor-pointer" onClick={()=>navigate(prompt?"/search"+"?search="+prompt:navigate("/"))}/>
+            <div className="bg-indigo-400 p-3">
+              <IoSearch
+                className="text-slate-900 text-lg cursor-pointer"
+                onClick={() =>
+                  navigate(prompt ? "/search" + "?search=" + prompt : navigate("/"))
+                }
+              />
+            </div>
+            
 
             <input
               type="search"

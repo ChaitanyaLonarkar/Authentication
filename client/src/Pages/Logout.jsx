@@ -18,8 +18,11 @@ export default function Logout() {
       if (response.data.status) {
         toast.success(response.data.message);
         // navigate("/");
+        window.location.reload(true)
+
         localStorage.clear();
         navigate("/login");
+
       } else {
         toast.success(response.data.message);
       }

@@ -17,20 +17,6 @@ const updateUser = async (req, res) => {
 
   try {
     const { name, email, password, profilePic } = req.body;
-
-    // const user = await User.findOne({ email });
-    //         if(user._id==req.body._id){
-
-    // }
-    //     if (user) {
-    //       return res.status(400).json({ error: "email already exsist" });
-    //     }
-    //     const username = await User.findOne({ email });
-
-    //     if (username) {
-    //       return res.status(400).json({ error: "username already exsist" });
-    //     }
-
     if (req.body.password) {
       bcrypt.genSalt(10, function (err, salt) {
         req.body.password = bcrypt.hash(req.body.password, salt);

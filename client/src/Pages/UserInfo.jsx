@@ -63,7 +63,7 @@ export default function Profile() {
             <div>
               <div className="blog-section m-5 bg-white rounded-xl pr-8 gap-12  flex flex-col justify-around items-center">
                 <div className="latestblogs flex flex-col gap-12 ">
-                  fsdfdf
+                 
                   {usersPosts.map((blog) => (
                     <div className="l-blog">
                       <div className="  rounded-xl overflow-hidden  ">
@@ -103,13 +103,23 @@ export default function Profile() {
 
             <div className="text-lg font-medium flex flex-col gap-5">
               <div className="w-[200px] rounded-lg overflow-hidden ">
+
+                {user.profilePic==""?
                 <img
-                  src="https://avatars.githubusercontent.com/u/110454138?v=4"
-                  alt=""
+                src="https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                alt="Profile"
+                className=" w-40 h-40 object-cover rounded-lg"
+                />:
+                <img
+                src={url+user.profilePic}
+                alt="Profile"
+                 className=" w-40 h-40 object-cover rounded-lg"
                 />
+              }
+
               </div>
-              <div>UserName : {user.name}</div>
-              <div>Email : {user.email}</div>
+              <div className="text-base"> <b>UserName :</b> {user.name}</div>
+              <div className="text-base"> <b>Email :</b> {user.email}</div>
             
             </div>
           </div>

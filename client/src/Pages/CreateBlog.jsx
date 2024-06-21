@@ -190,6 +190,8 @@ export default function CreateBlog() {
               placeholder="add paragraph"
               className="bg-slate-200 p-3 outline-none"
               onChange={(e) => setdesc(e.target.value)}
+              rows={8} cols={40}
+
             >
               {" "}
             </textarea>

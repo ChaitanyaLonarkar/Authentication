@@ -74,13 +74,21 @@ export default function Home() {
             </h1>
           </div>
           <div className="join max-[636px]:flex max-[636px]:justify-center ">
-            <Link
+            {!authUser?<Link
               to="/login"
-              className="max-[636px]:p-2 max-[636px]:text-sm p-4 rounded-md bg-indigo-100 font-bold  hover:bg-indigo-200 text-indigo-700 "
+              className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
             >
               {" "}
               Join Us Today
             </Link>
+            :
+            <Link
+              to="/createBlog"
+              className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
+            >
+              
+              Write a blog
+            </Link>}
           </div>
         </div>
         <div className="h-r  w-72 sm:w-2/4 sm:mb-0 mb-10">
@@ -98,46 +106,52 @@ export default function Home() {
 
         <div className="latestblogs flex flex-col-reverse gap-8 ">
           {allBlogs.map((blog) => (
-            <div className="l-blog flex gap-12 even:flex-row-reverse border bg-slate-200 p-[2rem] items-center ">
-              <div className=" w-2/4 .w-[41rem] rounded-xl overflow-hidden  ">
+            <div className="l-blog flex gap-12 even:flex-row-reverse border bg-indigo-50 rounded p-[2rem] items-center ">
+              <div className=" w-2/4 .w-[41rem] rounded overflow-hidden  ">
                 {/* <img src={tu} alt="" /> */}
-                <img src={url + blog.thumbnail} alt="Thumbnail" />
+                <img src={url + blog.thumbnail} alt="Thumbnail" className="w-full h-[27rem] object-cover" />
               </div>
               <div className="w-2/4 flex flex-col  justify-center gap-7">
-                <div className="text-indigo-900 font-medium opacity-95 text-xl">
-                  {blog.categories.map((c) => (
-                    <div>{c}</div>
+                <div className="text-indigo-900 flex gap-2 flex-wrap font-medium opacity-95 ">
+                  {blog.categories?.map((c) => (
+                    <div className=" bg-white w-[max-content] p-1 px-3 rounded-xl ">
+                      {c}
+                    </div>
                   ))}
                 </div>
                 <div className="font-bold text-4xl  text-indigo-900 opacity-95">
                   <Link
                     key={blog._id}
-                    to={authUser ? `/bloginfo/${blog._id}` : "/login"}
+                    // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
+                    to={`/bloginfo/${blog._id}`}
                   >
                     {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
                     {blog.title}
                   </Link>
                 </div>
-                <div className="text-slate-700 text-lg ">
+                <div className="text-slate-700 text-lg overflow-hidden ">
                   {blog.desc.slice(0, 200)}...
                   <Link
                     key={blog._id}
-                    to="/b"
+                    to={`/bloginfo/${blog._id}`}
                     className=" text-base text-sky-700"
                   >
                     Read More
                   </Link>
                 </div>
                 <div key={blog.userId}>
-                  by{" "}
+                  by 
                   <Link
-                    className="text-xl text-indigo-800 font-semibold"
-                    to={blog.userId === authUser._id ?"/myprofile": `/userinfo/${blog.userId}` }
+                    className="text-lg ps-2 text-indigo-800 font-semibold pe-2"
+                    to={
+                      blog.userId === authUser?._id
+                        ? "/myprofile"
+                        : `/userinfo/${blog.userId}`
+                    }
                   >
-                    {blog.username}
+                     {blog.username}
                   </Link>
                   {timeAgo(blog.updatedAt)}
-                  
                 </div>
               </div>
             </div>

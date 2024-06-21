@@ -14,6 +14,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useAuthContext } from "../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { GrDocumentUpdate } from "react-icons/gr";
 
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
@@ -50,6 +51,8 @@ export default function SelectedBlog() {
       // console.log(res.data)
       if (res.data.sucess) {
         toast.success(res.data.message);
+        // window.location.reload(true)
+
         navigate("/");
       } else {
         toast.error(res.data.message);
@@ -87,7 +90,7 @@ export default function SelectedBlog() {
       if (res.data.sucess) {
         toast.success(res.data.message);
         setcomment("");
-        window.location.reload(true)
+        window.location.reload(true);
       } else {
         toast.error(res.data.message);
       }
@@ -104,10 +107,11 @@ export default function SelectedBlog() {
   const deleteBlogComments = async (id) => {
     try {
       const res = await axios.delete(
-        "http://localhost:8000/comment/delete/" + id,{withCredentials:true}
+        "http://localhost:8000/comment/delete/" + id,
+        { withCredentials: true }
       );
       // toast.message(res.data.message)
-      window.location.reload(true)
+      window.location.reload(true);
       // setcomments(res.data.comments);
     } catch (error) {
       toast.error(error);
@@ -127,9 +131,6 @@ export default function SelectedBlog() {
             {blog.categories?.map((c) => (
               <div className=" bg-slate-200 p-1 px-3 rounded-2xl ">{c}</div>
             ))}
-            {/* <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Career</div>
-            <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Job</div>
-            <div className=" bg-slate-200 p-1 px-3 rounded-2xl "> Tech</div> */}
           </div>
           <div className="blogger-details flex gap-3 items-center justify-between text-slate-700 border-t-2  border-b-2 p-2  sm:p-4">
             <div className="flex gap-3 items-center max-[500px]:text-sm">
@@ -164,7 +165,9 @@ export default function SelectedBlog() {
               <a
                 href="#comment-karu"
                 className=" scroll-smooth"
-                onClick={() => setcommentKaru(true)}
+                onClick={() => {
+                  authUser ? setcommentKaru(true) : navigate("/login");
+                }}
               >
                 <FaRegCommentDots className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer" />
               </a>
@@ -176,13 +179,19 @@ export default function SelectedBlog() {
                   className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"
                   onClick={() => navigate("/updateBlog/" + blogId)}
                 >
-                  <BiEdit />
+                  <abbr title="Update Blog" >
+                    <GrDocumentUpdate className="text-2xl"/>
+                  </abbr>
+
+                  {/* <BiEdit /> */}
                 </p>
                 <p
                   className="cursor-pointer text-3xl text-slate-600 hover:text-slate-700"
                   onClick={handleDeletePost}
                 >
-                  <MdDelete />
+                  <abbr title="Delete Blog">
+                    <MdDelete />
+                  </abbr>
                 </p>
               </div>
             )}
@@ -219,7 +228,9 @@ export default function SelectedBlog() {
             )}
             <FaRegCommentDots
               className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer"
-              onClick={() => setcommentKaru(true)}
+              onClick={() => {
+                authUser ? setcommentKaru(true) : navigate("/login");
+              }}
             />
             <FaShare className="text-2xl text-slate-600 hover:text-slate-500 cursor-pointer" />
           </div>
@@ -257,27 +268,37 @@ export default function SelectedBlog() {
               </div>
             </div>
           )}
-          <div className="comment-section  w-full bg-slate-50 p-3 rounded  ">
+          <div className="comment-section  w-full bg-slate-100 p-3 rounded  ">
             <div className="font-semibold text-slate-600">All Comments</div>
-            {comments.map((cm) => (
-              <div className="text-sm m-3 flex flex-col gap-2 bg-white px-5 py-3 border rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div className="text-xs">
-                    <b className="text-lg text-indigo-900 pe-4">
-                      @{cm.autherId}
-                    </b>
-                    {timeAgo(cm.updatedAt)}
-                  </div>
-                  {authUser._id===cm.userId?<div className="flex text-xl gap-4 text-slate-700 cursor-pointer">
-                    {/* <BiEdit /> */}
-                    <MdDelete onClick={()=>deleteBlogComments(cm._id)} />
-                  </div>:""}
-                  
-                </div>
-                <div className="text-base text-indigo-600">{cm.comment}</div>
-                {/* <div>{timeAgo(cm.updatedAt)}</div> */}
+
+            {comments.length === 0 ? (
+              <div className=" text-slate-700 text-sm p-4">
+                No comments in this post
               </div>
-            ))}
+            ) : (
+              comments.map((cm) => (
+                <div className="text-sm m-3 flex flex-col gap-2 bg-white px-5 py-3 border rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs">
+                      <b className="text-lg text-indigo-900 pe-4">
+                        @{cm.autherId}
+                      </b>
+                      {timeAgo(cm.updatedAt)}
+                    </div>
+                    {authUser._id === cm.userId ? (
+                      <div className="flex text-xl gap-4 text-slate-700 cursor-pointer">
+                        {/* <BiEdit /> */}
+                        <MdDelete onClick={() => deleteBlogComments(cm._id)} />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="text-base text-indigo-600">{cm.comment}</div>
+                  {/* <div>{timeAgo(cm.updatedAt)}</div> */}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

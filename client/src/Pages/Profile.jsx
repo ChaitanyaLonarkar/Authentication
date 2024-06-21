@@ -29,7 +29,7 @@ export default function Profile() {
     }
   };
   const username = Cookies.get('token');
-  console.log(username); // 
+  // console.log(username); // 
 
   useEffect(() => {
     fetchUsersPost();
@@ -108,21 +108,21 @@ export default function Profile() {
             </div>
 
             <div className="text-lg font-medium flex flex-col gap-5">
-              <div className="w-[200px] rounded-lg overflow-hidden ">
+              <div className=" rounded-lg overflow-hidden ">
                 {/* <img
                   src="https://avatars.githubusercontent.com/u/110454138?v=4"
                   alt=""
                 /> */}
-                <img src={url + authUser.profilePic} alt="thumbnail" />
+                <img src={url + authUser.profilePic} alt="profile" className=" w-40 h-40 object-cover rounded-lg" />
               </div>
-              <div>UserName : {authUser.name}</div>
-              <div>Email : {authUser.email}</div>
-              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4">
+              <div className="text-base"><b>UserName :</b> {authUser.name}</div>
+              <div className="text-base"><b>Email :</b> {authUser.email}</div>
+              <div className=" cursor-pointer   hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-3">
                 <Link to={`/profileUpdate/${authUser._id}`}>
                   Update Profile
                 </Link>
               </div>
-              <div className=" cursor-pointer hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-4" onClick={delUser}>
+              <div className=" cursor-pointer  hover:bg-slate-400  p-2 bg-slate-300 w-[max-content] rounded text-base  px-3" onClick={delUser}>
                 Delete Profile
               </div>
             </div>
