@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 const PORT=process.env.PORT||8000
 const cors = require("cors");
 const corsOptions = {
-  // origin: "http://localhost:5173", // Allow this origin
+  origin: "https://perfect-blogs.netlify.app/", // Allow this origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
