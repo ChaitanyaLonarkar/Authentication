@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate,useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./App.css";
@@ -20,36 +20,34 @@ import ProfileUpdate from "./Pages/ProfileUpdate";
 function App() {
   const [count, setCount] = useState(0);
   // const navigate = useNavigate();
-const { authUser} = useAuthContext();
-// console.log(authUser,"from aoo")
-
-
+  const { authUser } = useAuthContext();
+  // console.log(authUser,"from aoo")
+  
+  
   return (
     <>
       <BrowserRouter>
         <Navbar />
+
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/signup"
+            element={authUser ? <Navigate to="/" replace /> : <Signup />}
+          />
+          <Route
+            path="/login"
+            element={authUser ? <Navigate to="/" replace /> : <Login />}
+          />
           <Route path="/createBlog" element={<CreateBlog />} />
-          {/* <Route path="/createBlog" element={authUser?<CreateBlog />:navigate("login")} /> */}
-
           <Route path="/bloginfo/:id" element={<SelectedBlog />} />
           <Route path="/updateBlog/:id" element={<UpdateBlog />} />
           <Route path="/myprofile" element={<Profile />} />
           <Route path="/search" element={<Search />} />
           <Route path="/userinfo/:id" element={<UserInfo />} />
           <Route path="/profileUpdate/:id" element={<ProfileUpdate />} />
-
-
-
-          {/* <Route index element={(localStorage.getItem("user"))? <Home /> :<Navigate to={"/login"}/>} />
-          <Route path="/signup" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Signup />} />
-          <Route path="/login" element={(localStorage.getItem("user"))? <Navigate to={"/"}/>: <Login />} />
-          <Route path="/createBlog" element={(localStorage.getItem("user"))? <CreateBlog />:<Navigate to={"/login"}/>} /> */}
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
       <Toaster />
     </>

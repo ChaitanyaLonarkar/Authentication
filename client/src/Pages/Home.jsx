@@ -125,6 +125,7 @@ export default function Home() {
                 </div>
                 <div className="max-[600px]:text-2xl font-bold text-4xl  text-indigo-900 opacity-95">
                   <Link
+                  className="cap"
                     key={blog._id}
                     // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
                     to={`/bloginfo/${blog._id}`}

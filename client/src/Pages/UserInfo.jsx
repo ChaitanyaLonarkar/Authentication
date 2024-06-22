@@ -77,7 +77,7 @@ export default function Profile() {
                           </div>;
                         })}
                         <div className="font-bold text-4xl max-[640px]:text-2xl   text-indigo-900 opacity-95">
-                          <Link to="">{blog.title}</Link>
+                          <Link to={`/bloginfo/${blog._id}`}>{blog.title}</Link>
                         </div>
                         <div className="text-slate-700 text-lg max-[640px]:text-base overflow-hidden">
                           {blog.desc.slice(0, 200)}...
@@ -86,7 +86,7 @@ export default function Profile() {
                           </Link>
                         </div>
                         <div className="max-[640px]:text-sm ">
-                          by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">{blog.username}</Link> {timeAgo(blog.updatedAt)}
+                          by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">@{blog.username}</Link> {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
                     </div>

@@ -40,3 +40,16 @@ pre{
   font-family: 'Poppins';
   /* font-size: 12px; */
 }
+.cap::first-letter{
+  text-transform: uppercase;
+}
+/* .footer{
+  position: absolute;
+    bottom: 0;
+    /* left: 50%;
+    transform: translate(-50%, -50%); */
+    /* width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+
+} */ 

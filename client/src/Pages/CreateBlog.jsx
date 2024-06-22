@@ -17,7 +17,7 @@ export default function CreateBlog() {
 
   const addCategory = () => {
     if (cat == "") {
-      return toast.error("kuch to dal category me");
+      return toast.error("Please add the category");
     }
     let updatedCat = [...cats];
     updatedCat.push(cat);
@@ -34,23 +34,9 @@ export default function CreateBlog() {
 
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
-  // console.log(file, "hjghccggggfgffgfggvgvgvbbbbm");
-
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-
-  // };
 
   const createBlogPost = async () => {
     try {
-      // if (file) {
-      //   const reader = new FileReader();
-      //   reader.onloadend = () => {
-      //     setImage(reader.result);
-      //   };
-      //   reader.readAsDataURL(file);
-      // }
-      // console.log(image, "hjghccggggfgffgfggvgvgvbbbbm");
 
       const post = {
         title: title,
@@ -58,8 +44,7 @@ export default function CreateBlog() {
         categories: cats,
         username: authUser.name,
         userId: authUser._id,
-        // userId: "666ea7c341028dc4c4fc2f29",
-        // username: "chaitanyaa"
+    
       };
 
       if (file) {

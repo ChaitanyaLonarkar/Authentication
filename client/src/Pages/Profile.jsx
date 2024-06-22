@@ -66,7 +66,7 @@ export default function Profile() {
         <div className=" md:w-[80rem] max-[500px]:w-[95%]  bg-white p-3 min-[501px]:w-[87%] min-[401px]:p-7 md:p-12 flex  max-[900px]:flex-col-reverse  gap-8 sm:gap-10 rounded-lg">
           <div className=" w-2/3 border-r-2 max-[900px]:border-0 max-[900px]:w-[100%]">
             <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
-            User Blogs
+            My Blogs
             </div>
 
             <div>
@@ -86,17 +86,17 @@ export default function Profile() {
                             {cat}
                           </div>;
                         })}
-                        <div className="font-bold text-4xl max-[640px]:text-2xl   text-indigo-900 opacity-95">
-                          <Link to="">{blog.title}</Link>
+                        <div className=" font-bold text-4xl max-[640px]:text-2xl text-c  text-indigo-900 opacity-95">
+                          <Link to={`/bloginfo/${blog._id}`} className="cap">{blog.title}</Link>
                         </div>
-                        <div className="text-slate-700 text-lg max-[640px]:text-base overflow-hidden">
+                        <div className="text-slate-700 text-lg max-[640px]:text-base overflow-hidden ">
                           {blog.desc.slice(0, 200)}...
                           <Link to="" className=" text-base text-sky-700">
                             Read More
                           </Link>
                         </div>
                         <div className="max-[640px]:text-sm ">
-                          by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">{blog.username}</Link> {timeAgo(blog.updatedAt)}
+                          by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">@{blog.username}</Link> {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
                     </div>
@@ -109,7 +109,7 @@ export default function Profile() {
           </div>
           <div className="w-[35%] flex flex-col gap-8  max-[900px]:w-[100%] ">
             <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
-              User Profile
+              My Profile
             </div>
 
             <div className="text-lg font-medium flex flex-col max-[600px]:items-center  max-[900px]:border-b-2 max-[900px]:pb-9  gap-5">
