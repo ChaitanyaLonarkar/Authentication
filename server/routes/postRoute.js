@@ -3,6 +3,8 @@ const router = express.Router();
 
 const Blog = require("../models/postModel.js");
 const verifyUser=require("../verifyUser.js")
+const Comments = require("../models/commentModel.js");
+
 // CREATE ONE BLOG
 
 const createPost = async (req, res) => {
@@ -42,6 +44,7 @@ const deletePost = async (req, res) => {
   try {
     // const { title, content, category, thumbnail } = req.body();
     await Blog.findByIdAndDelete(req.params.id);
+    await Comments.deleteMany({postId:req.params.id})
     res.status(200).json({ sucess: true, message: "Blog deleted Succesfully" });
   } catch (error) {
     res.status(500).json({ sucess: false, message: "Blog delete error" });
