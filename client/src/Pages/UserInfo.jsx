@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import Logo from "../assets/logo.png";
-import il1 from "../assets/il1c.png";
-import tu from "../assets/illus.jpg";
+
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
 
@@ -103,14 +101,14 @@ export default function Profile() {
               User Profile
             </div>
 
-            <div className="text-lg font-medium flex flex-col max-[900px]:border-b-2 max-[900px]:pb-9  gap-5">
-              <div className="w-[200px] rounded-lg overflow-hidden ">
+            <div className="text-lg font-medium flex flex-col max-[600px]:items-center  max-[900px]:border-b-2 max-[900px]:pb-9  gap-5">
+              <div className="w-[200px] rounded-lg overflow-hidden  ">
 
                 {user.profilePic==""?
                 <img
                 src="https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                 alt="Profile"
-                className=" w-40 h-40 object-cover rounded-lg"
+                className=" w-40 h-40 object-cover rounded-lg mx-auto"
                 />:
                 <img
                 src={url+user.profilePic}

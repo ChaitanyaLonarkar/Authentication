@@ -7,9 +7,13 @@ import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
+import Loader from "../components/Loader"
+
 export default function Home() {
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
+  const [loader, setloader] = useState(false);
+
   const { authUser, setAuthUser } = useAuthContext();
   const url = "http://localhost:8000/public/Images/";
 
@@ -40,11 +44,15 @@ export default function Home() {
   // console.log(user.name);
 
   const fetchAllBlogs = async () => {
+    setloader(true);
+
     try {
       const res = await axios.get("http://localhost:8000/post/getAllPosts");
 
       // console.log(res.data.allblogs);
       setallBlogs(res.data.allblogs);
+      setloader(false);
+
       // console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
     } catch (error) {
       console.log(error);
@@ -99,11 +107,13 @@ export default function Home() {
       </div>
 
       <div className="blog-section max-[450px]:m-2 m-5 bg-white rounded-xl p-12 px-20 gap-12  flex flex-col justify-around items-center">
-        <div className="heading font-extrabold max-[500px]:text-2xl text-3xl md:text-5xl  flex flex-col items-center text-indigo-900 opacity-95">
+        <div className="heading font-extrabold max-[500px]:text-xl text-3xl md:text-5xl  flex flex-col items-center text-indigo-900 opacity-95">
           Latest Blogs
-          <div className="h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
+          <div className="  max-[500px]:mt-2 h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
+        {loader?<div className="mx-auto my-12 text-center"><Loader/></div>:
+        
         <div className="latestblogs flex flex-col-reverse max-[600px]:gap-4 gap-8 max-[1024px]:items-center ">
           {allBlogs.map((blog) => (
             <div className="  l-blog flex flex-col  max-[1024px]:w-[100%] lg:flex-row gap-5 max-[450px]:w-80 lg:gap-12 lg:even:flex-row-reverse border bg-indigo-50 rounded max-[600px]:p-[1.2rem] p-[2rem] items-center  ">
@@ -149,7 +159,7 @@ export default function Home() {
                         : `/userinfo/${blog.userId}`
                     }
                   >
-                     {blog.username}
+                     @{blog.username}
                   </Link>
                   {timeAgo(blog.updatedAt)}
                 </div>
@@ -157,6 +167,7 @@ export default function Home() {
             </div>
           ))}
         </div>
+}
       </div>
     </>
   );
