@@ -5,16 +5,20 @@ import toast, { Toaster } from "react-hot-toast";
 
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
+import Loader from "../components/Loader"
 
 export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
   const [user, setuser] = useState([]);
   const url = "http://localhost:8000/public/Images/";
+  const [loader, setloader] = useState(false);
 
   const userId = useParams().id;
   
   const fetchUser = async () => {
+    setloader(true);
+
     try {
       const res = await axios.get(
         "http://localhost:8000/user/getuser/" + userId,
@@ -22,8 +26,7 @@ export default function Profile() {
       );
       console.log(res.data);
       setuser(res.data.getUser);
-      // setusersPosts(res.data.getUser.myblogs)
-      // console.log(usersPosts)
+      setloader(false);
     } catch (err) {
       console.log(err);
     }
@@ -35,9 +38,7 @@ export default function Profile() {
         "http://localhost:8000/post/getpostofuser/" + userId,
         { withCredentials: true }
       );
-      // console.log(res.data.oneBlogOfUser);
       setusersPosts(res.data.oneBlogOfUser);
-      // console.log(usersPosts)
     } catch (err) {
       console.log(err);
     }
@@ -45,13 +46,13 @@ export default function Profile() {
 
   useEffect(() => {
     fetchUsersPost();
-
     fetchUser();
   }, []);
 
   return (
     <>
       <div className="flex justify-center my-4  items-center ">
+      {loader?<div className="mx-auto my-12 text-center"><Loader/></div>:
         <div className=" md:w-[80rem] max-[500px]:w-[95%]  bg-white p-3 min-[501px]:w-[87%] min-[401px]:p-7 md:p-12 flex  max-[900px]:flex-col-reverse  gap-8 sm:gap-10 rounded-lg">
           <div className=" w-2/3 border-r-2 max-[900px]:border-0 max-[900px]:w-[100%]">
             <div className="font-bold max-[400px]:text-xl text-center sm:text-start text-2xl  text-indigo-950 opacity-95">
@@ -123,7 +124,8 @@ export default function Profile() {
             
             </div>
           </div>
-        </div>
+        </div>}
+
       </div>
     </>
   );

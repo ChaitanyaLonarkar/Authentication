@@ -39,21 +39,15 @@ export default function Home() {
   // };
 
   const { search } = useLocation();
-  // console.log(search);
-  // const user=JSON.parse(localStorage.getItem("user"))
-  // console.log(user.name);
+ 
 
   const fetchAllBlogs = async () => {
     setloader(true);
 
     try {
       const res = await axios.get("http://localhost:8000/post/getAllPosts");
-
-      // console.log(res.data.allblogs);
       setallBlogs(res.data.allblogs);
       setloader(false);
-
-      // console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
     } catch (error) {
       console.log(error);
     }
