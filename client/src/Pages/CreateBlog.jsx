@@ -58,7 +58,7 @@ export default function CreateBlog() {
       //img upload
       try {
         const imgUpload = await axios.post(
-          "https://blog-app-63z6.onrender.com/image/upload",
+          "https://blog-app-nu-hazel.vercel.app/image/upload",
           formData,
           { withCredentials: true }
         );
@@ -68,7 +68,7 @@ export default function CreateBlog() {
       }
     }
 
-      const res = await axios.post("https://blog-app-63z6.onrender.com/post/create", post, {
+      const res = await axios.post("https://blog-app-nu-hazel.vercel.app/post/create", post, {
         withCredentials: true,
       });
 

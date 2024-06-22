@@ -21,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://blog-app-63z6.onrender.com/signup",
+        "https://blog-app-nu-hazel.vercel.app/signup",
         { name, email, password, confpassword },
         {
           withCredentials: true,

@@ -11,7 +11,7 @@ export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
   const [user, setuser] = useState([]);
-  const url = "https://blog-app-63z6.onrender.com/public/Images/";
+  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
   const [loader, setloader] = useState(false);
 
   const userId = useParams().id;
@@ -21,7 +21,7 @@ export default function Profile() {
 
     try {
       const res = await axios.get(
-        "https://blog-app-63z6.onrender.com/user/getuser/" + userId,
+        "https://blog-app-nu-hazel.vercel.app/user/getuser/" + userId,
         { withCredentials: true }
       );
       console.log(res.data);
@@ -35,7 +35,7 @@ export default function Profile() {
   const fetchUsersPost = async () => {
     try {
       const res = await axios.get(
-        "https://blog-app-63z6.onrender.com/post/getpostofuser/" + userId,
+        "https://blog-app-nu-hazel.vercel.app/post/getpostofuser/" + userId,
         { withCredentials: true }
       );
       setusersPosts(res.data.oneBlogOfUser);

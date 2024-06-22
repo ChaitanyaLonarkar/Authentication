@@ -37,7 +37,7 @@ export default function UpdateBlog() {
   const fetchPost = async () => {
     try {
       const res = await axios.get(
-        "https://blog-app-63z6.onrender.com/post/getpost/" + blogId
+        "https://blog-app-nu-hazel.vercel.app/post/getpost/" + blogId
       );
       console.log(res.data);
 
@@ -82,7 +82,7 @@ export default function UpdateBlog() {
       //img upload
       try {
         const imgUpload = await axios.post(
-          "https://blog-app-63z6.onrender.com/image/upload",
+          "https://blog-app-nu-hazel.vercel.app/image/upload",
           formData,
           { withCredentials: true }
         );
@@ -92,7 +92,7 @@ export default function UpdateBlog() {
       }
     }
 
-      const res = await axios.put("https://blog-app-63z6.onrender.com/post/update/"+blogId, post, {
+      const res = await axios.put("https://blog-app-nu-hazel.vercel.app/post/update/"+blogId, post, {
         withCredentials: true,
       });
 

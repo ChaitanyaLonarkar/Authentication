@@ -18,13 +18,13 @@ export default function Search() {
   // console.log(search);
   const [noResult, setnoResult] = useState(false);
   const [loader, setloader] = useState(false);
-  const url = "https://blog-app-63z6.onrender.com/public/Images/";
+  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
 
   const fetchSearchBlogs = async () => {
     setloader(true);
     try {
       const res = await axios.get(
-        "https://blog-app-63z6.onrender.com/post/getSearchPosts" + search
+        "https://blog-app-nu-hazel.vercel.app/post/getSearchPosts" + search
       );
       // console.log(res.data.posts,);
       setallBlogs(res.data.posts);

@@ -13,7 +13,7 @@ export default function ProfileUpdate() {
 
   const [file, setfile] = useState("");
 
-  const url = "https://blog-app-63z6.onrender.com/public/Images/";
+  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
 
   const updateProfile = async () => {
     try {
@@ -38,7 +38,7 @@ export default function ProfileUpdate() {
         //img upload
         try {
           const imgUpload = await axios.post(
-            "https://blog-app-63z6.onrender.com/image/upload",
+            "https://blog-app-nu-hazel.vercel.app/image/upload",
             formData,
             { withCredentials: true }
           );
@@ -49,7 +49,7 @@ export default function ProfileUpdate() {
       }
 
       const res = await axios.put(
-        "https://blog-app-63z6.onrender.com/user/update/" + authUser._id,
+        "https://blog-app-nu-hazel.vercel.app/user/update/" + authUser._id,
         upuser,
         {
           withCredentials: true,

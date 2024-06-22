@@ -8,7 +8,7 @@ export default function Logout() {
   const logout = async () => {
     try {
       const response = await axios.post(
-        "https://blog-app-63z6.onrender.com/logout",
+        "https://blog-app-nu-hazel.vercel.app/logout",
         {},
         {
           withCredentials: true,

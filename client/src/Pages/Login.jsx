@@ -20,7 +20,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://blog-app-63z6.onrender.com/login",
+        "https://blog-app-nu-hazel.vercel.app/login",
         { email, password },
         {
           withCredentials: true,
