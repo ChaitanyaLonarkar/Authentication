@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Blog = require("../models/postModel.js");
 const User = require("../models/userModel.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
