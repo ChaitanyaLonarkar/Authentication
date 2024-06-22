@@ -4,10 +4,10 @@ const cookieParser = require("cookie-parser");
 const multer=require('multer')
 const path=require("path")
 var jwt = require("jsonwebtoken");
-
+const PORT=process.env.PORT||8000
 const cors = require("cors");
 const corsOptions = {
-  origin: "http://localhost:5173", // Allow this origin
+  // origin: "http://localhost:5173", // Allow this origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
@@ -53,7 +53,7 @@ app.post('/image/upload', upload.single('file'), (req, res) => {
   res.status(200).json("Image has been uploaded successfully!")
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   connectDb();
-  console.log(`working on`, process.env.PORT);
+  console.log(`working on`,PORT );
 });
