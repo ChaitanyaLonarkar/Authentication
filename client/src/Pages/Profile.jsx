@@ -14,7 +14,7 @@ export default function Profile() {
   const { authUser, setAuthUser } = useAuthContext();
   const navigate = useNavigate();
   const [usersPosts, setusersPosts] = useState([]);
-  const url = "http://localhost:8000/public/Images/";
+  const url = "https://blog-app-63z6.onrender.com/public/Images/";
   const [loader, setloader] = useState(false);
 
   const fetchUsersPost = async () => {
@@ -22,7 +22,7 @@ export default function Profile() {
     setloader(true);
 
       const res = await axios.get(
-        "http://localhost:8000/post/getpostofuser/" + authUser._id,
+        "https://blog-app-63z6.onrender.com/post/getpostofuser/" + authUser._id,
         { withCredentials: true }
       );
       setusersPosts(res.data.oneBlogOfUser);
@@ -41,7 +41,7 @@ export default function Profile() {
   const delUser = async () => {
     try {
       const res = await axios.delete(
-        "http://localhost:8000/user/delete/" + authUser._id,
+        "https://blog-app-63z6.onrender.com/user/delete/" + authUser._id,
         { withCredentials: true }
       );
       if(res.data.sucess){

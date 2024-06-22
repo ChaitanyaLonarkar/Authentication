@@ -15,7 +15,7 @@ import { useAuthContext } from "../context/AuthContext";
 export default function Navbar() {
   const { authUser } = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
-  const url = "http://localhost:8000/public/Images/";
+  const url = "https://blog-app-63z6.onrender.com/public/Images/";
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);

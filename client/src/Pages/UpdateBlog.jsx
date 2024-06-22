@@ -26,18 +26,18 @@ export default function UpdateBlog() {
     updatedCat.push(cat);
     setcat("");
     setcats(updatedCat);
-    console.log(cats);
+    // console.log(cats);
   };
   const delCategory = (k) => {
     let updatedCat = [...cats];
     updatedCat.splice(k, 1);
     setcats(updatedCat);
-    console.log(cats, "........................................");
+    // console.log(cats, "........................................");
   };
   const fetchPost = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/post/getpost/" + blogId
+        "https://blog-app-63z6.onrender.com/post/getpost/" + blogId
       );
       console.log(res.data);
 
@@ -49,24 +49,6 @@ export default function UpdateBlog() {
       console.log(err);
     }
   };
-  // const updateBlogPost = async () => {
-  //   try {
-  //     const res = await axios.put(
-  //       "http://localhost:8000/post/update/" + blogId,
-  //       { withCredentials: true }
-  //     );
-  //     // console.log(res.data)
-  //     if (res.data.sucess) {
-  //       toast.success(res.data.message);
-  //       navigate("/bloginfo/" + blogId);
-  //     } else {
-  //       toast.error(res.data.message);
-  //     }
-  //     // console.log(blog)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
 
   const updateBlogPost = async () => {
@@ -100,7 +82,7 @@ export default function UpdateBlog() {
       //img upload
       try {
         const imgUpload = await axios.post(
-          "http://localhost:8000/image/upload",
+          "https://blog-app-63z6.onrender.com/image/upload",
           formData,
           { withCredentials: true }
         );
@@ -110,7 +92,7 @@ export default function UpdateBlog() {
       }
     }
 
-      const res = await axios.put("http://localhost:8000/post/update/"+blogId, post, {
+      const res = await axios.put("https://blog-app-63z6.onrender.com/post/update/"+blogId, post, {
         withCredentials: true,
       });
 

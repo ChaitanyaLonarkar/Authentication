@@ -15,7 +15,7 @@ export default function Home() {
   const [loader, setloader] = useState(false);
 
   const { authUser, setAuthUser } = useAuthContext();
-  const url = "http://localhost:8000/public/Images/";
+  const url = "https://blog-app-63z6.onrender.com/public/Images/";
 
   // const verifyUser = async (e) => {
   //   try {
@@ -45,7 +45,7 @@ export default function Home() {
     setloader(true);
 
     try {
-      const res = await axios.get("http://localhost:8000/post/getAllPosts");
+      const res = await axios.get("https://blog-app-63z6.onrender.com/post/getAllPosts");
       setallBlogs(res.data.allblogs);
       setloader(false);
     } catch (error) {

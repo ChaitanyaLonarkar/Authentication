@@ -20,13 +20,13 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/login",
+        "https://blog-app-63z6.onrender.com/login",
         { email, password },
         {
           withCredentials: true,
         }
       );
-      console.log(response.data,"loginnnnnnnnnnnnnnn");
+      // console.log(response.data,"loginnnnnnnnnnnnnnn");
       localStorage.setItem("user", JSON.stringify(response.data.user));
       if (localStorage.getItem("user")) {
         toast.success(response.data.message || "User logged in successfully");

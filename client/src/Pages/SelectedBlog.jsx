@@ -29,14 +29,14 @@ export default function SelectedBlog() {
 
   const navigate = useNavigate();
 
-  const url = "http://localhost:8000/public/Images/";
+  const url = "https://blog-app-63z6.onrender.com/public/Images/";
 
   const fetchBlogInfo = async () => {
     setloader(true);
 
     try {
       const res = await axios.get(
-        "http://localhost:8000/post/getpost/" + blogId
+        "https://blog-app-63z6.onrender.com/post/getpost/" + blogId
       );
       // console.log(res.data.oneBlog)
       setblog(res.data.oneBlog);

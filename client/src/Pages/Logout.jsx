@@ -8,7 +8,7 @@ export default function Logout() {
   const logout = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/logout",
+        "https://blog-app-63z6.onrender.com/logout",
         {},
         {
           withCredentials: true,

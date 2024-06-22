@@ -21,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/signup",
+        "https://blog-app-63z6.onrender.com/signup",
         { name, email, password, confpassword },
         {
           withCredentials: true,
