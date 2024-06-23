@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     
     profilePic: {
       type: String,
-      default: "",
+      default: "user.jpg",
       required:false,
     },
     myblogs:{

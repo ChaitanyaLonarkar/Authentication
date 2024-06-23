@@ -16,17 +16,17 @@ const Login = async (req, res) => {
   try {
     // const { email} = req.body;
     if (!req.body.email || !req.body.password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ success: false , message: "All fields are required" });
     }
 
     const user = await User.findOne( {email:req.body.email} );
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ success: false , message: "Invalid email or password" });
     }
 
     const auth = await bcrypt.compare(req.body.password, user.password);
     if (!auth) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ success: false , message: "Invalid email or password" });
     }
 
     let token = jwt.sign({email:req.body.email}, process.env.JWT_SECRET);
@@ -38,17 +38,17 @@ const Login = async (req, res) => {
 
     const {password,...info}=user._doc 
 
-    console.log("ye user hai ", user);
-    console.log("ye login token hai ", token);
-    console.log("ye login cookie hai", req.cookies);
+    // console.log("ye user hai ", user);
+    // console.log("ye login token hai ", token);
+    // console.log("ye login cookie hai", req.cookies);
     res.status(200).json({
       message: "User logged in successfully",
       success: true,
       user: info,
     });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-    console.log(error.message)
+    res.status(500).json({ success: false ,error: "Internal Server Error" });
+    // console.log(error.message)
   }
 };
 
@@ -98,8 +98,8 @@ const Signup = async (req, res) => {
           withCredentials: true,
           httpOnly: false,
         });
-        console.log("ye signup token hai ", token);
-        console.log("ye signup cookie hai", req.cookies);
+        // console.log("ye signup token hai ", token);
+        // console.log("ye signup cookie hai", req.cookies);
         res.send({ message: "user registered successfully" });
       });
     });

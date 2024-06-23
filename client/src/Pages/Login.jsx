@@ -7,6 +7,7 @@ import { IoIosUnlock } from "react-icons/io";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { IoMail } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
+import { Server } from "../context/TimeAgo";
 
 
 export default function Login() {
@@ -20,27 +21,35 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://blog-app-nu-hazel.vercel.app/login",
+        Server+"login",
         { email, password },
         {
           withCredentials: true,
         }
       );
       // console.log(response.data,"loginnnnnnnnnnnnnnn");
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      if (localStorage.getItem("user")) {
+      if(response.data.success){
         toast.success(response.data.message || "User logged in successfully");
-        // console.log(response.data.user);
-        // setAuthUser(localStorage.getItem("user"));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         setAuthUser(response.data.user);
-        // console.log("auth usser hai ham", authUser);
         navigate("/");
+
+      }else{
+      toast.error(response.data.message);
+           
       }
-      else{
-        return error
-      }
+      // if (localStorage.getItem("user")) {
+      //   toast.success(response.data.message || "User logged in successfully");
+       
+      //   setAuthUser(response.data.user);
+      //   navigate("/");
+      // }
+      // else{
+      //   return error
+      // }
     } catch (error) {
-      toast.error(error.response?.data?.error || "An error occurred");
+      toast.error(error.response.data.message);
+      console.log(error)
     }
   };
   return (

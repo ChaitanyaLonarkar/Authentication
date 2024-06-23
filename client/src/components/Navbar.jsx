@@ -10,12 +10,13 @@ import { LuPenSquare } from "react-icons/lu";
 import Logout from "../Pages/Logout";
 import { IoClose } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
+import { Server } from "../context/TimeAgo";
 // const path=useLocation().pathname
 
 export default function Navbar() {
   const { authUser } = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);
@@ -74,7 +75,8 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link to="/createBlog">
+          
+          <Link to={authUser ? ("/createBlog"):"/login"}>
             <abbr title="Write Blog">
               <LuPenSquare className="text-slate-800 text-xl-5 text-2xl max-[400px]:scale-75" />
             </abbr>

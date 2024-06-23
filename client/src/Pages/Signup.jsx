@@ -8,12 +8,12 @@ import { FaUserPen } from "react-icons/fa6";
 import { IoIosLock } from "react-icons/io";
 import { IoIosUnlock } from "react-icons/io";
 import { IoMail } from "react-icons/io5";
+import { Server } from "../context/TimeAgo";
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confpassword, setconfPassword] = useState("");
-
   // const notify = () => ;
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://blog-app-nu-hazel.vercel.app/signup",
+        Server+"signup",
         { name, email, password, confpassword },
         {
           withCredentials: true,

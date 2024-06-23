@@ -10,6 +10,7 @@ const Comments = require("../models/commentModel.js");
 const createPost = async (req, res) => {
   try {
     // const { title, content, category, thumbnail } = req.body();
+    console.log(req.body,"gfgdfgsdfsdfsd")
     const createdPost = await Blog.create(req.body);
     res.status(200).json({
       sucess: true,
@@ -17,7 +18,8 @@ const createPost = async (req, res) => {
       post: createdPost,
     });
   } catch (error) {
-    res.status(500).json({ sucess: false, message: "Blog posting error" });
+    res.status(500).json({ sucess: false, message: "Blog Title and Description should not empty" });
+    console.log(error)
   }
 };
 // UPDATE ONE BLOG
@@ -39,6 +41,8 @@ const updatePost = async (req, res) => {
     res.status(500).json({ sucess: false, message: "Blog update error" });
   }
 };
+
+
 // DELET ONE BLOG
 const deletePost = async (req, res) => {
   try {

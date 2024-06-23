@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-
 import { useAuthContext } from "../context/AuthContext";
-import timeAgo from "../context/TimeAgo";
+import timeAgo, { Server } from "../context/TimeAgo";
 import Loader from "../components/Loader"
 
 export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
   const [user, setuser] = useState([]);
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
   const [loader, setloader] = useState(false);
 
   const userId = useParams().id;
@@ -21,7 +20,7 @@ export default function Profile() {
 
     try {
       const res = await axios.get(
-        "https://blog-app-nu-hazel.vercel.app/user/getuser/" + userId,
+        Server+"user/getuser/" + userId,
         { withCredentials: true }
       );
       console.log(res.data);
@@ -35,7 +34,7 @@ export default function Profile() {
   const fetchUsersPost = async () => {
     try {
       const res = await axios.get(
-        "https://blog-app-nu-hazel.vercel.app/post/getpostofuser/" + userId,
+        Server+"post/getpostofuser/" + userId,
         { withCredentials: true }
       );
       setusersPosts(res.data.oneBlogOfUser);
@@ -65,9 +64,10 @@ export default function Profile() {
                  
                   {usersPosts.map((blog) => (
                     <div className="l-blog bg-indigo-50 p-5 max-[900px]:w-[100%]">
-                      <div className="  rounded-xl overflow-hidden  ">
+                      <div className="  rounded overflow-hidden  ">
                         {/* <img src={tu} alt="" /> */}
-                        <img src={url + blog.thumbnail} alt="thumbnail" />
+                        <img src={url + blog.thumbnail} alt="thumbnail"
+                        className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover" />
 
                       </div>
                       <div className=" flex flex-col  justify-center gap-4 mt-10">

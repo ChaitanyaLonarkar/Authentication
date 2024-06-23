@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-
+import { Server } from "../context/TimeAgo";
 export default function CreateBlog() {
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
@@ -37,14 +37,12 @@ export default function CreateBlog() {
 
   const createBlogPost = async () => {
     try {
-
       const post = {
         title: title,
         desc: desc,
         categories: cats,
         username: authUser.name,
         userId: authUser._id,
-    
       };
 
       if (file) {
@@ -53,22 +51,22 @@ export default function CreateBlog() {
         formData.append("img", filename);
         formData.append("file", file);
         post.thumbnail = filename;
-      // console.log(formData,"fomrdata")
+        // console.log(formData,"fomrdata")
 
-      //img upload
-      try {
-        const imgUpload = await axios.post(
-          "https://blog-app-nu-hazel.vercel.app/image/upload",
-          formData,
-          { withCredentials: true }
-        );
-        // console.log(imgUpload, "image upload");
-      } catch (err) {
-        console.log(err.message);
+        //img upload
+        try {
+          const imgUpload = await axios.post(
+            Server + "image/upload",
+            formData,
+            { withCredentials: true }
+          );
+          // console.log(imgUpload, "image upload");
+        } catch (err) {
+          toast.error(err.response.data.message);
+        }
       }
-    }
 
-      const res = await axios.post("https://blog-app-nu-hazel.vercel.app/post/create", post, {
+      const res = await axios.post(Server + "post/create", post, {
         withCredentials: true,
       });
 
@@ -80,7 +78,7 @@ export default function CreateBlog() {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -95,7 +93,6 @@ export default function CreateBlog() {
             <div className="font-semibold text-indigo-900">Add Thumbnail</div>
             <input
               type="file"
-              placeholder="dfgdfg"
               className="text-sm text-stone-500
    file:mr-5 file:py-2 file:px-3 
     file:font-medium file:border-0
@@ -104,27 +101,16 @@ export default function CreateBlog() {
    hover:file:text-blue-700"
               onChange={(e) => setFile(e.target.files[0])}
             />
-
-            {/* <div class="flex items-center justify-center w-full">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-        </div>
-        <input id="dropzone-file" type="file" class="hidden" />
-    </label>
-</div>  */}
           </div>
+
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
             <div className="font-semibold text-indigo-900">Add Title</div>
             <input
               type="text"
-              placeholder="dfgdfg"
+              placeholder="Give title name"
               className="bg-slate-200 p-3 outline-none"
               onChange={(e) => settitle(e.target.value)}
+              required
             />
           </div>
 
@@ -134,11 +120,10 @@ export default function CreateBlog() {
               <div className="flex items-center  md:space-x-8">
                 <input
                   type="text"
-                  className="px-4 py-2 outline-none bg-slate-200 "
+                  className="px-4 py-2 outline-none bg-slate-200 max-[400px]:w-[60%]"
                   placeholder="enter category "
                   onChange={(e) => setcat(e.target.value)}
                   value={cat}
-
                 />
                 <div
                   className="bg-indigo-500 text-white px-4 py-2 font-semibold cursor-pointer"
@@ -175,8 +160,9 @@ export default function CreateBlog() {
               placeholder="add paragraph"
               className="bg-slate-200 p-3 outline-none"
               onChange={(e) => setdesc(e.target.value)}
-              rows={8} cols={40}
-
+              rows={8}
+              cols={40}
+              required
             >
               {" "}
             </textarea>
@@ -186,8 +172,8 @@ export default function CreateBlog() {
             <button
               className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
               onClick={createBlogPost}
-              rows={8} cols={40}
-
+              rows={8}
+              cols={40}
             >
               Create Blog
             </button>

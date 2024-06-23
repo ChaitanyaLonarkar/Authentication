@@ -16,7 +16,7 @@ import { useAuthContext } from "../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { GrDocumentUpdate } from "react-icons/gr";
 import Loader from "../components/Loader"
-
+import { Server } from "../context/TimeAgo";
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
   const [commnetKaru, setcommentKaru] = useState();
@@ -29,14 +29,14 @@ export default function SelectedBlog() {
 
   const navigate = useNavigate();
 
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
 
   const fetchBlogInfo = async () => {
     setloader(true);
 
     try {
       const res = await axios.get(
-        "https://blog-app-nu-hazel.vercel.app/post/getpost/" + blogId
+        Server+"post/getpost/" + blogId
       );
       // console.log(res.data.oneBlog)
       setblog(res.data.oneBlog);
@@ -51,7 +51,7 @@ export default function SelectedBlog() {
   const handleDeletePost = async () => {
     try {
       const res = await axios.delete(
-        "http://localhost:8000/post/delete/" + blogId,
+        Server+"post/delete/" + blogId,
         { withCredentials: true }
       );
       // console.log(res.data)
@@ -72,7 +72,7 @@ export default function SelectedBlog() {
   const fetchBlogComments = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/comment/post/" + blogId
+        Server+"comment/post/" + blogId
       );
       // console.log(res.data)
       setcomments(res.data.comments);
@@ -84,7 +84,7 @@ export default function SelectedBlog() {
   const postBlogComment = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8000/comment/create",
+        Server+"comment/create",
         {
           comment: comment,
           autherId: authUser.name,
@@ -113,7 +113,7 @@ export default function SelectedBlog() {
   const deleteBlogComments = async (id) => {
     try {
       const res = await axios.delete(
-        "http://localhost:8000/comment/delete/" + id,
+        Server+"comment/delete/" + id,
         { withCredentials: true }
       );
       // toast.message(res.data.message)
@@ -209,7 +209,7 @@ export default function SelectedBlog() {
                 src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*CC1ML6NyDUAWSLdRJLFsMg.jpeg"
                 alt=""
               /> */}
-              <img src={url + blog.thumbnail} alt="thumbnail" />
+              <img src={url + blog.thumbnail} alt="thumbnail" className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover"/>
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
               <pre className="max-[666px]:text-sm w-[100%] overflow-hidden">{blog.desc}</pre>

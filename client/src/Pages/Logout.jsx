@@ -2,13 +2,14 @@ import React from "react";
 import toast from "react-hot-toast";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Server } from "../context/TimeAgo";
 
 export default function Logout() {
   const navigate = useNavigate();
   const logout = async () => {
     try {
       const response = await axios.post(
-        "https://blog-app-nu-hazel.vercel.app/logout",
+        Server+"logout",
         {},
         {
           withCredentials: true,
@@ -18,10 +19,10 @@ export default function Logout() {
       if (response.data.status) {
         toast.success(response.data.message);
         // navigate("/");
+        navigate("/");
         window.location.reload(true)
 
         localStorage.clear();
-        navigate("/login");
 
       } else {
         toast.success(response.data.message);

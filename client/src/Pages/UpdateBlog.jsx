@@ -6,13 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import { useEffect } from "react";
+import { Server } from "../context/TimeAgo";
+
+
 export default function UpdateBlog() {
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
   const [file, setFile] = useState(null);
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
-  const url = "http://localhost:8000/public/Images/";
+  const url = Server+"public/Images/";
 
   const blogId = useParams().id;
   const navigate = useNavigate();
@@ -37,7 +40,7 @@ export default function UpdateBlog() {
   const fetchPost = async () => {
     try {
       const res = await axios.get(
-        "https://blog-app-nu-hazel.vercel.app/post/getpost/" + blogId
+        Server+"post/getpost/" + blogId
       );
       console.log(res.data);
 
@@ -82,7 +85,7 @@ export default function UpdateBlog() {
       //img upload
       try {
         const imgUpload = await axios.post(
-          "https://blog-app-nu-hazel.vercel.app/image/upload",
+          Server+"image/upload",
           formData,
           { withCredentials: true }
         );
@@ -92,7 +95,7 @@ export default function UpdateBlog() {
       }
     }
 
-      const res = await axios.put("https://blog-app-nu-hazel.vercel.app/post/update/"+blogId, post, {
+      const res = await axios.put(Server+"post/update/"+blogId, post, {
         withCredentials: true,
       });
 
@@ -129,7 +132,6 @@ export default function UpdateBlog() {
             </div>
             <input
               type="file"
-              placeholder="dfgdfg"
               className="text-sm text-stone-500
    file:mr-5 file:py-2 file:px-3 
     file:font-medium file:border-0
@@ -144,7 +146,6 @@ export default function UpdateBlog() {
             <div className="font-semibold text-indigo-900">Update Title</div>
             <input
               type="text"
-              placeholder="dfgdfg"
               className="bg-slate-200 p-3 outline-none"
               onChange={(e) => settitle(e.target.value)}
               value={title}

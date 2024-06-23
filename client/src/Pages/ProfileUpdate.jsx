@@ -3,6 +3,7 @@ import { Link, useFetcher, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import { Server } from "../context/TimeAgo";
 
 export default function ProfileUpdate() {
     const navigate=useNavigate();
@@ -13,7 +14,7 @@ export default function ProfileUpdate() {
 
   const [file, setfile] = useState("");
 
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
 
   const updateProfile = async () => {
     try {
@@ -38,7 +39,7 @@ export default function ProfileUpdate() {
         //img upload
         try {
           const imgUpload = await axios.post(
-            "https://blog-app-nu-hazel.vercel.app/image/upload",
+            Server+"image/upload",
             formData,
             { withCredentials: true }
           );
@@ -49,7 +50,7 @@ export default function ProfileUpdate() {
       }
 
       const res = await axios.put(
-        "https://blog-app-nu-hazel.vercel.app/user/update/" + authUser._id,
+        Server+"user/update/" + authUser._id,
         upuser,
         {
           withCredentials: true,

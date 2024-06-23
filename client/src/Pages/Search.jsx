@@ -6,7 +6,7 @@ import Logo from "../assets/logo.png";
 import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
 import Loader from "../components/Loader";
-import timeAgo from "../context/TimeAgo";
+import timeAgo, { Server } from "../context/TimeAgo";
 import { useAuthContext } from "../context/AuthContext";
 
 export default function Search() {
@@ -18,13 +18,13 @@ export default function Search() {
   // console.log(search);
   const [noResult, setnoResult] = useState(false);
   const [loader, setloader] = useState(false);
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
 
   const fetchSearchBlogs = async () => {
     setloader(true);
     try {
       const res = await axios.get(
-        "https://blog-app-nu-hazel.vercel.app/post/getSearchPosts" + search
+        Server+"post/getSearchPosts" + search
       );
       // console.log(res.data.posts,);
       setallBlogs(res.data.posts);

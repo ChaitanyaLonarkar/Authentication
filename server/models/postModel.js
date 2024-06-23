@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
     // date: { type: Date, default: Date.now },
     thumbnail: {
       type: String,
-      default: "",
+      default: "/no_image_available_sm.jpg",
     },
     title: { type: String, required: true },
     desc: { type: String, required: true },

@@ -7,15 +7,16 @@ import il1 from "../assets/il1c.png";
 import tu from "../assets/illus.jpg";
 import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
-import Loader from "../components/Loader"
-
+import Loader from "../components/Loader";
+import { Server } from "../context/TimeAgo";
 export default function Home() {
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
   const [loader, setloader] = useState(false);
+  const [noResult, setnoResult] = useState(false);
 
   const { authUser, setAuthUser } = useAuthContext();
-  const url = "https://blog-app-nu-hazel.vercel.app/public/Images/";
+  const url = Server+"public/Images/";
 
   // const verifyUser = async (e) => {
   //   try {
@@ -39,14 +40,17 @@ export default function Home() {
   // };
 
   const { search } = useLocation();
- 
 
   const fetchAllBlogs = async () => {
     setloader(true);
 
     try {
-      const res = await axios.get("https://blog-app-nu-hazel.vercel.app/post/getAllPosts");
+      const res = await axios.get(
+        Server+"post/getAllPosts"
+      );
       setallBlogs(res.data.allblogs);
+      if (res.data.allblogs.length == 0) setnoResult(true);
+      else setnoResult(false);
       setloader(false);
     } catch (error) {
       console.log(error);
@@ -76,21 +80,22 @@ export default function Home() {
             </h1>
           </div>
           <div className="join max-[636px]:flex max-[636px]:justify-center ">
-            {!authUser?<Link
-              to="/login"
-              className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
-            >
-              {" "}
-              Join Us Today
-            </Link>
-            :
-            <Link
-              to="/createBlog"
-              className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
-            >
-              
-              Write a blog
-            </Link>}
+            {!authUser ? (
+              <Link
+                to="/login"
+                className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
+              >
+                {" "}
+                Join Us Today
+              </Link>
+            ) : (
+              <Link
+                to="/createBlog"
+                className="max-[636px]:p-2 max-[636px]:text-sm p-3 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
+              >
+                Write a blog
+              </Link>
+            )}
           </div>
         </div>
         <div className="h-r  w-72 sm:w-2/4 sm:mb-0 mb-10">
@@ -106,63 +111,78 @@ export default function Home() {
           <div className="  max-[500px]:mt-2 h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        {loader?<div className="mx-auto my-12 text-center"><Loader/></div>:
-        
-        <div className="latestblogs flex flex-col-reverse max-[600px]:gap-4 gap-8 max-[1024px]:items-center ">
-          {allBlogs.map((blog) => (
-            <div className="  l-blog flex flex-col  max-[1024px]:w-[100%] lg:flex-row gap-5 max-[450px]:w-80 lg:gap-12 lg:even:flex-row-reverse border bg-indigo-50 rounded max-[600px]:p-[1.2rem] p-[2rem] items-center  ">
-              <div className=" w-2/4 max-[1024px]:w-[100%] rounded overflow-hidden   ">
-                {/* <img src={tu} alt="" /> */}
-                <img src={url + blog.thumbnail} alt="Thumbnail" className="max-[600px]:h-full w-full h-[27rem] object-cover" />
-              </div>
-              <div className="w-2/4 max-[1024px]:w-[100%]  flex flex-col  justify-center gap-7">
-                <div className="max-[600px]:text-sm text-indigo-900 flex gap-2 flex-wrap font-medium opacity-95 ">
-                  {blog.categories?.map((c) => (
-                    <div className=" bg-white w-[max-content] p-1 px-3 rounded-xl ">
-                      {c}
-                    </div>
-                  ))}
-                </div>
-                <div className="max-[600px]:text-2xl font-bold text-4xl  text-indigo-900 opacity-95">
-                  <Link
-                  className="cap"
-                    key={blog._id}
-                    // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
-                    to={`/bloginfo/${blog._id}`}
-                  >
-                    {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
-                    {blog.title}
-                  </Link>
-                </div>
-                <div className= "max-[600px]:text-sm text-slate-700 text-lg overflow-hidden ">
-                  {blog.desc.slice(0, 200)}...
-                  <Link
-                    key={blog._id}
-                    to={`/bloginfo/${blog._id}`}
-                    className="max-[600px]:text-sm text-base text-sky-700"
-                  >
-                    Read More
-                  </Link>
-                </div>
-                <div key={blog.userId}>
-                  by 
-                  <Link
-                    className=" max-[600px]:text-sm text-lg ps-2 text-indigo-800 font-semibold pe-2"
-                    to={
-                      blog.userId === authUser?._id
-                        ? "/myprofile"
-                        : `/userinfo/${blog.userId}`
-                    }
-                  >
-                     @{blog.username}
-                  </Link>
-                  {timeAgo(blog.updatedAt)}
-                </div>
-              </div>
+        {loader ? (
+          <div className="mx-auto my-12 text-center">
+            <Loader />
+          </div>
+        ) : noResult ? (
+          <div className="blog-section m-5 bg-white rounded-xl flex flex-col justify-around items-center">
+            <div className=" max-[500px]:text-base w-full text-2xl font-semibold text-indigo-900 opacity-90">
+              No Blog post for now
             </div>
-          ))}
-        </div>
-}
+          </div>
+        ) : (
+          <div className="latestblogs flex flex-col-reverse max-[600px]:gap-4 gap-8 max-[1024px]:items-center ">
+            {allBlogs.map((blog) => (
+              <div className="  l-blog flex flex-col  max-[1024px]:w-[100%] lg:flex-row gap-5 max-[450px]:w-80 lg:gap-12 lg:even:flex-row-reverse border bg-indigo-50 rounded max-[600px]:p-[1.2rem] p-[2rem] items-center  ">
+                <div className=" w-2/4 max-[1024px]:w-[100%] rounded overflow-hidden   ">
+                {blog.thumbnail==""?
+                  <img src="https://www.interactive.org/images/games_developers/no_image_available_sm.jpg" alt="Thumbnail" 
+                  className="max-[600px]:h-full w-full h-[27rem] object-cover"/> :
+                  <img
+                    src={url + blog.thumbnail}
+                    alt="Thumbnail"
+                    className="max-[600px]:h-full w-full h-[27rem] object-cover"
+                  />}
+                </div>
+                <div className="w-2/4 max-[1024px]:w-[100%]  flex flex-col  justify-center gap-7">
+                  <div className="max-[600px]:text-sm text-indigo-900 flex gap-2 flex-wrap font-medium opacity-95 ">
+                    {blog.categories?.map((c) => (
+                      <div className=" bg-white w-[max-content] p-1 px-3 rounded-xl ">
+                        {c}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="max-[600px]:text-2xl font-bold text-4xl  text-indigo-900 opacity-95">
+                    <Link
+                      className="cap"
+                      key={blog._id}
+                      // to={authUser ? `/bloginfo/${blog._id}` : "/login"}
+                      to={`/bloginfo/${blog._id}`}
+                    >
+                      {/* <Link key={blog._id} to={`/bloginfo/${blog._id}`}> */}
+                      {blog.title}
+                    </Link>
+                  </div>
+                  <div className="max-[600px]:text-sm text-slate-700 text-lg overflow-hidden ">
+                    {blog.desc.slice(0, 200)}...
+                    <Link
+                      key={blog._id}
+                      to={`/bloginfo/${blog._id}`}
+                      className="max-[600px]:text-sm text-base text-sky-700"
+                    >
+                      Read More
+                    </Link>
+                  </div>
+                  <div key={blog.userId}>
+                    by
+                    <Link
+                      className=" max-[600px]:text-sm text-lg ps-2 text-indigo-800 font-semibold pe-2"
+                      to={
+                        blog.userId === authUser?._id
+                          ? "/myprofile"
+                          : `/userinfo/${blog.userId}`
+                      }
+                    >
+                      @{blog.username}
+                    </Link>
+                    {timeAgo(blog.updatedAt)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
