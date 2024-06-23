@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const Comments = require("../models/commentModel.js");
 app.use(cookieParser());
-const verifyUser=require("../verifyUser.js")
+const verifyUser=require("../verify/verifyUser.js")
 
 const updateUser = async (req, res) => {
 

@@ -32,9 +32,9 @@ app.use("/comment", commentRouter);
 app.use("/public/Images",express.static(path.join(__dirname,"/public/Images")))
 
 
-// app.get("/",(req,res)=>{
-//     res.send("heelos")
-// })
+app.get("/",(req,res)=>{
+    res.send("Server is running")
+})
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {

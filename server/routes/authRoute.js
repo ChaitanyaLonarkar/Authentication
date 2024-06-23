@@ -9,7 +9,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 app.use(cookieParser());
-const verifyUser=require("../verifyUser.js")
+const verifyUser=require("../verify/verifyUser.js")
 
 
 const Login = async (req, res) => {

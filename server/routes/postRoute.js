@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Blog = require("../models/postModel.js");
-const verifyUser=require("../verifyUser.js")
+const verifyUser=require("../verify/verifyUser.js")
 const Comments = require("../models/commentModel.js");
 
 // CREATE ONE BLOG
