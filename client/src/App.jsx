@@ -39,7 +39,7 @@ function App() {
             path="/login"
             element={authUser ? <Navigate to="/" replace /> : <Login />}
           />
-          <Route path="/createBlog" element={<CreateBlog />} />
+          <Route path="/createBlog" element={authUser ? <CreateBlog />:<Navigate to="/" replace /> } />
           <Route path="/bloginfo/:id" element={<SelectedBlog />} />
           <Route path="/updateBlog/:id" element={<UpdateBlog />} />
           <Route path="/myprofile" element={<Profile />} />

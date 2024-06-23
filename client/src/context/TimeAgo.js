@@ -35,4 +35,6 @@ export default function timeAgo(inputTime) {
     }
   }
   // export const  Server="https://blog-app-nu-hazel.vercel.app/"
-  export const  Server="http://localhost:8000/"
+  // export const  Server="http://localhost:8000/"
+  export const  Server="https://authentication-qubw.onrender.com/"
+
