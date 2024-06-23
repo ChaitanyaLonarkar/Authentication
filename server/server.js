@@ -8,8 +8,8 @@ const PORT=process.env.PORT||8000
 const cors = require("cors");
 const corsOptions = {
   // origin: ["https://perfect-blogs.netlify.app/","http://localhost:5173/"] ,// Allow this origin
-  origin: "http://localhost:5173" ,// Allow this origin
-//  origin: "https://perfect-blogs.netlify.app/",
+  // origin: "http://localhost:5173" ,// Allow this origin
+ origin: "https://perfect-blogs.netlify.app",
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
