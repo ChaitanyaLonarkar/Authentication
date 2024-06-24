@@ -9,34 +9,41 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 app.use(cookieParser());
-const verifyUser=require("../verify/verifyUser.js")
-
+const verifyUser = require("../verify/verifyUser.js");
 
 const Login = async (req, res) => {
   try {
     // const { email} = req.body;
     if (!req.body.email || !req.body.password) {
-      return res.status(400).json({ success: false , message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
     }
 
-    const user = await User.findOne( {email:req.body.email} );
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(400).json({ success: false , message: "Invalid email or password" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email or password" });
     }
 
     const auth = await bcrypt.compare(req.body.password, user.password);
     if (!auth) {
-      return res.status(400).json({ success: false , message: "Invalid email or password" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email or password" });
     }
 
-    let token = jwt.sign({email:req.body.email}, process.env.JWT_SECRET);
+    let token = jwt.sign({ email: req.body.email }, process.env.JWT_SECRET);
     res.cookie("token", token, {
-        maxAge: 10 * 24 * 60 * 60 * 1000,
+      maxAge: 10 * 24 * 60 * 60 * 1000,
       withCredentials: true,
       httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
 
-    const {password,...info}=user._doc 
+    const { password, ...info } = user._doc;
 
     // console.log("ye user hai ", user);
     // console.log("ye login token hai ", token);
@@ -47,7 +54,7 @@ const Login = async (req, res) => {
       user: info,
     });
   } catch (error) {
-    res.status(500).json({ success: false ,error: "Internal Server Error" });
+    res.status(500).json({ success: false, error: "Internal Server Error" });
     // console.log(error.message)
   }
 };
@@ -93,10 +100,12 @@ const Signup = async (req, res) => {
 
         let token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-        res.cookie("token", token,  {
+        res.cookie("token", token, {
           maxAge: 1 * 24 * 60 * 60 * 1000,
           withCredentials: true,
-          httpOnly: false,
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
         });
         // console.log("ye signup token hai ", token);
         // console.log("ye signup cookie hai", req.cookies);
@@ -110,10 +119,8 @@ const Signup = async (req, res) => {
   }
 };
 
-
-
 router.post("/login", Login);
-router.post("/logout",verifyUser, Logout);
+router.post("/logout", verifyUser, Logout);
 router.post("/signup", Signup);
 
 router.get("/", verifyUser, (req, res) => {

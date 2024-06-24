@@ -25,7 +25,7 @@ const commentRouter = require("./routes/commentsRoute.js");
 
 app.use(cookieParser());
 app.use(express.json());
-app.use("/", authRouter);
+app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
