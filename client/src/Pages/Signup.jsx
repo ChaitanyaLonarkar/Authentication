@@ -21,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        Server+"signup",
+        Server+"auth/signup",
         { name, email, password, confpassword },
         {
           withCredentials: true,

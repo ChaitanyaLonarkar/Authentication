@@ -9,7 +9,7 @@ export default function Logout() {
   const logout = async () => {
     try {
       const response = await axios.post(
-        Server+"logout",
+        Server+"auth/logout",
         {},
         {
           withCredentials: true,
