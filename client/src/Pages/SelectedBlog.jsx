@@ -146,7 +146,7 @@ export default function SelectedBlog() {
               <div className="max-[400px]:text-[13px]">
                 {blog.username}
                 <br />
-                <span className=" max-[400px]:text-[10px] text-sm text-slate-500">
+                <span className=" max-[400px]:text-[8px] text-sm text-slate-500">
                   {timeAgo(blog.updatedAt)}
                 </span>
               </div>
@@ -212,7 +212,10 @@ export default function SelectedBlog() {
               <img src={url + blog.thumbnail} alt="thumbnail" className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover"/>
             </div>
             <div className="text-justify max-[550px]:text-sm  ">
-              <pre className="max-[666px]:text-sm w-[100%] overflow-hidden">{blog.desc}</pre>
+              {/* <pre className="max-[666px]:text-sm w-[100%] overflow-hidden">{blog.desc}</pre> */}
+
+              <div className=" w-[100%]"   dangerouslySetInnerHTML={{ __html: blog.desc }} />
+
             </div>
           </div>
           <div className="flex gap-8  max-[500px]:scale-90  max-[500px]:gap-4">

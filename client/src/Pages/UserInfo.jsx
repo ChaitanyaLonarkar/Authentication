@@ -60,7 +60,7 @@ export default function Profile() {
 
             <div>
               <div className="blog-section max-[640px]:w-[100%] ms-0 m-5  rounded-xl gap-12  max-[900px]:mt-5 max-[900px]:m-0 flex flex-col justify-around items-center">
-                <div className="latestblogs max-[640px]:w-[100%] flex flex-col  gap-12 max-[640px]:gap-7 ">
+                <div className="flex flex-col-reverse latestblogs max-[640px]:w-[100%]  gap-12 max-[640px]:gap-7 ">
                  
                   {usersPosts.map((blog) => (
                     <div className="l-blog bg-indigo-50 p-5 max-[900px]:w-[100%]">
@@ -80,7 +80,8 @@ export default function Profile() {
                           <Link to={`/bloginfo/${blog._id}`}>{blog.title}</Link>
                         </div>
                         <div className="text-slate-700 text-lg max-[640px]:text-base overflow-hidden">
-                          {blog.desc.slice(0, 200)}...
+                          {/* {blog.desc.slice(0, 200)}... */}
+                          <div className=" w-[100%] max-[640px]:text-base"   dangerouslySetInnerHTML={{ __html: blog.desc.slice(0,300) +"......"}} />
                           <Link to="" className=" text-base text-sky-700">
                             Read More
                           </Link>

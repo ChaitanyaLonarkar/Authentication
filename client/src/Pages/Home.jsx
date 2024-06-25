@@ -155,7 +155,8 @@ export default function Home() {
                     </Link>
                   </div>
                   <div className="max-[600px]:text-sm text-slate-700 text-lg overflow-hidden ">
-                    {blog.desc.slice(0, 200)}...
+                    {/* {blog.desc.slice(0, 200)}... */}
+                    <div className=" w-[100%]"   dangerouslySetInnerHTML={{ __html: blog.desc.slice(0,300) +"......"}} />
                     <Link
                       key={blog._id}
                       to={`/bloginfo/${blog._id}`}

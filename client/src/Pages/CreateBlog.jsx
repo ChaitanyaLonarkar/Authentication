@@ -1,18 +1,31 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { Server } from "../context/TimeAgo";
+
+import JoditEditor from "jodit-react";
+
 export default function CreateBlog() {
+
+  // const config = {
+  //   height: 400,
+  //   buttons: "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,lineHeight,superscript,subscript,image,cut,copy,paste,selectall,copyformat"
+
+  // };
+
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
   // const [, setcat] = useState("");
   const navigate = useNavigate();
+
+  const editor = useRef(null);
+
   const { authUser } = useAuthContext();
 
   const addCategory = () => {
@@ -154,7 +167,7 @@ export default function CreateBlog() {
 
           <div className="flex flex-col gap-4 max-[400px]:text-sm">
             <div className="font-semibold text-indigo-900">Add Description</div>
-            <textarea
+            {/* <textarea
               name="desc"
               id=""
               placeholder="add paragraph"
@@ -164,19 +177,27 @@ export default function CreateBlog() {
               cols={40}
               required
             >
-              {" "}
-            </textarea>
+             
+            </textarea> */}
+            <JoditEditor
+              ref={editor}
+              value={desc}
+              // readOnly={false}
+              // config={config}
+              tabIndex={1} // tabIndex of textarea
+              onChange={(newContent) => setdesc(newContent)}
+            />
           </div>
 
           <div>
             <button
               className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
               onClick={createBlogPost}
-              rows={8}
-              cols={40}
             >
               Create Blog
             </button>
+
+            {desc}
           </div>
         </div>
       </div>

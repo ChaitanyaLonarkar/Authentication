@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import React from "react";
 import toast from "react-hot-toast";
 import { ImCross } from "react-icons/im";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import { useEffect } from "react";
 import { Server } from "../context/TimeAgo";
+import JoditEditor from "jodit-react";
 
 
 export default function UpdateBlog() {
@@ -16,6 +17,9 @@ export default function UpdateBlog() {
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
   const url = Server+"public/Images/";
+
+  const editor = useRef(null);
+
 
   const blogId = useParams().id;
   const navigate = useNavigate();
@@ -196,7 +200,7 @@ export default function UpdateBlog() {
             <div className="font-semibold text-indigo-900">
               Update Description
             </div>
-            <textarea
+            {/* <textarea
               name="desc"
               id=""
               placeholder="add paragraph"
@@ -206,7 +210,15 @@ export default function UpdateBlog() {
               rows={8} cols={40}
             >
               {" "}
-            </textarea>
+            </textarea> */}
+            <JoditEditor
+              ref={editor}
+              value={desc}
+              // readOnly={false}
+              // config={config}
+              tabIndex={1} // tabIndex of textarea
+              onChange={(newContent) => setdesc(newContent)}
+            />
           </div>
 
           <div>
