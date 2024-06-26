@@ -162,10 +162,10 @@ export default function Profile() {
                   <b>Email :</b> {authUser?.email}
                 </div>
 
-                <div className=" cursor-pointer hover:bg-indigo-500  p-2 bg-indigo-600 text-white w-[max-content] rounded text-base  px-4">
+                <div className="max-[600px]:text-[13px] max-[600px]:p-1 max-[600px]:px-2  cursor-pointer hover:bg-indigo-500  p-2 bg-indigo-600 text-white w-[max-content] rounded text-base  px-4">
                 <Link to={"/profileUpdate/"+authUser._id}>Update Profile</Link>
               </div>
-              <div className=" cursor-pointer hover:bg-indigo-500  p-2 bg-indigo-600 text-white w-[max-content] rounded text-base  px-4">
+              <div className="max-[600px]:text-[13px] max-[600px]:p-1 max-[600px]:px-2 cursor-pointer hover:bg-indigo-500  p-2 bg-indigo-600 text-white w-[max-content] rounded text-base  px-4">
                 <Link onClick={delUser}>Delete Profile</Link>
               </div>
               </div>

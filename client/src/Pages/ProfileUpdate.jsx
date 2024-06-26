@@ -12,7 +12,7 @@ export default function ProfileUpdate() {
   const [password, setpassword] = useState(authUser.profilePic);
   const [email, setemail] = useState(authUser.email);
 
-  const [file, setfile] = useState("");
+  const [file, setfile] = useState(authUser.profilePic);
 
   const url = Server+"public/Images/";
 

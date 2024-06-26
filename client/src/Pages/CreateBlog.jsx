@@ -197,7 +197,6 @@ export default function CreateBlog() {
               Create Blog
             </button>
 
-            {desc}
           </div>
         </div>
       </div>

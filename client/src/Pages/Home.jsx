@@ -165,10 +165,10 @@ export default function Home() {
                       Read More
                     </Link>
                   </div>
-                  <div key={blog.userId}>
+                  <div key={blog.userId} className="max-[600px]:text-[10px]">
                     by
                     <Link
-                      className=" max-[600px]:text-sm text-lg ps-2 text-indigo-800 font-semibold pe-2"
+                      className=" max-[600px]:text-sm text-lg ps-1 text-indigo-800 font-semibold pe-1"
                       to={
                         blog.userId === authUser?._id
                           ? "/myprofile"

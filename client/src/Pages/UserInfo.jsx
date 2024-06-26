@@ -86,7 +86,7 @@ export default function Profile() {
                             Read More
                           </Link>
                         </div>
-                        <div className="max-[640px]:text-sm ">
+                        <div className="max-[600px]:text-[10px]">
                           by <Link  className="text-xl max-[640px]:text-base  text-indigo-800 font-semibold" to="">@{blog.username}</Link> {timeAgo(blog.updatedAt)}
                         </div>
                       </div>
