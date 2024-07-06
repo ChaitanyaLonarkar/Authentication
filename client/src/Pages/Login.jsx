@@ -8,48 +8,47 @@ import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { IoMail } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
 import { Server } from "../context/TimeAgo";
-
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function Login() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [authuser, setAuthuser] = useState(null);
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 
   const { authUser, setAuthUser } = useAuthContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error("Please fill in both email and password");
+      return;
+    }
+    setLoader(true);
+
     try {
       const response = await axios.post(
-        Server+"auth/login",
+        Server + "auth/login",
         { email, password },
         {
           withCredentials: true,
         }
       );
-      // console.log(response.data,"loginnnnnnnnnnnnnnn");
-      if(response.data.success){
+      if (response.data.success) {
         toast.success(response.data.message || "User logged in successfully");
         localStorage.setItem("user", JSON.stringify(response.data.user));
         setAuthUser(response.data.user);
         navigate("/");
-
-      }else{
-      toast.error(response.data.message);
-           
+        setLoader(false)
+      } else {
+        toast.error(response.data.message);
       }
-      // if (localStorage.getItem("user")) {
-      //   toast.success(response.data.message || "User logged in successfully");
-       
-      //   setAuthUser(response.data.user);
-      //   navigate("/");
-      // }
-      // else{
-      //   return error
-      // }
+      
     } catch (error) {
       toast.error(error.response.data.message);
-      console.log(error)
+      // console.log(error);
+    }finally {
+      setLoader(false);
     }
   };
   return (
@@ -62,7 +61,7 @@ export default function Login() {
           <h1 className="font-bold text-3xl text-indigo-500">Login </h1>
           <form onSubmit={handleSubmit} className=" flex flex-col w-full gap-3">
             <div className="bg-slate-100 flex items-center gap-3  outline-none  p-3 w-full rounded-md mb-2">
-              {/* <MdOutlineMarkEmailRead className="text-xl " /> */}
+              
               <IoMail className="text-xl  text-slate-600 " />
 
               <input
@@ -91,8 +90,15 @@ export default function Login() {
             <button
               type="submit"
               className="py-2 px-4 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
+              
             >
-              Submit
+              {loader ? (
+                <div className="flex  p-[0.35rem] justify-center ">
+                  <BeatLoader size={10} />
+                </div>
+              ) : (
+                <div>Submit</div>
+              )}
             </button>
             <span className="text-center">
               Dont have an account?{" "}
@@ -103,40 +109,8 @@ export default function Login() {
             <Toaster />
           </form>
         </div>
+  
       </div>
-      {/* <div className="sign">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              placeholder="Enter your password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit">Login</button>
-          <span>
-            Dont have an account? <Link to={"/signup"}>Signup</Link>
-          </span>
-
-        </form>
-      </div> */}
     </>
   );
 }

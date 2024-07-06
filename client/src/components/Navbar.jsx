@@ -12,11 +12,13 @@ import { IoClose } from "react-icons/io5";
 import { useAuthContext } from "../context/AuthContext";
 import { Server } from "../context/TimeAgo";
 // const path=useLocation().pathname
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function Navbar() {
   const { authUser } = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
   const url = Server+"public/Images/";
+  const [loader, setLoader] = useState(false);
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
   const [toggle, settoggle] = useState(false);

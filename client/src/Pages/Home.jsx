@@ -9,7 +9,10 @@ import { useAuthContext } from "../context/AuthContext";
 import timeAgo from "../context/TimeAgo";
 import Loader from "../components/Loader";
 import { Server } from "../context/TimeAgo";
+
 export default function Home() {
+
+
   const navigate = useNavigate();
   const [allBlogs, setallBlogs] = useState([]);
   const [loader, setloader] = useState(false);
@@ -111,7 +114,7 @@ export default function Home() {
           <div className="  max-[500px]:mt-2 h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        {loader ? (
+        {!loader ? (
           <div className="mx-auto my-12 text-center">
             <Loader />
           </div>

@@ -6,6 +6,7 @@ import { ImCross } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { Server } from "../context/TimeAgo";
+import BeatLoader from "react-spinners/BeatLoader";
 
 import JoditEditor from "jodit-react";
 
@@ -16,6 +17,7 @@ export default function CreateBlog() {
   //   buttons: "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,lineHeight,superscript,subscript,image,cut,copy,paste,selectall,copyformat"
 
   // };
+  const [loader, setLoader] = useState(false);
 
   const [cat, setcat] = useState("");
   const [cats, setcats] = useState([]);
@@ -49,6 +51,8 @@ export default function CreateBlog() {
   const [file, setFile] = useState(null);
 
   const createBlogPost = async () => {
+    setLoader(true);
+
     try {
       const post = {
         title: title,
@@ -92,6 +96,8 @@ export default function CreateBlog() {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+    }finally {
+      setLoader(false);
     }
   };
 
@@ -191,10 +197,16 @@ export default function CreateBlog() {
 
           <div>
             <button
-              className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
+              className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white w-[130px] max-[400px]:w-[110px]"
               onClick={createBlogPost}
             >
-              Create Blog
+             {loader ? (
+                <div className="flex  p-[0.35rem] justify-center ">
+                  <BeatLoader size={10} color="white"/>
+                </div>
+              ) : (
+                <div>Create Blog</div>
+              )}
             </button>
 
           </div>

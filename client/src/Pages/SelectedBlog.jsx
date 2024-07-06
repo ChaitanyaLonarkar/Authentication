@@ -17,16 +17,19 @@ import toast, { Toaster } from "react-hot-toast";
 import { GrDocumentUpdate } from "react-icons/gr";
 import Loader from "../components/Loader";
 import { Server } from "../context/TimeAgo";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function SelectedBlog() {
   const [isLiked, setisLiked] = useState(false);
   const [commnetKaru, setcommentKaru] = useState();
   const blogId = useParams().id;
+
   const [blog, setblog] = useState({});
   const { authUser } = useAuthContext();
   const [comment, setcomment] = useState("");
   const [comments, setcomments] = useState([]);
   const [loader, setloader] = useState(false);
+  const [bloader, setbLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,7 +40,7 @@ export default function SelectedBlog() {
 
     try {
       const res = await axios.get(Server + "post/getpost/" + blogId);
-      console.log(res.data.oneBlog);
+      // console.log(res.data.oneBlog);
       setblog(res.data.oneBlog);
       setloader(false);
 
@@ -78,6 +81,7 @@ export default function SelectedBlog() {
   };
 
   const postBlogComment = async () => {
+    setbLoader(true)
     try {
       const res = await axios.post(
         Server + "comment/create",
@@ -98,6 +102,9 @@ export default function SelectedBlog() {
       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setbLoader(false)
     }
   };
 
@@ -280,7 +287,13 @@ export default function SelectedBlog() {
                     className="p-3 bg-indigo-500 text-white max-[506px]:text-xs text-sm max-[506px]:p-2 hover:bg-indigo-600 rounded-sm  "
                     onClick={postBlogComment}
                   >
-                    Add Comment
+                    {bloader ? (
+                      <div className="flex  py-[0.2rem] justify-center ">
+                        <BeatLoader size={10} color="white" />
+                      </div>
+                    ) : (
+                      <div>Add Comment</div>
+                    )}
                   </button>
                 </div>
               </div>
@@ -304,7 +317,7 @@ export default function SelectedBlog() {
                         </b>
                         {timeAgo(cm.updatedAt)}
                       </div>
-              
+
                       {authUser?._id === cm.userId && (
                         <div className="flex max-[506px]:text-base  text-xl gap-4 text-slate-700 cursor-pointer">
                           <MdDelete

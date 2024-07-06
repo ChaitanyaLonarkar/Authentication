@@ -4,19 +4,23 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 import { Server } from "../context/TimeAgo";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function ProfileUpdate() {
-    const navigate=useNavigate();
-  const { authUser,setAuthUser } = useAuthContext();
+  const navigate = useNavigate();
+  const { authUser, setAuthUser } = useAuthContext();
   const [username, setusername] = useState(authUser.name);
   const [password, setpassword] = useState(authUser.profilePic);
   const [email, setemail] = useState(authUser.email);
+  const [loader, setLoader] = useState(false);
 
   const [file, setfile] = useState(authUser.profilePic);
 
-  const url = Server+"public/Images/";
+  const url = Server + "public/Images/";
 
   const updateProfile = async () => {
+    setLoader(true);
+
     try {
       const upuser = {
         name: username,
@@ -39,7 +43,7 @@ export default function ProfileUpdate() {
         //img upload
         try {
           const imgUpload = await axios.post(
-            Server+"image/upload",
+            Server + "image/upload",
             formData,
             { withCredentials: true }
           );
@@ -50,25 +54,26 @@ export default function ProfileUpdate() {
       }
 
       const res = await axios.put(
-        Server+"user/update/" + authUser._id,
+        Server + "user/update/" + authUser._id,
         upuser,
         {
           withCredentials: true,
         }
       );
 
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.sucess) {
-        localStorage.setItem("user",JSON.stringify(res.data.updatedUser))
-        setAuthUser(res.data.updatedUser)
+        localStorage.setItem("user", JSON.stringify(res.data.updatedUser));
+        setAuthUser(res.data.updatedUser);
         navigate("/myprofile");
         toast.success(res.data.message);
       } else {
         toast.error(res.data.message);
-
       }
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -138,7 +143,17 @@ export default function ProfileUpdate() {
                 />
               </div>
               <div className=" cursor-pointer hover:bg-indigo-500  p-2 bg-indigo-600 text-white w-[max-content] rounded text-base  px-4">
-                <Link onClick={updateProfile}>Update Profile</Link>
+                <Link onClick={updateProfile}>
+                
+                
+                {loader ? (
+                <div className="flex  p-[0.25rem] justify-center ">
+                  <BeatLoader size={10} color="white"/>
+                </div>
+              ) : (
+                <div>Update Profile</div>
+              )}
+                </Link>
               </div>
             </div>
           </div>

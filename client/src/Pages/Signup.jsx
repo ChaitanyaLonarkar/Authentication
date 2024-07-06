@@ -9,19 +9,28 @@ import { IoIosLock } from "react-icons/io";
 import { IoIosUnlock } from "react-icons/io";
 import { IoMail } from "react-icons/io5";
 import { Server } from "../context/TimeAgo";
+import BeatLoader from "react-spinners/BeatLoader";
+
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confpassword, setconfPassword] = useState("");
+  const [loader, setLoader] = useState(false);
+
   // const notify = () => ;
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email || !password || !confpassword || !name) {
+      toast.error("Please fill in both email and password");
+      return;
+    }
+    setLoader(true);
     try {
       const response = await axios.post(
-        Server+"auth/signup",
+        Server + "auth/signup",
         { name, email, password, confpassword },
         {
           withCredentials: true,
@@ -29,13 +38,14 @@ export default function Signup() {
       ); // Make sure the URL is correct
 
       if (!localStorage.getItem("user")) {
-
         toast.success(response.data.message || "User created successfully");
         navigate("/login");
       }
     } catch (error) {
       const errorMessage = error.response?.data?.error || "An error occurred";
       toast.error(errorMessage);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -101,7 +111,13 @@ export default function Signup() {
               type="submit"
               className="py-2 px-4 rounded-md bg-indigo-100 font-semibold  hover:bg-indigo-200 text-indigo-700 "
             >
-              Submit
+              {loader ? (
+                <div className="flex  p-[0.35rem] justify-center ">
+                  <BeatLoader size={10} />
+                </div>
+              ) : (
+                <div>Submit</div>
+              )}
             </button>
             <span className="text-center">
               Already have an account?{" "}

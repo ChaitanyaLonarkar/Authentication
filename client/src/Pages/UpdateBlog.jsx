@@ -8,18 +8,19 @@ import { useAuthContext } from "../context/AuthContext";
 import { useEffect } from "react";
 import { Server } from "../context/TimeAgo";
 import JoditEditor from "jodit-react";
-
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function UpdateBlog() {
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
   const [file, setFile] = useState(null);
   const [cat, setcat] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const [cats, setcats] = useState([]);
-  const url = Server+"public/Images/";
+  const url = Server + "public/Images/";
 
   const editor = useRef(null);
-
 
   const blogId = useParams().id;
   const navigate = useNavigate();
@@ -43,9 +44,7 @@ export default function UpdateBlog() {
   };
   const fetchPost = async () => {
     try {
-      const res = await axios.get(
-        Server+"post/getpost/" + blogId
-      );
+      const res = await axios.get(Server + "post/getpost/" + blogId);
       console.log(res.data);
 
       settitle(res.data.oneBlog.title);
@@ -57,10 +56,9 @@ export default function UpdateBlog() {
     }
   };
 
-
   const updateBlogPost = async () => {
+    setLoader(true);
     try {
-
       const post = {
         title: title,
         desc: desc,
@@ -76,30 +74,27 @@ export default function UpdateBlog() {
         const filename = Date.now() + file.name;
         formData.append("img", filename);
         formData.append("file", file);
-        if(filename){
+        if (filename) {
           post.thumbnail = filename;
-
-        } 
-        else{
+        } else {
           post.thumbnail = file;
-
         }
-      // console.log(formData,"fomrdata")
+        // console.log(formData,"fomrdata")
 
-      //img upload
-      try {
-        const imgUpload = await axios.post(
-          Server+"image/upload",
-          formData,
-          { withCredentials: true }
-        );
-        // console.log(imgUpload, "image upload");
-      } catch (err) {
-        console.log(err.message);
+        //img upload
+        try {
+          const imgUpload = await axios.post(
+            Server + "image/upload",
+            formData,
+            { withCredentials: true }
+          );
+          // console.log(imgUpload, "image upload");
+        } catch (err) {
+          console.log(err.message);
+        }
       }
-    }
 
-      const res = await axios.put(Server+"post/update/"+blogId, post, {
+      const res = await axios.put(Server + "post/update/" + blogId, post, {
         withCredentials: true,
       });
 
@@ -112,14 +107,13 @@ export default function UpdateBlog() {
       }
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
-
-
   useEffect(() => {
     fetchPost();
-
   }, [blogId]);
 
   return (
@@ -130,7 +124,7 @@ export default function UpdateBlog() {
             Update Blog here
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm ">
-            <img src={url +file} alt="thumbnail" />
+            <img src={url + file} alt="thumbnail" />
             <div className="font-semibold text-indigo-900">
               Update Thumbnail
             </div>
@@ -226,7 +220,13 @@ export default function UpdateBlog() {
               className="p-2 px-4 max-[400px]:text-xs rounded bg-indigo-500 hover:bg-indigo-400 text-white "
               onClick={updateBlogPost}
             >
-              Update Blog
+              {loader ? (
+                <div className="flex  p-[0.35rem] justify-center ">
+                  <BeatLoader size={10} />
+                </div>
+              ) : (
+                <div> Update Blog</div>
+              )}
             </button>
           </div>
         </div>
