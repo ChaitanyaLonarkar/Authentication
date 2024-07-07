@@ -10,7 +10,7 @@ const Comments = require("../models/commentModel.js");
 const createPost = async (req, res) => {
   try {
     // const { title, content, category, thumbnail } = req.body();
-    console.log(req.body,"gfgdfgsdfsdfsd")
+    // console.log(req.body,"gfgdfgsdfsdfsd")
     const createdPost = await Blog.create(req.body);
     res.status(200).json({
       sucess: true,
@@ -19,7 +19,7 @@ const createPost = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ sucess: false, message: "Blog Title and Description should not empty" });
-    console.log(error)
+    // console.log(error)
   }
 };
 // UPDATE ONE BLOG
@@ -52,7 +52,7 @@ const deletePost = async (req, res) => {
     res.status(200).json({ sucess: true, message: "Blog deleted Succesfully" });
   } catch (error) {
     res.status(500).json({ sucess: false, message: "Blog delete error" });
-    console.log(error.message)
+    // console.log(error.message)
   }
 };
 // GET ALL BLOGS
@@ -95,7 +95,7 @@ const getSearchPosts = async (req, res) => {
    
   } catch (error) {
     res.status(500).json({ sucess: false, message: "Blogs nahi hai" });
-    console.log(error.message)
+    // console.log(error.message)
   }
 };
 

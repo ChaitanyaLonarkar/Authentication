@@ -14,7 +14,6 @@ export default function Profile() {
   const { authUser, setAuthUser } = useAuthContext();
   const navigate = useNavigate();
   const [usersPosts, setusersPosts] = useState([]);
-  const url = Server + "public/Images/";
   const [loader, setloader] = useState(false);
   const [noResult, setnoResult] = useState(false);
 
@@ -31,7 +30,9 @@ export default function Profile() {
       setusersPosts(res.data.oneBlogOfUser);
       setloader(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      toast.error(err);
+
     }
   };
   const username = Cookies.get("token");
@@ -87,7 +88,7 @@ export default function Profile() {
                         <div className="l-blog bg-indigo-50 p-5 max-[900px]:w-[100%]">
                           <div className="  rounded overflow-hidden  ">
                             {/* <img src={tu} alt="" /> */}
-                            <img src={url + blog.thumbnail} alt="thumbnail" 
+                            <img src={blog.thumbnail} alt="thumbnail" 
                             className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover"/>
                           </div>
                           <div className=" flex flex-col  justify-center gap-4 mt-10">
@@ -139,19 +140,12 @@ export default function Profile() {
 
               <div className="text-lg font-medium flex flex-col max-[600px]:items-center  max-[900px]:border-b-2 max-[900px]:pb-9  gap-5">
                 <div className="w-[200px] rounded-lg overflow-hidden  ">
-                  {/* {authUser.profilePic == "" ? (
+                  
                     <img
-                      src="https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                      alt="Profile"
-                      className=" w-40 h-40 object-cover rounded-lg mx-auto"
-                    />
-                  ) : ( */}
-                    <img
-                      src={url + authUser?.profilePic}
+                      src={authUser?.profilePic}
                       alt="Profile"
                       className=" w-40 h-40 object-cover m-auto rounded-lg"
                     />
-                  {/* )} */}
                 </div>
                 <div className="text-base">
                   {" "}

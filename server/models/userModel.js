@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     
     profilePic: {
       type: String,
-      default: "user.jpg",
+      default: "https://firebasestorage.googleapis.com/v0/b/blog-app-32552.appspot.com/o/files%2Fuser.jpg?alt=media&token=27f9dd1d-be27-4e59-a4f0-9b68c9eb6b8e",
       required:false,
     },
     myblogs:{

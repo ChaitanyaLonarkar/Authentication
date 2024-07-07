@@ -19,7 +19,7 @@ export default function Home() {
   const [noResult, setnoResult] = useState(false);
 
   const { authUser, setAuthUser } = useAuthContext();
-  const url = Server+"public/Images/";
+  // const url = Server+"public/Images/";
 
   // const verifyUser = async (e) => {
   //   try {
@@ -56,7 +56,9 @@ export default function Home() {
       else setnoResult(false);
       setloader(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error);
+
     }
   };
 
@@ -114,7 +116,7 @@ export default function Home() {
           <div className="  max-[500px]:mt-2 h-1 bg-indigo-400 rounded w-3/4 justify-self-center mt-4"></div>
         </div>
 
-        {!loader ? (
+        {loader ? (
           <div className="mx-auto my-12 text-center">
             <Loader />
           </div>
@@ -133,7 +135,7 @@ export default function Home() {
                   <img src="https://www.interactive.org/images/games_developers/no_image_available_sm.jpg" alt="Thumbnail" 
                   className="max-[600px]:h-full w-full h-[27rem] object-cover"/> :
                   <img
-                    src={url + blog.thumbnail}
+                    src={blog.thumbnail}
                     alt="Thumbnail"
                     className="max-[600px]:h-full w-full h-[27rem] object-cover"
                   />}

@@ -18,7 +18,6 @@ export default function UpdateBlog() {
   const [loader, setLoader] = useState(false);
 
   const [cats, setcats] = useState([]);
-  const url = Server + "public/Images/";
 
   const editor = useRef(null);
 
@@ -45,14 +44,14 @@ export default function UpdateBlog() {
   const fetchPost = async () => {
     try {
       const res = await axios.get(Server + "post/getpost/" + blogId);
-      console.log(res.data);
+      // console.log(res.data);
 
       settitle(res.data.oneBlog.title);
       setdesc(res.data.oneBlog.desc);
       setFile(res.data.oneBlog.thumbnail);
       setcats(res.data.oneBlog.categories);
     } catch (err) {
-      console.log(err);
+      toast.error(err);
     }
   };
 
@@ -65,8 +64,7 @@ export default function UpdateBlog() {
         categories: cats,
         username: authUser.name,
         userId: authUser._id,
-        // userId: "666ea7c341028dc4c4fc2f29",
-        // username: "chaitanyaa"
+       
       };
 
       if (file) {
@@ -74,11 +72,11 @@ export default function UpdateBlog() {
         const filename = Date.now() + file.name;
         formData.append("img", filename);
         formData.append("file", file);
-        if (filename) {
-          post.thumbnail = filename;
-        } else {
-          post.thumbnail = file;
-        }
+        // if (filename) {
+        //   post.thumbnail = filename;
+        // } else {
+        //   post.thumbnail = file;
+        // }
         // console.log(formData,"fomrdata")
 
         //img upload
@@ -89,8 +87,10 @@ export default function UpdateBlog() {
             { withCredentials: true }
           );
           // console.log(imgUpload, "image upload");
+          post.thumbnail = imgUpload.data.downloadURL;
+
         } catch (err) {
-          console.log(err.message);
+          console.log(err);
         }
       }
 
@@ -106,7 +106,7 @@ export default function UpdateBlog() {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     } finally {
       setLoader(false);
     }
@@ -124,7 +124,7 @@ export default function UpdateBlog() {
             Update Blog here
           </div>
           <div className="flex flex-col gap-4 max-[400px]:text-sm ">
-            <img src={url + file} alt="thumbnail" />
+            <img src={file} alt="thumbnail" />
             <div className="font-semibold text-indigo-900">
               Update Thumbnail
             </div>
@@ -222,7 +222,7 @@ export default function UpdateBlog() {
             >
               {loader ? (
                 <div className="flex  p-[0.35rem] justify-center ">
-                  <BeatLoader size={10} />
+                  <BeatLoader size={10} color="white" />
                 </div>
               ) : (
                 <div> Update Blog</div>

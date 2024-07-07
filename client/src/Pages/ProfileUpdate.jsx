@@ -15,9 +15,6 @@ export default function ProfileUpdate() {
   const [loader, setLoader] = useState(false);
 
   const [file, setfile] = useState(authUser.profilePic);
-
-  const url = Server + "public/Images/";
-
   const updateProfile = async () => {
     setLoader(true);
 
@@ -33,11 +30,9 @@ export default function ProfileUpdate() {
         const filename = Date.now() + file.name;
         formData.append("img", filename);
         formData.append("file", file);
-        if (filename) {
-          upuser.profilePic = filename;
-        } else {
-          upuser.profilePic = file;
-        }
+        // if (!filename)
+        //   upuser.profilePic = file;
+        // }
         // console.log(formData,"fomrdata")
 
         //img upload
@@ -48,8 +43,10 @@ export default function ProfileUpdate() {
             { withCredentials: true }
           );
           // console.log(imgUpload, "image upload");
+          upuser.profilePic= imgUpload.data.downloadURL;
+
         } catch (err) {
-          console.log(err.message);
+          toast.error(err.message);
         }
       }
 
@@ -71,7 +68,7 @@ export default function ProfileUpdate() {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     } finally {
       setLoader(false);
     }
@@ -92,7 +89,7 @@ export default function ProfileUpdate() {
                   src="https://avatars.githubusercontent.com/u/110454138?v=4"
                   alt=""
                 /> */}
-                <img src={url + authUser.profilePic} alt="pic" />
+                <img src={authUser.profilePic} alt="pic" />
               </div>
               <div className="flex flex-col gap-3">
                 Update Pic :

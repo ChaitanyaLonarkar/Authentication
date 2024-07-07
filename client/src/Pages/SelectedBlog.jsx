@@ -33,8 +33,6 @@ export default function SelectedBlog() {
 
   const navigate = useNavigate();
 
-  const url = Server + "public/Images/";
-
   const fetchBlogInfo = async () => {
     setloader(true);
 
@@ -46,7 +44,7 @@ export default function SelectedBlog() {
 
       // console.log(blog)
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -217,7 +215,7 @@ export default function SelectedBlog() {
                 alt=""
               /> */}
                 <img
-                  src={url + blog.thumbnail}
+                  src={blog.thumbnail}
                   alt="thumbnail"
                   className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover"
                 />

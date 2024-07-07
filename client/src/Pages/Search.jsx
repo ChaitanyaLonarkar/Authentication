@@ -18,7 +18,6 @@ export default function Search() {
   // console.log(search);
   const [noResult, setnoResult] = useState(false);
   const [loader, setloader] = useState(false);
-  const url = Server+"public/Images/";
 
   const fetchSearchBlogs = async () => {
     setloader(true);
@@ -34,7 +33,7 @@ export default function Search() {
 
       // console.log(allBlogs, "dfdfdfdfdfdfdfdfd");
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -69,7 +68,7 @@ export default function Search() {
                 <div className=" w-2/4 max-[1024px]:w-[100%] rounded overflow-hidden   ">
                   {/* <img src={tu} alt="" /> */}
                   <img
-                    src={url + blog.thumbnail}
+                    src={blog.thumbnail}
                     alt="Thumbnail"
                     className="max-[600px]:h-full w-full h-[27rem] object-cover"
                   />

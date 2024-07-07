@@ -11,7 +11,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import JoditEditor from "jodit-react";
 
 export default function CreateBlog() {
-
+ 
   // const config = {
   //   height: 400,
   //   buttons: "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,lineHeight,superscript,subscript,image,cut,copy,paste,selectall,copyformat"
@@ -61,13 +61,13 @@ export default function CreateBlog() {
         username: authUser.name,
         userId: authUser._id,
       };
+      
 
       if (file) {
         const formData = new FormData();
         const filename = Date.now() + file.name;
         formData.append("img", filename);
         formData.append("file", file);
-        post.thumbnail = filename;
         // console.log(formData,"fomrdata")
 
         //img upload
@@ -78,8 +78,13 @@ export default function CreateBlog() {
             { withCredentials: true }
           );
           // console.log(imgUpload, "image upload");
+          post.thumbnail = imgUpload.data.downloadURL;
+
+
         } catch (err) {
           toast.error(err.response.data.message);
+          // console.log(err.response.data.message);
+
         }
       }
 

@@ -17,7 +17,6 @@ import BeatLoader from "react-spinners/BeatLoader";
 export default function Navbar() {
   const { authUser } = useAuthContext();
   const [loginUser, setLoginUser] = useState(true);
-  const url = Server+"public/Images/";
   const [loader, setLoader] = useState(false);
 
   const [searchReasponsive, setSearchReasponsive] = useState(false);
@@ -103,7 +102,7 @@ export default function Navbar() {
             <div className="nav-profile hidden lg:flex gap-8 items-center">
               <div className="nav-user flex gap-1 items-center">
                 <img
-                  src={url + authUser.profilePic}
+                  src={authUser.profilePic}
                   alt="pic"
                   className=" rounded-full w-8 h-8 object-cover"
                 />
@@ -178,7 +177,7 @@ export default function Navbar() {
             <div className="nav-profile lg:hidden flex flex-col gap-5  items-center mt-4 mb-4  scale-90">
               <div className="nav-user flex gap-1 items-center">
                 <img
-                  src={url + authUser.profilePic}
+                  src={authUser.profilePic}
                   alt="pic"
                   className=" rounded-full w-8 h-8 object-cover"
                 />

@@ -39,8 +39,8 @@ const updateUser = async (req, res) => {
         });
         const {password,...info}=updateduser._doc 
 
-        console.log("ye updated token hai ", token);
-        console.log("ye updated cookie hai", req.cookies);
+        // console.log("ye updated token hai ", token);
+        // console.log("ye updated cookie hai", req.cookies);
         res.send({ sucess:true,message: "user updated successfully",updatedUser :
            info});
       });
@@ -49,7 +49,7 @@ const updateUser = async (req, res) => {
     res
       .status(500)
       .json({ error: "Is name ka yaa fir is email se koi pahle se user hai" });
-    console.log(errorr.message);
+    // console.log(errorr.message);
   }
 };
 
@@ -64,7 +64,7 @@ const deleteUser = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({sucess:false,message:"Unable to delete user"})
-    console.log(error.message)
+    // console.log(error.message)
 
   }
 };
@@ -77,7 +77,7 @@ const getUser = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({sucess:false,message:"Unable to get user or user not found"})
-    console.log(error.message)
+    // console.log(error.message)
   }
 };
 

@@ -10,7 +10,6 @@ export default function Profile() {
   const { authUser } = useAuthContext();
   const [usersPosts, setusersPosts] = useState([]);
   const [user, setuser] = useState([]);
-  const url = Server+"public/Images/";
   const [loader, setloader] = useState(false);
 
   const userId = useParams().id;
@@ -23,11 +22,11 @@ export default function Profile() {
         Server+"user/getuser/" + userId,
         { withCredentials: true }
       );
-      console.log(res.data);
+      // console.log(res.data);
       setuser(res.data.getUser);
       setloader(false);
     } catch (err) {
-      console.log(err);
+      toast.error(err);
     }
   };
 
@@ -66,7 +65,7 @@ export default function Profile() {
                     <div className="l-blog bg-indigo-50 p-5 max-[900px]:w-[100%]">
                       <div className="  rounded overflow-hidden  ">
                         {/* <img src={tu} alt="" /> */}
-                        <img src={url + blog.thumbnail} alt="thumbnail"
+                        <img src={blog.thumbnail} alt="thumbnail"
                         className="w-full min-[566px]:h-[25rem] min-[566px]:object-cover" />
 
                       </div>
@@ -113,7 +112,7 @@ export default function Profile() {
                 className=" w-40 h-40 object-cover rounded-lg mx-auto"
                 />:
                 <img
-                src={url+user.profilePic}
+                src={user.profilePic}
                 alt="Profile"
                  className=" w-40 h-40 object-cover rounded-lg"
                 />
