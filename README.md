@@ -1,4 +1,4 @@
-# Authentication
+# Perfect Blog
 
 ## Prerequisites
 
